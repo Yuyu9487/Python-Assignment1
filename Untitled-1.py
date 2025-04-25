@@ -6,14 +6,14 @@ def main():
         read()
 
 def read():
-    with open(r"C:\Users\kawwe\Desktop\python files\learn txt\Data.txt", "r") as file:
+    with open(r"file.txt", "r") as file:
         content = file.read()
         print(content)
     main()
 
 def add():
     user = input("What you want to write?:")
-    with open(r"C:\Users\kawwe\Desktop\python files\learn txt\Data.txt", "a") as file:
+    with open(r"file.txt", "a") as file:
         file.write(f"\n{user}")
     read()
 
