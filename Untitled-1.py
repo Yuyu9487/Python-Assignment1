@@ -13,8 +13,12 @@ def read():
 
 def add():
     user = input("What you want to write?:")
-    with open(r"file.txt", "a") as file:
-        file.write(f"\n{user}")
-    read()
+    #when use "w+", the file will be clean.
+    with open(r"file.txt", "w+") as file:
+        file.write(user)
+        file.seek(0)
+        content = file.read()
+        print(content)
+    main()
 
 main()
