@@ -1,3 +1,14 @@
+files:
+1.Receptionist(username, password)
+2.Doctor(username, password)
+    timeTable
+3.Nurse
+4.Patient
+    medical records
+    observations
+    payment history
+5.Appointments
+
 function:
 1.Receptionist
     register_patient
