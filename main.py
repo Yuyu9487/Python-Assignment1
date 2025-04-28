@@ -23,9 +23,10 @@ def main():
                 print("Role not found, Please try again.")
 #Receptionist function
 def Receptionist():
+    print("\n============================\nReceptionist Menu\n============================")
+    print("1.Register New Patient\n2.Update Patient Details\n3.Schedule Appointment For Patient\n4.Process Payemnt\n5.Back To Menu")
     while True:
-        print("\n============================\nReceptionist Menu\n============================")
-        user = input("1.Register New Patient\n2.Update Patient Details\n3.Schedule Appointment For Patient\n4.Process Payemnt\n5.Back To Menu\nYour Choice:")
+        user = input("Your Choice:")
         match user:
                 case "1":
                     Register()
@@ -58,22 +59,23 @@ def RepPay():
 #Doctor Funtion
 def Doctor():
     print("\n============================\nDoctor Menu\n============================")
+    print("1.Patient's Medical Logs/Treatment History\n2.Update Patient Record\n3.View Appointment List\n4.Block/Unblock Schedule\n5.Back To Menu")
     while True:
-        user = input("1.Patient's Medical Logs/Treatment History\n2.Update Patient Record\n3.View Appointment List\n4.Block/Unblock Schedule\n5.Back To Menu\nYour Choice:")
+        user = input("Your Choice:")
         match user:
-                case 1:
+                case "1":
                     Medlogs()
                     break
-                case 2:
+                case "2":
                     UpdatePatRec()
                     break
-                case 3:
+                case "3":
                     viewappoint()
                     break
-                case 4:
+                case "4":
                     Timetable()
                     break
-                case 5:
+                case "5":
                     main()
                     break
                 case _:
@@ -92,8 +94,9 @@ def Timetable():
 #Nurse Functions
 def Nurse():
     print("\n============================\nNurse Menu\n============================")
+    print("1.View Doctor's Appointment\n2.Record Patient's Observation\n3.View Prescriptions\n4.Administer Medicine To Patients\n5.Back To Menu")
     while True:
-        user = input("1.View Doctor's Appointment\n2.Record Patient's Observation\n3.View Prescriptions\n4.Administer Medicine To Patients\n5.Back To Menu\nYour Choice:")
+        user = input("Your Choice:")
         match user:
                 case "1":
                     viewdocappoint()
@@ -125,8 +128,9 @@ def Givemeds():
 #Patient function
 def Patient():
     print("\n============================\nPatient Menu\n============================")
+    print("1.View Personal Medical Records\n2.View Appointment\n3.Update Infomation\n4.Access Billing Details And Payment History\n5.Back To Menu")
     while True:
-        user = input("1.View Personal Medical Records\n2.View Appointment\n3.Update Infomation\n4.Access Billing Details And Payment History\n5.Back To Menu\nYour Choice:")
+        user = input("Your Choice:")
         match user:
                 case "1":
                     MedicalRec()
