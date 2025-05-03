@@ -1,4 +1,5 @@
 import main
+import fileManager
 #Nurse Functions
 def Nurse():
     print("\n============================\nNurse Menu\n============================")
@@ -25,6 +26,19 @@ def Nurse():
                     print("Error. Please Enter A Valid Input.")
 
 def viewdocappoint():
+    nurseinfo = fileManager.readFile("nurseinfo.txt")
+    #data = [(id, name, contact, age), (id, name, contact, age), (id, name, contact, age), ..
+    user = input("Enter Your ID: ")
+    for i in range(len(nurseinfo)):
+        if nurseinfo[i][0] == user:
+            print("Your ID:", nurseinfo[i][0])
+            print("Your Name:", nurseinfo[i][1])
+            print("Your Contact:", nurseinfo[i][2])
+            print("Your Age:", nurseinfo[i][3])
+            break
+    else:
+        print("ID not found.")
+        return
     return
 def Recpatient():
     return
@@ -32,3 +46,19 @@ def viewprescript():
     return
 def Givemeds():
     return
+
+
+#def nurseupdateinfo():
+    nurseinfo = fileManager.readfile("nureseinfo.txt")
+    #data = [(id, name, contact, age), (id, name, contact, age), (id, name, contact, age), ..
+    user = input("Enter Your ID:")
+    for i in range(len(nurseinfo)):
+        if nurseinfo[i][0] == user:
+            print("Your ID:", nurseinfo[i][0])
+            print("Your Name:", nurseinfo[i][1])
+            print("Your Contact:", nurseinfo[i][2])
+            print("Your Age:", nurseinfo[i][3])
+            break
+    else:
+        print("ID not found.")
+        return
