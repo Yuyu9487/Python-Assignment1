@@ -1,4 +1,5 @@
 import main
+import fileManager
 #Patient function
 def Patient():
     print("\n============================\nPatient Menu\n============================")
@@ -23,11 +24,15 @@ def Patient():
                     break
                 case _:
                     print("Error. Please Enter A Valid Input.")
+
 def MedicalRec():
     return
 def Pat_viewappoint():
     return
 def updateinfo():
+    patientInfo = fileManager.readFile("patient.txt")
+    # data = [(id, name, contact)]
+    # print(patientInfo[0][0])
     return
 def Paymenthistory():
     return

@@ -5,15 +5,16 @@ def readFile(path : str):
     with open(path, "r") as file:
         content = file.read()
     data = content.split("/#")
-    number = data[0]
-    datalist = []
+    number = int(data[0])
+    datalist = [[]]
     group = []
     groupNumber = 0
-    while groupNumber >= (len(data) - 1) / number:
-        groupNumber += 1
+    while groupNumber < len(data) - 1:
         for i in range(0, number):
-            group[i] = data(i + groupNumber + 1)
+            group.append(data[i + groupNumber + 1])
         datalist.append(group)
+        group = []
+        groupNumber += number
     return datalist
 
 def writeFile(path : str, number : int, data : str):
