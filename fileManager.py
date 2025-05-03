@@ -1,28 +1,26 @@
+#readFile = [(id, name), (id, name), (id, name), ..]
+# read = 3/#id/#name/#age/#id/#name/#age
+
 def readFile(path : str):
     with open(path, "r") as file:
         content = file.read()
-    return content
-    file.close()
+    data = content.split("/#")
+    number = data[0]
+    datalist = []
+    group = []
+    groupNumber = 0
+    while groupNumber >= (len(data) - 1) / number:
+        groupNumber += 1
+        for i in range(0, number):
+            group[i] = data(i + groupNumber + 1)
+        datalist.append(group)
+    return datalist
 
-def writeFile(path : str, user):
+def writeFile(path : str, number : int, data : str):
+    write = ""
+    write += str(number)
+    for group in data:
+        for var in group:
+            write += "/#" + var
     with open(path, "w") as file:
-        file.write(user)
-    file.close()
-
-# read file example
-def example():
-    fileData = readFile(file.txt)
-    fileDatas = fileData.split("#")
-    i = 3
-    for x in fileDatas:
-        match i % 3:
-            case 0:
-                # print name
-                pass
-            case 1:
-                # print age
-                pass
-            case 2:
-                # print address
-                pass
-        i += 1
+        file.write(write)
