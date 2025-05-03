@@ -2,7 +2,6 @@ import doctor
 import nurse
 import patient
 import receptionist
-import fileManager
 
 def main():
     print("\n============================\nWelcome to Best Clinic!\n============================")
@@ -27,16 +26,5 @@ def main():
                 break
             case _:
                 print("Role not found, Please try again.")
-
-
-    
-
-
-
-
-
-
-
-
 
 main()
