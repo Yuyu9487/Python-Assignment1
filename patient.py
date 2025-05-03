@@ -32,8 +32,11 @@ def Pat_viewappoint():
 def updateinfo():
     patientInfo = fileManager.readFile("patient.txt")
     # data = [(id, name, contact)]
-    print(patientInfo[0])
-    print(patientInfo[1])
+    user = input("Enter your ID: ")
+    for info in patientInfo:
+        if info[0] == user:
+            user = input("Enter your Name: ")
+            info[]
     return
 def Paymenthistory():
     return
