@@ -6,7 +6,7 @@ def readFile(path : str):
         content = file.read()
     data = content.split("/#")
     number = int(data[0])
-    datalist = [[]]
+    datalist = []
     group = []
     groupNumber = 0
     while groupNumber < len(data) - 1:
