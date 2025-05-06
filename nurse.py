@@ -26,6 +26,7 @@ def Nurse():
                     print("Error. Please Enter A Valid Input.")
 
 def view_doc_appointment():
+    pass
 def view_appointment(): #viwe doctor's 
     nurseinfo = fileManager.readFile("nurseinfo.txt")
     #data = [(id, name, contact, age), (id, name, contact, age), (id, name, contact, age), ..
