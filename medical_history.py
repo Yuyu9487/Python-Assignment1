@@ -8,7 +8,6 @@ root.title("Table Example")
 table = ttk.Treeview(root, columns=("Name", "Age", "Disease", "Allergy"), show="headings")
 table.heading("Name", text="Name")
 table.heading("Age", text="Age")
-table.heading("City", text="City")
 table.heading("Disease", text="Disease")
 table.heading("Allergy", test="Allergy")
 
