@@ -1,6 +1,8 @@
-import random
 import main
 #Doctor Funtion
+MEDICAL_HISTORY_FILE="patient_observation.txt"
+APPOINTMENT_FILE="patient.txt"
+
 def Doctor():
     print("\n============================\nDoctor Menu\n============================")
     print("1.Patient's Medical Logs/Treatment History\n2.Update Patient Record\n3.View Appointment List\n4.Block/Unblock Schedule\n5.Back To Menu")
@@ -25,40 +27,19 @@ def Doctor():
                 case _:
                     print("Error. Please Enter A Valid Input.")
 def Medlogs():
-    return
-medical_logs = {
-    "P001": [
-        {"date": "2025-01-25", "Name":"Ali", "diagnosis": "Flu", "treatment": "Rest + Paracetamol", "Allergy":"Seafood"},
-        {"date": "2025-03-15", "Name" :"Betty", "diagnosis": "Hypertension", "treatment": "Prescribed Amlodipine", "Allergy":"Seafood"}
-    ],
-    "P002": [
-        {"date": "2025-01-20", "Name":"Chris", "diagnosis": "Back Pain", "treatment": "Physical therapy recommended", "Allergy":"Protein"}
-    ],
-    "P003": [
-        {"date": "2024-11-25", "Name":"David", "diagnosis":"Asthma","treatment":"Inhaled Corticosteroids", "Allergy":"latex"}
-    ]
-}
-
-def Medlogs():
-    patient_id = input("Enter Patient ID: ").strip().upper()
-    logs = medical_logs.get(patient_id)
-
-    if not logs:
-        print(f"No records found for Patient ID: {patient_id}")
-        return
-
-    print(f"\n--- Medical Logs for {patient_id} ---")
-    for entry in logs:
-        print(f"Date: {entry['date']}")
-        print(f"Name: {entry['Name']}")
-        print(f"Diagnosis: {entry['diagnosis']}")
-        print(f"Treatment: {entry['treatment']}")
-        print(f"Allergy:{entry['Allergy']}")
-        print("-" * 30)
+    pid = input("Enter Patient ID: ").strip()
+    found = False
+    with open(MEDICAL_HISTORY_FILE, "r") as f:
+        for line in f:
+            if line.startswith(pid):
+                print(line.strip())
+                found = True
+    if not found:
+        print("No records found.")
 
 def UpdatePatRec():
     # Read from medical history file
-    with open("medical_history.txt", "r") as file:
+    with open("patient_observation.txt", "r") as file:
         lines = file.readlines()
 
     # For demonstration: update first line (normally you'd search by ID or name)
@@ -66,9 +47,9 @@ def UpdatePatRec():
         lines[0] = "Updated patient info\n"
 
     # Write back to the same file
-    with open("medical_history.py", "w") as file:
+    with open("patient_observation.txt", "w") as file:
         file.writelines(lines)
-    print("Patient record updated.")
+    
 def viewappoint():
     return
 def Timetable():
