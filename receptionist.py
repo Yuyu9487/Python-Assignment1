@@ -1,4 +1,5 @@
 import main
+import fileManager
 
 #Receptionist function
 def Receptionist():
@@ -25,7 +26,46 @@ def Receptionist():
                 case _:
                     print("Error. Please Enter A Valid Input.")
 def Register():
-    return
+    Entered = False
+    while Entered == False:
+        checkid = fileManager.readFile("patient.txt")
+        
+        regid = input("Enter New Patient ID:")
+        for info in checkid:
+            if info[0] == regid:
+                print(f"Error:ID {regid} already exist.")
+                
+            elif regid == "":
+                print("Error:Cannot be blank.")
+            elif regid.isdigit() == False:
+                print("Error:ID must be number.")
+            else:#next step
+
+                regname = input("Enter Patient Name:")
+                if regname == "":
+                    print("Error:Name cannot be blank.")
+                else:#next step
+                    
+                    regpass = input("Enter Patient Password:")
+                    if regpass == "":
+                        print("Error:Password cannot be blank.")
+
+                    else:#nextstep
+                        regcontact = input("Enter Patient Contact Number:")
+                        if regcontact == "":
+                            print("Error:Cannot be blank.")
+                        elif regcontact.isdigit() == False:
+                            print("Error:ID must be number.")
+                        else:
+                            Entered = True
+                            
+                        
+    
+
+
+
+    
+    
 def UpdatePatDes():
     return
 def MakeAppoint():
