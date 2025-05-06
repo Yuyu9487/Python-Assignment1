@@ -2,8 +2,6 @@ import main
 import fileManager
 #Patient function
 def Patient():
-    print("1.Sign In")
-    print("2.Login")
     print("\n============================\nPatient Menu\n============================")
     print("1.View Personal Medical Records")
     print("2.View Appointment")
@@ -17,6 +15,15 @@ def Patient():
                 SignIn()
                 break
             case "2":
+                Login()
+                break
+            case "3":
+                Login()
+                break
+            case "4":
+                Login()
+                break
+            case "5":
                 Login()
                 break
             case _:

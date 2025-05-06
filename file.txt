@@ -1,5 +1,10 @@
+File
 receptionist: []
 doctor : []
 nurse : []
 patient: [id, name, password, contant number]
-appointment: []
+
+Folder
+patient medical records: file name is patient id
+patient observations: file name is patient id
+patient payments: file name is patient id
