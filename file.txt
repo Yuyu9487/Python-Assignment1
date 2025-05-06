@@ -1,1 +1,5 @@
-testing
+receptionist: []
+doctor : []
+nurse : []
+patient: [id, name, password, contant number]
+appointment: []
