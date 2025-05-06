@@ -12,3 +12,5 @@ user=input("Please select your option!")
 if user==1:
     patienthistory="Please insert the patient's name."
     print ("The patient that you chose is", patienthistory)
+    import medical_history
+    
