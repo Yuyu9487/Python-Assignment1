@@ -112,6 +112,7 @@ def UpdatePatDes():
 
     return
 def MakeAppoint():
+    print("Hello")
     return
 def RepPay():
     return
