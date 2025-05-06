@@ -28,45 +28,50 @@ def Receptionist():
 def Register():
     Entered = False
     while Entered == False:
-        checkid = fileManager.readFile("patient.txt")
+        patfile = fileManager.readFile("patient.txt")
         
         regid = input("Enter New Patient ID:")
-        for info in checkid:
+        for info in patfile:
             if info[0] == regid:
                 print(f"Error:ID {regid} already exist.")
-                
+                break
             elif regid == "":
                 print("Error:Cannot be blank.")
+                break
             elif regid.isdigit() == False:
                 print("Error:ID must be number.")
+                break
             else:#next step
 
                 regname = input("Enter Patient Name:")
                 if regname == "":
                     print("Error:Name cannot be blank.")
+                    break
                 else:#next step
                     
                     regpass = input("Enter Patient Password:")
                     if regpass == "":
                         print("Error:Password cannot be blank.")
+                        break
 
                     else:#nextstep
                         regcontact = input("Enter Patient Contact Number:")
                         if regcontact == "":
                             print("Error:Cannot be blank.")
+                            break
                         elif regcontact.isdigit() == False:
-                            print("Error:ID must be number.")
+                            print("Error:Contact Number must be number.")
+                            break
                         else:
                             Entered = True
-                            
-                        
-    
+                            patfile.append([regid, regname, regpass, regcontact])
+                            fileManager.writeFile("patient.txt", 4, patfile)
+                            print("Patient added successfully!")
+                            Receptionist()
+                            break
 
-
-
-    
-    
 def UpdatePatDes():
+    
     return
 def MakeAppoint():
     return
