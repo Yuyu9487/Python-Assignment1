@@ -8,16 +8,16 @@ def Nurse():
         user = input("Your Choice:")
         match user:
                 case "1":
-                    viewdocappoint()
+                    view_appointment()
                     break
                 case "2":
-                    Recpatient()
+                    record_patient_observation()
                     break
                 case "3":
-                    viewprescript()
+                    view_doc__medical_records()
                     break
                 case "4":
-                    Givemeds()
+                    administer_medicine()
                     break
                 case "5":
                     main.main()
@@ -25,7 +25,7 @@ def Nurse():
                 case _:
                     print("Error. Please Enter A Valid Input.")
 
-def viewdocappoint():
+def view_appointment(): #viwe doctor's 
     nurseinfo = fileManager.readFile("nurseinfo.txt")
     #data = [(id, name, contact, age), (id, name, contact, age), (id, name, contact, age), ..
     user = input("Enter Your ID: ")
@@ -40,11 +40,25 @@ def viewdocappoint():
         print("ID not found.")
         return
     return
-def Recpatient():
+def record_patient_observation():
+    patient_id = (input("Enter Patient ID:"))
+    blood_pressure = (input("Enter Blood Pressure (🩸C): "))
+    pulse_rate = (input("Enter Pulse Rate (💓): "))
+    temperature = str(float(input("Enter Temperature (🌡️): ")))
+    symptoms = (input("Enter Symptoms (🩺): "))
+
+    observation = f"Patient ID: {patient_id}, Blood Pressure: {blood_pressure}C, Pulse Rate: {pulse_rate}bpm, Temperature: {temperature}C, Symptoms: {symptoms}\n"
+    with open("patient_observation.txt", "a") as file:
+        file.write(observation)
+
+
+
+    
+
     return
-def viewprescript():
+def view_doc__medical_records():
     return
-def Givemeds():
+def administer_medicine():
     return
 
 

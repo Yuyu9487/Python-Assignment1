@@ -1,0 +1,1 @@
+Patient ID: 168, Blood Pressure: 23C, Pulse Rate: 25bpm, Temperature: 23.4564C, Symptoms: 23.0

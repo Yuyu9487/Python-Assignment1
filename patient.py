@@ -1,9 +1,9 @@
 import main
 import fileManager
 #Patient function
-# patient: [id, name, password, contant number]
 def Patient():
-    ID = -1
+    while True:
+        ID = -1
     while True:
         if ID == -1:
             print("\n============================\nPatient Menu\n============================")
@@ -84,10 +84,9 @@ def view_appointment():
     return
 def update_info():
     patientInfo = fileManager.readFile("patient.txt")
+    user = input("Enter your ID: ")
     for info in patientInfo:
         if info[0] == user:
-            print("")
-            user = input("Enter your Name: ")
             user = input("Enter your Name: ")
             break
     return
