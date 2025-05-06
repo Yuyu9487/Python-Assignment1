@@ -25,11 +25,8 @@ def Nurse():
                 case _:
                     print("Error. Please Enter A Valid Input.")
 
-<<<<<<< Updated upstream
 def view_doc_appointment():
-=======
 def view_appointment(): #viwe doctor's 
->>>>>>> Stashed changes
     nurseinfo = fileManager.readFile("nurseinfo.txt")
     #data = [(id, name, contact, age), (id, name, contact, age), (id, name, contact, age), ..
     user = input("Enter Your ID: ")
@@ -45,7 +42,6 @@ def view_appointment(): #viwe doctor's
         return
     return
 def record_patient_observation():
-<<<<<<< Updated upstream
     patient_id = (input("Enter Patient ID:"))
     blood_pressure = (input("Enter Blood Pressure (🩸C): "))
     pulse_rate = (input("Enter Pulse Rate (💓): "))
@@ -62,11 +58,6 @@ def record_patient_observation():
 
     return
 def view_doc__medical_records():
-=======
-    patient_id = int(input("Enter your Patient ID: "))
-    return
-def view_patient_medical_records():
->>>>>>> Stashed changes
     return
 def administer_medicine():
     return
