@@ -84,7 +84,7 @@ def UpdatePatDes():
                     Receptionist()
                 else:
                     print("Invalid Response, Please try again.")
-                    UpdatePatDes()
+                    Receptionist()
 
                 if update == "":
                     print("Error:Input cannot be blank.")
@@ -99,16 +99,16 @@ def UpdatePatDes():
                             patientInfo.append([info[0], info[1], info[2], info[3]])
                             fileManager.writeFile("patient.txt", 4, patientInfo)
                             print("Updated")
-                            UpdatePatDes()
+                            Receptionist()
                         case "2":
-                            UpdatePatDes()
+                            Receptionist()
                         case _:
                             print("Error, Invalid Input.")
-                            UpdatePatDes()
+                            Receptionist()
 
         if userid != info[0]: 
             print(f"Patient ID {userid} does not exist.")
-            UpdatePatDes()
+            Receptionist()
 
     return
 def MakeAppoint():
