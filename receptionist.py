@@ -65,6 +65,50 @@ def Register():
                     break
 
 def UpdatePatDes():
+    patientInfo = fileManager.readFile("patient.txt")
+    userid = input("============================\nEnter your ID: ")
+    if userid == "" or userid.isdigit() == False:
+        print("Invalid input, ID must be digits and cannot be null.")
+    else:
+        for info in patientInfo:
+            if info[0] == userid:
+                print(f"User {info[1]} found.")
+                user = int(input("What would you like to Update?\n1.Name\n2.Password\n3.Contact Number\n4.Abort\nYour Choice:"))
+                if user == 1:
+                    update = input("Enter Patient Name:")
+                elif user ==2:
+                    update = input("Enter Patient Password:")
+                elif user ==3:
+                    update = input("Enter Patient Contact Number:")
+                elif user ==4:
+                    Receptionist()
+                else:
+                    print("Invalid Response, Please try again.")
+                    UpdatePatDes()
+
+                if update == "":
+                    print("Error:Input cannot be blank.")
+                else:
+                    confirm = input(f"System will be overwrite {info[user]} with {update}.\n1.Confirm\n2.Abort\nAre you sure?:")
+                    match confirm:
+                        case "1":
+                            temporary = []
+                            temporary.append([info[0], info[1], info[2], info[3]])
+                            patientInfo.remove([info[0], info[1], info[2], info[3]])
+                            info[user] = update
+                            patientInfo.append([info[0], info[1], info[2], info[3]])
+                            fileManager.writeFile("patient.txt", 4, patientInfo)
+                            print("Updated")
+                            UpdatePatDes()
+                        case "2":
+                            UpdatePatDes()
+                        case _:
+                            print("Error, Invalid Input.")
+                            UpdatePatDes()
+
+        if userid != info[0]: 
+            print(f"Patient ID {userid} does not exist.")
+            UpdatePatDes()
 
     return
 def MakeAppoint():
