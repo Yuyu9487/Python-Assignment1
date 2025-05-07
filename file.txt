@@ -6,6 +6,20 @@ patient: [id, name, password, contant number]
 
 Folder
 patient medical records: file name is patient id
-[id, detail, price]
+    [id, 
+    problem,
+    detail, 
+    medical plan, 
+    price, 
+    date]
 patient observations: file name is patient id
+    [id, 
+    Blood Pressure (🩸C), 
+    Pulse Rate (💓), 
+    Temperature (🌡️), 
+    Symptoms (🩺), 
+    date]
 patient payments: file name is patient id
+    [id, 
+    price, 
+    date]

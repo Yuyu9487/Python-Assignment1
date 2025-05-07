@@ -18,7 +18,10 @@ def readFile(path : str):
             groupNumber += number
         return datalist
     except:
-        print("\n", path, "can not found!\n")
+        print("\n", path, "have not found!")
+        print("Creating", path, "\n")
+        f = open(path, "x")
+        f.close()
         return []
 
 def writeFile(path : str, number : int, data):
