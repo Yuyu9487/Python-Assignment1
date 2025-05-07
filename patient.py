@@ -63,7 +63,7 @@ def Login():
     return -1
 
 def view_patient_medical_record(ID):
-    patient_medical_record_info = fileManager.readFile(f"patient.txt")
+    patient_medical_record_info = fileManager.readFile("patient_medical_records/" + ID + ".txt")
     return
 
 def view_appointment(ID):
