@@ -1,1 +1,9 @@
-Patient ID: 168, Blood Pressure: 23C, Pulse Rate: 25bpm, Temperature: 23.4564C, Symptoms: 23.0
+P001 | Ali | 2025-01-25 | Flu | Rest + Paracetamol | Seafood
+
+P002|Chris|2025-01-20|Back Pain|Physical therapy recommend|Protein
+
+P003|David|2024-11-25|Asthma|Inhaled Corticosteroids|latex
+
+P004|Siew Ling|2022-05-29|Siew Ling|Diabetes|Insulin Therapy|Nope
+
+P005|Pei Wei|2021-03-31|Fver|Aspirin|Nope
