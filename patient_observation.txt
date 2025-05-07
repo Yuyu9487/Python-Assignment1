@@ -1,4 +1,4 @@
-P001 | Ali | 2025-01-25 | Flu | Rest + Paracetamol | Seafood
+Updated patient info
 
 P002|Chris|2025-01-20|Back Pain|Physical therapy recommend|Protein
 
