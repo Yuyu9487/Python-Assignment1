@@ -1,4 +1,5 @@
 import main
+import fileManager
 #Doctor Funtion
 MEDICAL_HISTORY_FILE="patient_observation.txt"
 APPOINTMENT_FILE="patient.txt"

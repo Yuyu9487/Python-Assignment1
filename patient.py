@@ -2,8 +2,7 @@ import main
 import fileManager
 #Patient function
 def Patient():
-    while True:
-        ID = -1
+    ID = -1
     while True:
         if ID == -1:
             print("\n============================\nPatient Menu\n============================")
@@ -23,32 +22,32 @@ def Patient():
                     break
                 case _:
                     print("Error. Please Enter A Valid Input.")
-        else:
-            print("\n============================\nPatient Menu\n============================")
-            print("1.View Personal Medical Records")
-            print("2.View Appointment")
-            print("3.Update Infomation")
-            print("4.Access Billing Details And Payment History")
-            print("5.Back To Menu")
-            user = input("Your Choice:")
-            match user:
-                case "1":
-                    ID = MedicalRec()
-                    break
-                case "2":
-                    ID = Pat_viewappoint()
-                    break
-                case "3":
-                    ID = updateinfo()
-                    break
-                case "4":
-                    ID = Paymenthistory()
-                    break
-                case "5":
-                    main.main()
-                    break
-                case _:
-                    print("Error. Please Enter A Valid Input.")
+        # else:
+        #     print("\n============================\nPatient Menu\n============================")
+        #     print("1.View Personal Medical Records")
+        #     print("2.View Appointment")
+        #     print("3.Update Infomation")
+        #     print("4.Access Billing Details And Payment History")
+        #     print("5.Back To Menu")
+        #     user = input("Your Choice:")
+        #     match user:
+        #         case "1":
+        #             ID = MedicalRec()
+        #             break
+        #         case "2":
+        #             ID = Pat_viewappoint()
+        #             break
+        #         case "3":
+        #             ID = updateinfo()
+        #             break
+        #         case "4":
+        #             ID = Paymenthistory()
+        #             break
+        #         case "5":
+        #             main.main()
+        #             break
+        #         case _:
+        #             print("Error. Please Enter A Valid Input.")
 
 def SignIn():
     patientInfo = fileManager.readFile("patient.txt")
@@ -60,14 +59,14 @@ def SignIn():
     ID = 0
     allID = []
     for info in patientInfo:
-        allID.append(info[0])
+        allID.append(int(info[0]))
     while ID < 10000:
         if ID in allID:
             ID += 1
         else:
-            patientInfo.append([str(i), user[0], user[1], user[2]])
+            patientInfo.append([str(ID), user[0], user[1], user[2]])
             fileManager.writeFile("patient.txt", 4, patientInfo)
-            return i
+            return ID
     return -1
 
 def Login():
