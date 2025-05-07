@@ -25,7 +25,7 @@ def Nurse():
                 case _:
                     print("Error. Please Enter A Valid Input.")
 
-def view_appointment(): #viwe doctor's 
+def view_appointment(): #view doctor's appointment
     nurseinfo = fileManager.readFile("nurseinfo.txt")
     #data = [(id, name, contact, age), (id, name, contact, age), (id, name, contact, age), ..
     user = input("Enter Your ID: ")
@@ -57,7 +57,7 @@ def record_patient_observation():
 
     return
 def view_doc__medical_records():
-    return
+    print('hello')
 def administer_medicine():
     return
 
