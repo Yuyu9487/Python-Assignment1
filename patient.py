@@ -57,7 +57,7 @@ def Login():
     for info in patientInfo:
         if info[1] == userName and info[2] == userPassword:
             print("\nSuccessful login!\n")
-            return info[0]
+            return int(info[0])
         else:
             print("\nError:Enter error!\n")
     return -1
@@ -67,25 +67,49 @@ def view_patient_medical_record(ID):
     return
 
 def view_appointment(ID):
+    appointments = fileManager.readFile("Appointment.txt")
+    doctors = fileManager.readFile("doctor.txt")
+    print("\n" + "=" * 88)
+    for appointment in appointments:
+        # find the appointment which is for this patient
+        if int(appointment[1]) == ID:
+            # get doctor name
+            doctorName = "empty"
+            for doctor in doctors:
+                if doctor[0] == appointment[2]:
+                    doctorName = doctor[1]
+                    break
+            
+            # print appointment
+            print("ID:", appointment[0].ljust(3), "Doctor:", doctorName.ljust(20), "Date:", appointment[3].ljust(10), "Start time:", appointment[4].ljust(6), "End time:", appointment[5].ljust(6))
+    print("=" * 88 + "\n")
     return
 
 def update_info(ID):
     patientInfo = fileManager.readFile("patient.txt")
     for i in range(0, len(patientInfo)):
         if patientInfo[i][0] == ID:
-            user = int(input("\nWhat would you like to Update?\n1.Name\n2.Password\n3.Contact Number\n4.Abort\nYour Choice:"))
+            user = int(input("\nWhat would you like to Update?\n1.Name\n2.Password\n3.Age\n4.Contact Number\n5.Adress\n4.Abort\nYour Choice:"))
             match user:
                 case 1:
                     update = input("\nEnter Patient Name:")
                 case 2:
                     update = input("\nEnter Patient Password:")
                 case 3:
+                    update = input("\nEnter Patient Age:")
+                case 4:
                     update = input("\nEnter Patient Contact Number:")
+                case 5:
+                    update = input("\nEnter Patient Adress:")
                 case _:
                     Patient(ID)
 
             if update == "":
                 print("\nError:Input cannot be blank.")
+            elif user == 3 and not update.isdigit():
+                print("\nError:Age cannot be not digit.")
+            elif user == 4 and not update.isdigit():
+                print("\nError:Patient cannot be not digit.")
             else:
                 confirm = input(f"\nSystem will be overwrite {patientInfo[i][user]} with {update}.\n1.Confirm\n2.Abort\nAre you sure?:")
                 match confirm:
