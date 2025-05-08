@@ -92,8 +92,6 @@ def UpdatePatDes():
                     confirm = input(f"System will be overwrite {info[user]} with {update}.\n1.Confirm\n2.Abort\nAre you sure?:")
                     match confirm:
                         case "1":
-                            temporary = []
-                            temporary.append([info[0], info[1], info[2], info[3]])
                             patientInfo.remove([info[0], info[1], info[2], info[3]])
                             info[user] = update
                             patientInfo.append([info[0], info[1], info[2], info[3]])

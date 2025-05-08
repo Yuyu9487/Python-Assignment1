@@ -1,28 +1,22 @@
 import main
 import fileManager
 #Patient function
-def Patient():
-    while True:
-        ID = -1
+def Patient(input_ID = -1):
+    ID = input_ID
     while True:
         if ID == -1:
-            print("\n============================\nPatient Menu\n============================")
-            print("1.Sign In")
-            print("2.Login")
-            print("3.Back To Menu")
+            print("\n============================\nPatient Login Menu\n============================")
+            print("1.Login")
+            print("2.Back To Menu")
             user = input("Your Choice:")
             match user:
                 case "1":
-                    ID = SignIn()
-                    break
-                case "2":
                     ID = Login()
-                    break
-                case "3":
+                case "2":
                     main.main()
                     break
                 case _:
-                    print("Error. Please Enter A Valid Input.")
+                    print("\nError. Please Enter A Valid Input.\n")
         else:
             print("\n============================\nPatient Menu\n============================")
             print("1.View Personal Medical Records")
@@ -33,16 +27,16 @@ def Patient():
             user = input("Your Choice:")
             match user:
                 case "1":
-                    ID = MedicalRec()
+                    view_patient_medical_record(ID)
                     break
                 case "2":
-                    ID = Pat_viewappoint()
+                    view_appointment(ID)
                     break
                 case "3":
-                    ID = updateinfo()
+                    update_info(ID)
                     break
                 case "4":
-                    ID = Paymenthistory()
+                    view_payment(ID)
                     break
                 case "5":
                     main.main()
@@ -50,45 +44,60 @@ def Patient():
                 case _:
                     print("Error. Please Enter A Valid Input.")
 
-def SignIn():
-    patientInfo = fileManager.readFile("patient.txt")
-    user = [input("Enter your Name: "), input("Enter your Password: "), input("Enter your Contact Number: ")]
-    for user_input in user:
-        if user_input == "":
-            print("input can not be Null!")
-            return -1
-    ID = 0
-    allID = []
-    for info in patientInfo:
-        allID.append(info[0])
-    while ID < 10000:
-        if ID in allID:
-            ID += 1
-        else:
-            patientInfo.append([str(i), user[0], user[1], user[2]])
-            fileManager.writeFile("patient.txt", 4, patientInfo)
-            return i
-    return -1
-
 def Login():
     patientInfo = fileManager.readFile("patient.txt")
-    user = [input("Enter your Name: "), input("Enter your Password: ")]
+    userName = input("\nEnter your Name: ")
+    userPassword = input("Enter your Password: ")
+    if userName == "":
+        print("\nError:Name connot be blank!\n")
+        return -1
+    elif userPassword == "":
+        print("\nError:Password connot be blank!\n")
+        return -1
     for info in patientInfo:
-        if info[1] == user[0] and info[2] == user[1]:
+        if info[1] == userName and info[2] == userPassword:
+            print("\nSuccessful login!\n")
             return info[0]
+        else:
+            print("\nError:Enter error!\n")
     return -1
 
-def view_patient_medical_records():
+def view_patient_medical_record(ID):
+    patient_medical_record_info = fileManager.readFile("patient_medical_records/" + ID + ".txt")
     return
-def view_appointment():
+
+def view_appointment(ID):
     return
-def update_info():
+
+def update_info(ID):
     patientInfo = fileManager.readFile("patient.txt")
-    user = input("Enter your ID: ")
-    for info in patientInfo:
-        if info[0] == user:
-            user = input("Enter your Name: ")
+    for i in range(0, len(patientInfo)):
+        if patientInfo[i][0] == ID:
+            user = int(input("\nWhat would you like to Update?\n1.Name\n2.Password\n3.Contact Number\n4.Abort\nYour Choice:"))
+            match user:
+                case 1:
+                    update = input("\nEnter Patient Name:")
+                case 2:
+                    update = input("\nEnter Patient Password:")
+                case 3:
+                    update = input("\nEnter Patient Contact Number:")
+                case _:
+                    Patient(ID)
+
+            if update == "":
+                print("\nError:Input cannot be blank.")
+            else:
+                confirm = input(f"\nSystem will be overwrite {patientInfo[i][user]} with {update}.\n1.Confirm\n2.Abort\nAre you sure?:")
+                match confirm:
+                    case "1":
+                        patientInfo[i][user] = update
+                        fileManager.writeFile("patient.txt", 4, patientInfo)
+                        print("\nUpdated Sussessful!")
+                        Patient(ID)
+                    case _:
+                        Patient(ID)
             break
     return
-def view_payment():
+
+def view_payment(ID):
     return

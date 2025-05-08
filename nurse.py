@@ -25,7 +25,7 @@ def Nurse():
                 case _:
                     print("Error. Please Enter A Valid Input.")
 
-def view_appointment(): #viwe doctor's 
+def view_appointment(): #view doctor's appointment
     nurseinfo = fileManager.readFile("nurseinfo.txt")
     #data = [(id, name, contact, age), (id, name, contact, age), (id, name, contact, age), ..
     user = input("Enter Your ID: ")
@@ -41,15 +41,29 @@ def view_appointment(): #viwe doctor's
         return
     return
 def record_patient_observation():
-    patient_id = (input("Enter Patient ID:"))
+    # 拿到病人的观察记录文件
+    patient_id = int(input("Enter Patient ID:"))
+    if patient_id == "":
+        print("Error")
+        return
+    patient_observation = fileManager.readFile("patient_observation/" + ID + ".txt")
+    # patient_observation = [[id, blood_pressure, pulse_rate, ...], [id, ...], [id, ...], ...]
+
+    # 写入资讯
     blood_pressure = (input("Enter Blood Pressure (🩸C): "))
     pulse_rate = (input("Enter Pulse Rate (💓): "))
     temperature = str(float(input("Enter Temperature (🌡️): ")))
     symptoms = (input("Enter Symptoms (🩺): "))
+    date = input("Enter Date (**/**/****): ")
 
-    observation = f"Patient ID: {patient_id}, Blood Pressure: {blood_pressure}C, Pulse Rate: {pulse_rate}bpm, Temperature: {temperature}C, Symptoms: {symptoms}\n"
-    with open("patient_observation.txt", "a") as file:
-        file.write(observation)
+    observation_id = len(patient_observation)
+    patient_observation.append([int(observation_id), blood_pressure, pulse_rate, temperature, symptoms, date])
+
+    fileManager.writeFile("patient_observation/" + ID + ".txt", 6, patient_observation)
+
+    # observation = f"Patient ID: {patient_id}, Blood Pressure: {blood_pressure}C, Pulse Rate: {pulse_rate}bpm, Temperature: {temperature}C, Symptoms: {symptoms}\n"
+    # with open("patient_observation.txt", "a") as file:
+    #     file.write(observation)
 
 
 
@@ -57,7 +71,7 @@ def record_patient_observation():
 
     return
 def view_doc__medical_records():
-    return
+    print('hello')
 def administer_medicine():
     return
 

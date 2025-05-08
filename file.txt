@@ -1,10 +1,26 @@
 File
-receptionist: []
-doctor : []
-nurse : []
+receptionist: [id, name, password, contant number]
+doctor : [id, name, password, contant number]
+nurse : [id, name, password, contant number]
 patient: [id, name, password, contant number]
+appointment: [id, patient name, doctor name, date, start_time, end_time]
 
 Folder
 patient medical records: file name is patient id
+    [id, 
+    problem,
+    detail, 
+    medical plan, 
+    price, 
+    date]
 patient observations: file name is patient id
+    [id, 
+    Blood Pressure (🩸C), 
+    Pulse Rate (💓), 
+    Temperature (🌡️), 
+    Symptoms (🩺), 
+    date]
 patient payments: file name is patient id
+    [id, 
+    price, 
+    date]
