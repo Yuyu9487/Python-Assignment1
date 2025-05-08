@@ -1,5 +1,6 @@
 import main
 import fileManager
+import re
 #Doctor Funtion
 MEDICAL_HISTORY_FILE="patient_observation.txt"
 APPOINTMENT_FILE="patient.txt"
@@ -20,7 +21,7 @@ def Doctor():
                     viewappoint()
                     break
                 case "4":
-                    Timetable()
+                    Blocklist()
                     break
                 case "5":
                     main.main()
@@ -53,5 +54,37 @@ def UpdatePatRec():
     
 def viewappoint():
     return
-def Timetable():
-    return
+def Blocklist():
+    user = input("============================\n1.Block Schedule\n2.Unblock Schedule")
+    if user == "" or user.isdigit() == False:
+        print("Invalid input, ID must be digits and cannot be null.")
+    else:
+        user = int(user)
+        match user:
+            case 1:
+                date = input("Enter the date in DD/MM/YY,seperated by '/'")
+                pattern = ("^([1-9]|0[1-9]|[12][0-9]|3[01])/([1-9]|0[1-9]|1[0-2])/(\d{2})$")
+                try: 
+                    if re.match(pattern,date):
+                        Appointment = fileManager.readFile("AppointmentBlockList.txt")
+                        for info in Appointment:
+                            if info == date:
+                                print(f"Date already exist.")
+                                break
+                        if info != date: #already check all, and no repeating date are found
+                            print(f"{date} blocked successfully!")
+                            Appointment.append([info])
+                            fileManager.writeFile("patient.txt", 1, Appointment)
+
+                    else:
+                        raise ValueError("Date does not match DD/MM/YY format or input is invalid")
+                except ValueError as Error:
+                    print(Error)
+
+
+                    
+
+
+
+                
+
