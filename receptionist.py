@@ -212,16 +212,9 @@ def Appointment_fuction(userid):
                     case 4:
                         print("Bringing you back to receptionist menu...")
                         Receptionist()
-
-
-        
-
-
-            
+            break
         print(f"Error: Patient ID {userid} can't be found.")
         Receptionist()
-    
-
     return
 def RepPay():
     return
