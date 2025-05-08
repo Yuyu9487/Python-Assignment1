@@ -1,10 +1,10 @@
 import main
 import fileManager
-
+import re
 #Receptionist function
 def Receptionist():
     print("\n============================\nReceptionist Menu\n============================")
-    print("1.Register New Patient\n2.Update Patient Details\n3.Schedule Appointment For Patient\n4.Process Payemnt\n5.Back To Menu")
+    print("1.Register New Patient\n2.Update Patient Details\n3.Appointment Fuctions For Patient\n4.Process Payemnt\n5.Back To Menu")
     while True:
         user = input("Your Choice:")
         match user:
@@ -29,7 +29,6 @@ def Register():
     Entered = False
     while Entered == False:
         patfile = fileManager.readFile("patient.txt")
-        appointment = fileManager.readFile("Appointment.txt")
         regname = input("Enter Patient Name:")
         if regname == "":
             print("Error:Name cannot be blank.")
@@ -59,9 +58,7 @@ def Register():
                         else:
                             Entered = True
                             patfile.append([str(i), regname, regpass, regcontact])
-                            appointment.append([str(i),"Null"])
                             fileManager.writeFile("patient.txt", 4, patfile)
-                            fileManager.writeFile("Appointment.txt",2,appointment)
                             print(f"Patient ID: {i} added successfully!")
                             
                             break
@@ -90,7 +87,7 @@ def UpdatePatDes():
                 elif user ==3:
                     update = input("Enter Patient Contact Number:")
                 elif user ==4:
-                    print("Bring you back to receptionist menu...")
+                    print("Bringing you back to receptionist menu...")
                 else:
                     print("Invalid Response, Please try again.")
                     
@@ -112,7 +109,7 @@ def UpdatePatDes():
                             print("Updated")
                                 
                         case "2":
-                             print("Bring you back to receptionist menu...")
+                             print("Bringing you back to receptionist menu...")
                                 
                         case _:
                             print("Error, Invalid Input.")
@@ -124,38 +121,107 @@ def UpdatePatDes():
     Receptionist()
 
 def MakeAppoint():
-    patientInfo = fileManager.readFile("Appointment.txt")
     userid = input("============================\nEnter Patient ID: ")
+    Appointment_fuction(userid)
+
+def Appointment_fuction(userid):
+    patientInfo = fileManager.readFile("patient.txt")
     if userid == "" or userid.isdigit() == False:
         print("Invalid input, ID must be digits and cannot be null.")
+        Receptionist()
     else:
         for info in patientInfo:
             if info[0] == userid:
-                print(f"User found.")
+                print(f"Patient [{info[1]}] Appointment List.")
                 user = input("============================\nWhat would you like to do?\n1.Schedule Appointment\n2.View Patient's Appointment\n3.Cancel Appointment\n4.Abort\nYour Choice:")
                 if user == "" or user.isdigit() == False:
                     print("Invalid input, ID must be digits and cannot be null.")
-                    Receptionist()
+                    Appointment_fuction(userid)
                 else:
                     user = int(user)
+                match user:
+                    case 1:
+                        date = input("============================\nEnter the date in DD/MM/YY(ex:06/09/25),seperated by '/'.:")
+                        pattern = ("^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/(\d{2})$")
+                        try: 
+                            if re.match(pattern,date):
+                                Appointmentblock = fileManager.readFile("AppointmentBlockList.txt")
+                                Appointment = fileManager.readFile("Appointment.txt")
+
+                                for appointinfo in Appointment:
+                                    if date in appointinfo[1] and userid in appointinfo[0]:
+                                        print(f"Error: Appointment at [{date}] already exist.")
+                                        Appointment_fuction(userid)
+                                        break
+
+                                for dateinfo in Appointmentblock:
+                                    if date in dateinfo[0]:
+                                        print(f"Error: Doctor has this date [{date}] blocked for appointment.")
+                                        Appointment_fuction(userid)
+                                        break
+
+                                #already check all, and no repeating date are found
+                                print(f"Appointment made for [{info[1]}] at [{date}] successfully!")
+                                
+                                Appointment.append([info[0],date])
+                                fileManager.writeFile("Appointment.txt", 2, Appointment)
+                                Appointment_fuction(userid)
 
 
-                if user == 1:
-                    date = input("Enter the date in DD/MM/YY,seperated by '/'")
+                            else:
+                                raise ValueError("Date does not match DD/MM/YY format or input is invalid")
+                        except ValueError as Error:
+                            print(Error)
+                            Appointment_fuction(userid)
+
+                    case 2:
+                        Appointment = fileManager.readFile("Appointment.txt")
+                        display = []
+                        for appointinfo in Appointment:
+                            if userid == appointinfo[0]:
+                                display.append(appointinfo[1])
+                        if display == []:
+                            print(f"Patient {info[1]} doesn't have any upcoming appointments.")
+                        else:
+                            print(f"Patient {info[1]} has appointment(s) at {display}.")
+                        Appointment_fuction(userid)
                     
+                    case 3:
+                        date = input("============================\nEnter the date in DD/MM/YY(ex:06/09/25),seperated by '/'.:")
+                        pattern = ("^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/(\d{2})$")
+                        try: 
+                            if re.match(pattern,date):
+                                Appointmentblock = fileManager.readFile("AppointmentBlockList.txt")
+                                Appointment = fileManager.readFile("Appointment.txt")
 
-                    if info[1] == "Null":
-                        info[2] = []
-                elif user ==2:
-                    update = input("Enter Patient Password:")
-                elif user ==3:
-                    update = input("Enter Patient Contact Number:")
-                elif user ==4:
-                    print("Bring you back to receptionist menu...")
-                else:
-                    print("Invalid Response, Please try again.")
+                                for appointinfo in Appointment:
+                                    if date in appointinfo[1] and userid in appointinfo[0]:
+                                        print(f"Cancel Appointment at [{date}] for [{info[1]}] successfully.")
+                                        Appointment.remove([appointinfo[0],appointinfo[1]])
+                                        fileManager.writeFile("Appointment.txt", 2, Appointment)
+                                        Appointment_fuction(userid)
+                                        break
+                                print(f"Patient [{info[1]}] doesn't have the following appointment at [{date}]")
+                                Appointment_fuction(userid)
 
-    print("Hello")
+                            else:
+                                raise ValueError("Date does not match DD/MM/YY format or input is invalid")
+                        except ValueError as Error:
+                            print(Error)
+                            Appointment_fuction(userid)
+                    case 4:
+                        print("Bringing you back to receptionist menu...")
+                        Receptionist()
+
+
+        
+
+
+            
+        print(f"Error: Patient ID {userid} can't be found.")
+        Receptionist()
+    
+
     return
 def RepPay():
     return
