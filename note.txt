@@ -30,3 +30,13 @@ function:
     view_appointment(for self)
     update_patient
     view_payment
+
+
+
+
+temporary = []
+temporary.append([info[0], info[1], info[2], info[3]])
+patientInfo.remove([info[0], info[1], info[2], info[3]])
+info[user] = update
+patientInfo.append([info[0], info[1], info[2], info[3]])
+fileManager.writeFile("patient.txt", 4, patientInfo)
