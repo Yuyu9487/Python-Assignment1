@@ -88,7 +88,9 @@ def view_appointment(ID):
 def update_info(ID):
     patientInfo = fileManager.readFile("patient.txt")
     for i in range(0, len(patientInfo)):
+        # find patient Information
         if patientInfo[i][0] == ID:
+            # select the information witch user want to update
             user = int(input("\nWhat would you like to Update?\n1.Name\n2.Password\n3.Age\n4.Contact Number\n5.Adress\n4.Abort\nYour Choice:"))
             match user:
                 case 1:
@@ -103,7 +105,7 @@ def update_info(ID):
                     update = input("\nEnter Patient Adress:")
                 case _:
                     Patient(ID)
-
+            # check update is correct or not, then update user informationa
             if update == "":
                 print("\nError:Input cannot be blank.")
             elif user == 3 and not update.isdigit():
@@ -111,7 +113,7 @@ def update_info(ID):
             elif user == 4 and not update.isdigit():
                 print("\nError:Patient cannot be not digit.")
             else:
-                confirm = input(f"\nSystem will be overwrite {patientInfo[i][user]} with {update}.\n1.Confirm\n2.Abort\nAre you sure?:")
+                confirm = input(f"\nSystem will be overwrite {patientInfo[i][user]} with {update}.\n1.Confirm\n2.Cancel\nAre you sure?:")
                 match confirm:
                     case "1":
                         patientInfo[i][user] = update

@@ -52,16 +52,14 @@ def record_patient_observation():
         print("Error:Patient ID must be number.")
     else:
         patient_id = int(patient_id)
-        return
     #ensure the file is exist
-    folder_path = "patient_observation"
-    os.makedirs(folder_path, exist_ok=True)
+    # folder_path = "patient_observation"
+    # os.makedirs(folder_path, exist_ok=True)
 
-    file_path = os.path.join(folder_path,f"{patient_id}.txt")
-    patient_observations = fileManager.readfile(file_path)
+    # file_path = os.path.join(folder_path,f"{patient_id}.txt")
+    # patient_observations = fileManager.readFile(file_path)
     # patient_observation = fileManager.readFile("patient_observation.txt")
-    patient_observation = fileManager.readFile("patient_observation/" + str(patient_id) + ".txt")
-    # patient_observation = [[id, blood_pressure, pulse_rate, ...], [id, ...], [id, ...], ...]
+    patient_observation = fileManager.readFile("patient_observations/" + str(patient_id) + ".txt")
 
     # 写入资讯/收据数据
     blood_pressure = (input("Enter Blood Pressure (🩸C): "))
@@ -73,7 +71,7 @@ def record_patient_observation():
     observation_id = len(patient_observation)
     patient_observation.append([int(observation_id), blood_pressure, pulse_rate, temperature, symptoms, date])
 
-    fileManager.writeFile("patient_observation/" + str(patient_id) + ".txt", 6, patient_observation)
+    fileManager.writeFile("patient_observations/" + str(patient_id) + ".txt", 6, patient_observation)
 
     # observation = f"Patient ID: {patient_id}, Blood Pressure: {blood_pressure}C, Pulse Rate: {pulse_rate}bpm, Temperature: {temperature}C, Symptoms: {symptoms}\n"
     # with open("patient_observation.txt", "a") as file:
