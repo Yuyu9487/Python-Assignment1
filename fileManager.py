@@ -36,7 +36,7 @@ def writeFile(path : str, number : int, data):
     except:
         print("\n", path, "can not found!\n")
 
-def listPatient():
+def viewAllPatient():
     patients = readFile("patient.txt")
     if len(patients) > 0:
         print("\n============================")
