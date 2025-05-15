@@ -4,6 +4,7 @@ doctor : [id, name, password, contant number]
 nurse : [id, name, password, contant number]
 patient: [id, name, password, age, contant number, address]
 appointment: [patient id, doctor id, date, start_time, end_time]
+appointment block list: [doctor id, date]
 
 Folder
 patient medical records: file name is patient id
