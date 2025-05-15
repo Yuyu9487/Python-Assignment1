@@ -25,4 +25,4 @@ patient observations: file name is patient id
 patient payments: file name is patient id
     [id, 
     price, 
-    date]
+    payed]
