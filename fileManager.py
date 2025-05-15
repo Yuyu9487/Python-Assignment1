@@ -6,7 +6,10 @@ def readFile(path : str):
         with open(path, "r") as file:
             content = file.read()
         data = content.split("/#")
-        number = int(data[0])
+        try:
+            number = int(data[0])
+        except:
+            number = 0
         datalist = []
         group = []
         groupNumber = 0
@@ -18,7 +21,7 @@ def readFile(path : str):
             groupNumber += number
         return datalist
     except:
-        print("\n", path, "have not found!")
+        print(path, "have not found!")
         print("Creating", path, "\n")
         f = open(path, "x")
         f.close()

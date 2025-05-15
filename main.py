@@ -1,4 +1,4 @@
-import doctor
+# import doctor
 import nurse
 import patient
 import receptionist
@@ -13,7 +13,7 @@ def main():
                 receptionist.Receptionist()
                 break
             case "2":
-                doctor.Doctor()
+                # doctor.Doctor()
                 break
             case "3":
                 nurse.Nurse()

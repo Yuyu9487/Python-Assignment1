@@ -28,16 +28,12 @@ def Patient(input_ID = -1):
             match user:
                 case "1":
                     view_patient_medical_record(ID)
-                    break
                 case "2":
                     view_appointment(ID)
-                    break
                 case "3":
                     update_info(ID)
-                    break
                 case "4":
                     view_payment(ID)
-                    break
                 case "5":
                     main.main()
                     break
@@ -63,13 +59,26 @@ def Login():
     return -1
 
 def view_patient_medical_record(ID):
-    my_patient_medical_records = fileManager.readFile("patient_medical_records/" + ID + ".txt")
-    return
+    print("patient_medical_records/" + str(ID) + ".txt")
+    my_medical_records = fileManager.readFile("patient_medical_records/" + str(ID) + ".txt")
+    number = 0
+    for medical_record in my_medical_records:
+        number += 1
+        print("\n" + "=" * 34 + " Medical Record " + str(number) + "=" * 34)
+        print("Problem:".rjust(13), medical_record[1])
+        print("Detail:".rjust(13), medical_record[2])
+        print("Medical plan:".rjust(13), medical_record[3])
+        print("Price:".rjust(13), medical_record[4])
+        print("Date:".rjust(13), medical_record[5])
+    if number == 0:
+        print("\nYou don't have any medical record!")
+    else:
+        print("=" * 89 + "\n")
 
 def view_appointment(ID):
     appointments = fileManager.readFile("Appointment.txt")
     doctors = fileManager.readFile("doctor.txt")
-    print("\n" + "=" * 37 + "Appointment" + "=" * 37)
+    print("\n" + "=" * 36 + " Appointment " + "=" * 36)
     for appointment in appointments:
         # find the appointment which is for this patient
         if int(appointment[1]) == ID:
@@ -81,9 +90,8 @@ def view_appointment(ID):
                     break
             
             # print appointment
-            print("ID:", appointment[0].ljust(3), "Doctor:", doctorName.ljust(20), "Date:", appointment[3].ljust(10), "Start time:", appointment[4].ljust(6), "End time:", appointment[5].ljust(6))
+            print("ID:", appointment[0].ljust(3), "Doctor:", doctorName.ljust(20), "Date:", appointment[2].ljust(10), "Start time:", appointment[3].ljust(6), "End time:", appointment[4].ljust(6))
     print("=" * 89 + "\n")
-    return
 
 def update_info(ID):
     patientInfo = fileManager.readFile("patient.txt")
@@ -123,7 +131,6 @@ def update_info(ID):
                     case _:
                         Patient(ID)
             break
-    return
 
 def view_payment(ID):
-    return
+    pass
