@@ -5,7 +5,7 @@ def Patient(input_ID = -1):
     ID = input_ID
     while True:
         if ID == -1:
-            print("\n============================\nPatient Login Menu\n============================")
+            print("\n================== Patient Login Menu ==================")
             print("1.Login")
             print("2.Back To Menu")
             user = input("Your Choice:")
@@ -18,7 +18,7 @@ def Patient(input_ID = -1):
                 case _:
                     print("\nError. Please Enter A Valid Input.\n")
         else:
-            print("\n============================\nPatient Menu\n============================")
+            print("\n================== Patient Menu ==================")
             print("1.View Personal Medical Records")
             print("2.View Appointment")
             print("3.Update Infomation")
@@ -57,19 +57,19 @@ def Login():
     for info in patientInfo:
         if info[1] == userName and info[2] == userPassword:
             print("\nSuccessful login!\n")
-            return info[0]
+            return int(info[0])
         else:
             print("\nError:Enter error!\n")
     return -1
 
 def view_patient_medical_record(ID):
-    patient_medical_record_info = fileManager.readFile("patient_medical_records/" + ID + ".txt")
+    my_patient_medical_records = fileManager.readFile("patient_medical_records/" + ID + ".txt")
     return
 
 def view_appointment(ID):
     appointments = fileManager.readFile("Appointment.txt")
     doctors = fileManager.readFile("doctor.txt")
-    print("\n" + "=" * 88)
+    print("\n" + "=" * 37 + "Appointment" + "=" * 37)
     for appointment in appointments:
         # find the appointment which is for this patient
         if int(appointment[1]) == ID:
@@ -82,30 +82,38 @@ def view_appointment(ID):
             
             # print appointment
             print("ID:", appointment[0].ljust(3), "Doctor:", doctorName.ljust(20), "Date:", appointment[3].ljust(10), "Start time:", appointment[4].ljust(6), "End time:", appointment[5].ljust(6))
-    print("=" * 88 + "\n")
+    print("=" * 89 + "\n")
     return
 
 def update_info(ID):
     patientInfo = fileManager.readFile("patient.txt")
     for i in range(0, len(patientInfo)):
+        # find patient Information
         if patientInfo[i][0] == ID:
-            user = int(input("\nWhat would you like to Update?\n1.Name\n2.Password\n3.Contact Number\n4.Abort\nYour Choice:"))
+            # select the information witch user want to update
+            user = int(input("\nWhat would you like to Update?\n1.Name\n2.Password\n3.Age\n4.Contact Number\n5.Adress\n4.Abort\nYour Choice:"))
             match user:
                 case 1:
                     update = input("\nEnter Patient Name:")
                 case 2:
                     update = input("\nEnter Patient Password:")
                 case 3:
+                    update = input("\nEnter Patient Age:")
+                case 4:
                     update = input("\nEnter Patient Contact Number:")
-                    if not update.isdigit():
-                        print("\nError: Contact Number cannot be blank.")
+                case 5:
+                    update = input("\nEnter Patient Adress:")
                 case _:
                     Patient(ID)
-
+            # check update is correct or not, then update user informationa
             if update == "":
-                print("\nError: Input cannot be blank.")
+                print("\nError:Input cannot be blank.")
+            elif user == 3 and not update.isdigit():
+                print("\nError:Age cannot be not digit.")
+            elif user == 4 and not update.isdigit():
+                print("\nError:Patient cannot be not digit.")
             else:
-                confirm = input(f"\nSystem will be overwrite {patientInfo[i][user]} with {update}.\n1.Confirm\n2.Abort\nAre you sure?:")
+                confirm = input(f"\nSystem will be overwrite {patientInfo[i][user]} with {update}.\n1.Confirm\n2.Cancel\nAre you sure?:")
                 match confirm:
                     case "1":
                         patientInfo[i][user] = update
