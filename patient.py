@@ -67,6 +67,22 @@ def view_patient_medical_record(ID):
     return
 
 def view_appointment(ID):
+    appointments = fileManager.readFile("Appointment.txt")
+    doctors = fileManager.readFile("doctor.txt")
+    print("\n" + "=" * 88)
+    for appointment in appointments:
+        # find the appointment which is for this patient
+        if int(appointment[1]) == ID:
+            # get doctor name
+            doctorName = "empty"
+            for doctor in doctors:
+                if doctor[0] == appointment[2]:
+                    doctorName = doctor[1]
+                    break
+            
+            # print appointment
+            print("ID:", appointment[0].ljust(3), "Doctor:", doctorName.ljust(20), "Date:", appointment[3].ljust(10), "Start time:", appointment[4].ljust(6), "End time:", appointment[5].ljust(6))
+    print("=" * 88 + "\n")
     return
 
 def update_info(ID):

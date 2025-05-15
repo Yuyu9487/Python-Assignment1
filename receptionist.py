@@ -115,115 +115,141 @@ def UpdatePatDes():
     Receptionist()
 
 def MakeAppoint():
-    userid = input("============================\nEnter Patient ID: ")
-    Appointment_fuction(userid)
+    print("============================")
+    patientId = input("Enter Patient ID: ")
+    doctorId = input("Enter Doctor ID: ")
+    Appointment_fuction(patientId, doctorId)
 
-def Appointment_fuction(userid):
-    patientInfo = fileManager.readFile("patient.txt")
-    if userid == "" or userid.isdigit() == False:
+def Appointment_fuction(patientId, doctorId, patientName = None, doctorName = None):
+    if patientId == "" or patientId.isdigit() == False:
         print("Invalid input, ID must be digits and cannot be null.")
         Receptionist()
-    else:
-        for info in patientInfo:
-            if info[0] == userid:
-                print(f"Patient [{info[1]}] Appointment List.")
-                user = input("============================\nWhat would you like to do?\n1.Schedule Appointment\n2.View Patient's Appointment\n3.Cancel Appointment\n4.Abort\nYour Choice:")
-                if user == "" or user.isdigit() == False:
-                    print("Invalid input, ID must be digits and cannot be null.")
-                    Appointment_fuction(userid)
-                else:
-                    user = int(user)
-                match user:
-                    case 1:
-                        date = input("============================\nEnter the date in DD/MM/YY(ex:06/09/25),seperated by '/'.:")
-                        datepattern = ("^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/(\d{2})$")
-                        try:
-                            starttime = input("Enter the starting time of the appointment in [24 hour format](ex:0945)")
-                            endtime = input("Enter the end time of the appointment in [24 hour format](ex:2300)")
-                            timepattern = ("^([01][0-9]|[2][0-3])([05][0-9])")
-                            if re.match(datepattern,date):
-                                if re.match(timepattern,starttime) and re.match(timepattern,endtime):
-                                    starttime = int(starttime)
-                                    endtime = int(endtime)
-                                    if endtime <= starttime:
-                                        print("Error: End time cannot be same or early than starting time.")
-                                        Appointment_fuction(userid)
-
-                                    Appointmentblock = fileManager.readFile("AppointmentBlockList.txt")
-                                    Appointment = fileManager.readFile("Appointment.txt")
-
-
-                                    for appointinfo in Appointment: #check patient appointment
-                                        if date in appointinfo[1] and userid in appointinfo[0]:
-                                            print(f"Error: Appointment at [{date}] already exist, one patient may only have one appointment a day.")
-                                            Appointment_fuction(userid)
-                                            break
-
-                                    for dateinfo in Appointmentblock:
-                                        if date in dateinfo[0]:
-                                            print(f"Error: Doctor has this date [{date}] blocked for appointment.")
-                                            Appointment_fuction(userid)
-                                            break
-
-                                    #already check all, and no repeating date are found
-                                    print(f"Appointment made for [{info[1]}] at [{date}] successfully!")
-                                    
-                                    Appointment.append([info[0],date,starttime,endtime])
-                                    fileManager.writeFile("Appointment.txt", 4, Appointment)
-                                    Appointment_fuction(userid)
-                                else:
-                                    raise ValueError("Start/End time does not match XX:XX format or input is invalid")
-                                    
-
-
-                            else:
-                                raise ValueError("Date does not match DD/MM/YY format or input is invalid")
-                        except ValueError as Error:
-                            print(Error)
-                            Appointment_fuction(userid)
-
-                    case 2:
-                        Appointment = fileManager.readFile("Appointment.txt")
-                        display = []
-                        for appointinfo in Appointment:
-                            if userid == appointinfo[0]:
-                                display.append(appointinfo[1])
-                        if display == []:
-                            print(f"Patient {info[1]} doesn't have any upcoming appointments.")
-                        else:
-                            print(f"Patient {info[1]} has appointment(s) at {display}.")
-                        Appointment_fuction(userid)
-                    
-                    case 3:
-                        date = input("============================\nEnter the date in DD/MM/YY(ex:06/09/25),seperated by '/'.:")
-                        pattern = ("^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/(\d{2})$")
-                        try: 
-                            if re.match(pattern,date):
-                                Appointmentblock = fileManager.readFile("AppointmentBlockList.txt")
-                                Appointment = fileManager.readFile("Appointment.txt")
-
-                                for appointinfo in Appointment:
-                                    if date in appointinfo[1] and userid in appointinfo[0]:
-                                        print(f"Cancel Appointment at [{date}] for [{info[1]}] successfully.")
-                                        Appointment.remove([appointinfo[0],appointinfo[1]])
-                                        fileManager.writeFile("Appointment.txt", 2, Appointment)
-                                        Appointment_fuction(userid)
-                                        break
-                                print(f"Patient [{info[1]}] doesn't have the following appointment at [{date}]")
-                                Appointment_fuction(userid)
-
-                            else:
-                                raise ValueError("Date does not match DD/MM/YY format or input is invalid")
-                        except ValueError as Error:
-                            print(Error)
-                            Appointment_fuction(userid)
-                    case 4:
-                        print("Bringing you back to receptionist menu...")
-                        Receptionist()
-            break
-        print(f"Error: Patient ID {userid} can't be found.")
+        return
+    if doctorId == "" or doctorId.isdigit() == False:
+        print("Invalid input, ID must be digits and cannot be null.")
         Receptionist()
-    return
+        return
+
+    patientName, doctorName = patientName, doctorName
+    if patientName == None or doctorName == None:
+        patientInfo, doctorInfo = fileManager.readFile("patient.txt"), fileManager.readFile("doctor.txt")
+        for info in patientInfo:
+            if info[0] == patientId:
+                patientName = info[1]
+        for info in doctorInfo:
+            if info[0] == doctorId:
+                doctorName = info[1]
+        if patientName == None:
+            print(f"Error: Patient ID {patientId} can't be found.")
+            return
+        elif doctorName == None:
+            print(f"Error: Doctor ID {doctorId} can't be found.")
+            return
+    
+    user = input("============================\nWhat would you like to do?\n1.Schedule Appointment\n2.View Appointment\n3.Cancel Appointment\n4.Abort\nYour Choice:")
+    if user == "" or user.isdigit() == False:
+        print("Invalid input, ID must be digits and cannot be null.")
+        Appointment_fuction(patientId, doctorId, patientName, doctorName)
+    else:
+        user = int(user)
+    match user:
+        case 1:
+            scheduleAppointment(patientId, doctorId, patientName, doctorName)
+        case 2:
+            viewAppointment(patientId, doctorId, patientName, doctorName)
+        case 3:
+            cancelAppointment(patientId, doctorId, patientName, doctorName)
+        case 4:
+            print("Bringing you back to receptionist menu...")
+            Receptionist()
+    Receptionist()
+
+def scheduleAppointment(patientId, doctorId, patientName, doctorName):
+    date = input("============================\nEnter the date in DD/MM/YY(ex:06/09/25),seperated by '/'.:")
+    datepattern = ("^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/(\d{2})$")
+    startTime = input("Enter the starting time of the appointment in [24 hour format](ex:0945)")
+    endTime = input("Enter the end time of the appointment in [24 hour format](ex:2300)")
+    timepattern = ("^([01][0-9]|[2][0-3])([05][0-9])")
+    if not re.match(datepattern,date):
+        raise ValueError("Date does not match DD/MM/YY format or input is invalid")
+        Appointment_fuction(patientId, doctorId, patientName, doctorName)
+        return
+    if re.match(timepattern,startTime) and re.match(timepattern,endTime):
+        startTime, endTime = int(startTime), int(endTime)
+        if endTime <= startTime:
+            print("Error: End time cannot be same or early than starting time.")
+            Appointment_fuction(patientId, doctorId, patientName, doctorName)
+            return
+
+        Appointmentblock = fileManager.readFile("AppointmentBlockList.txt")
+        Appointment = fileManager.readFile("Appointment.txt")
+
+        for appointInfo in Appointment:
+            if date == appointInfo[2] and startTime < int(appointInfo[4]) and endTime > int(appointInfo[3]):
+                if patientId == appointInfo[0]:
+                    print(f"Error: Patient {patientName} have Appointment at [{date}]!")
+                    Appointment_fuction(patientId, doctorId, patientName, doctorName)
+                    return
+                elif doctorId == appointInfo[1]:
+                    print(f"Error: Doctor {doctorName} have Appointment at [{date}]!")
+                    Appointment_fuction(patientId, doctorId, patientName, doctorName)
+                    return
+
+        for appointBlockInfo in Appointmentblock:
+            if doctorId == appointBlockInfo[0] and date == appointBlockInfo[1]:
+                print(f"Error: Doctor {doctorName} has this date [{date}] blocked for appointment.")
+                Appointment_fuction(patientId, doctorId, patientName, doctorName)
+                return
+
+        #already check all, and no repeating date are found
+        print(f"Appointment made for [{patientName}] at [{date}] successfully!")
+        
+        Appointment.append([patientId, doctorId, date, startTime, endTime])
+        fileManager.writeFile("Appointment.txt", 5, Appointment)
+    else:
+        raise ValueError("Start/End time does not match XX:XX format or input is invalid")
+    Appointment_fuction(patientId, doctorId, patientName, doctorName)
+
+def viewAppointment(patientId, doctorId, patientName, doctorName):
+    Appointments = fileManager.readFile("Appointment.txt")
+    print("\n" + "=" * 24 + " Appointment " + "=" * 24)
+    print("Patient name: ", patientName)
+    print("Doctor name: ", doctorName)
+    totalAppointment = 0
+    for Appointment in Appointments:
+        if Appointment[0] == patientId and Appointment[1] == doctorId:
+            totalAppointment += 1
+            print("Number:", str(totalAppointment).ljust(3), "Date:", Appointment[2].ljust(9), "Start Time:", Appointment[3].ljust(5), "End Time:", Appointment[4])
+    print(f"Total appointment: {totalAppointment}")
+    print("=" * 61 + "\n")
+    Appointment_fuction(patientId, doctorId, patientName, doctorName)
+
+def cancelAppointment(patientId, doctorId, patientName, doctorName):
+    Appointments = fileManager.readFile("Appointment.txt")
+    myAppointments = []
+
+    print("\n" + "=" * 21 + " Cancel Appointment " + "=" * 21)
+    print("Patient name: ", patientName)
+    print("Doctor name: ", doctorName)
+    for Appointment in Appointments:
+        if patientId in Appointment[0] and doctorId in Appointment[1]:
+            myAppointments.append(Appointment)
+            print("Number:", str(len(myAppointments)).ljust(3), "Date:", Appointment[2].ljust(9), "Start Time:", Appointment[3].ljust(6), "End Time:", Appointment[4].ljust(6))
+    print(f"Total appointment: {len(myAppointments)}")
+    print("=" * 62)
+
+    cancelNumber = input("Please enter the appointment number that you want to cancel: ")
+    if cancelNumber == "" or not cancelNumber.isdigit():
+        print("Invalid input, ID must be digits and cannot be null.")
+        Appointment_fuction(patientId, doctorId, patientName, doctorName)
+        return
+    cancelNumber = int(cancelNumber)
+
+    print(f"Cancel Appointment at [{myAppointments[cancelNumber - 1][2]}] for Patient [{myAppointments[cancelNumber - 1][0]}] and Doctor [{myAppointments[cancelNumber - 1][1]}] successfully.")
+    Appointments.remove(myAppointments[cancelNumber - 1])
+    fileManager.writeFile("Appointment.txt", 5, Appointments)
+    Appointment_fuction(patientId, doctorId, patientName, doctorName)
+
 def RepPay():   
     userid = input("============================\nEnter Patient ID: ")
     if userid == "" or userid.isdigit() == False:
