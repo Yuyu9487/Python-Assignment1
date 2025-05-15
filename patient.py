@@ -97,11 +97,13 @@ def update_info(ID):
                     update = input("\nEnter Patient Password:")
                 case 3:
                     update = input("\nEnter Patient Contact Number:")
+                    if not update.isdigit():
+                        print("\nError: Contact Number cannot be blank.")
                 case _:
                     Patient(ID)
 
             if update == "":
-                print("\nError:Input cannot be blank.")
+                print("\nError: Input cannot be blank.")
             else:
                 confirm = input(f"\nSystem will be overwrite {patientInfo[i][user]} with {update}.\n1.Confirm\n2.Abort\nAre you sure?:")
                 match confirm:
