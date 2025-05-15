@@ -1,6 +1,6 @@
 import main
 import fileManager
-
+import re
 #Receptionist function
 def Receptionist():
     print("\n============================\nReceptionist Menu\n============================")
@@ -288,6 +288,33 @@ def paymentfuction(userid):
                     fileManager.writeFile("payment.txt", 4, payment)
                     print("Added Successfully!")
                     paymentfuction(userid)
+                case 2:
+                    pay = input(f"Which payemnt id does {info[1]} wishes to pay?")
+                    if pay == "" or pay.isdigit() == False:
+                        print("Invalid input, ID must be digits and cannot be null.")
+                        paymentfuction(userid)
+                    payment = fileManager.readFile("payment.txt")
+                    for payid in payment:
+                        if userid == payid[0] and pay == payid[1]:
+                            confirm = input(f"Payment ID {payid[1]} for {info[1]} is {payid[2]}.\n1.Yes\2.No\nMark payment as paid?:")
+                            match confirm:
+                                case "1":
+                                    match payid[3]:
+                                        case "No":
+                                            payment.remove([payid[0], payid[1], payid[2], payid[3]])
+                                            payid[3] = "Yes"
+                                            payment.append([payid[0], payid[1], payid[2], payid[3]])
+                                            fileManager.writeFile("payment.txt", 4, payment)
+                                            print("Payment made successfully!")
+                                        case "Yes":
+                                            print("Error:Payment is already paid before!")
+                                    
+                                case "2":
+                                    print("Bringing you back...")
+                                
+                                case _:
+                                    print("Error: Invalid input, only 1 or 2 is valid.")
+                            paymentfuction(userid)
                     
 
 
