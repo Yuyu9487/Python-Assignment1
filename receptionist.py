@@ -263,7 +263,7 @@ def paymentfuction(userid):
     for info in patientInfo:
         if info[0] == userid:
             print(f"Patient [{info[1]}] Payment List.")
-            user = input("============================\nWhat would you like to do?\n1.Add outstanding amount.\n2.Process payemnt.\n3.Abort\nYour Choice:")
+            user = input("============================\nWhat would you like to do?\n1.Add outstanding amount.\n2.Process payment.\n3.View patient's payment history.\n4.Back to receptionist menu.\nYour Choice:")
             if user == "" or user.isdigit() == False:
                 print("Invalid input, ID must be digits and cannot be null.")
                 paymentfuction(userid)
@@ -284,10 +284,9 @@ def paymentfuction(userid):
                         if userid == payid[0]:
                             id += 1
                             
-                    payment.append([info[0],str(id),"RM"+price,"No"])
-                    print(payment)
+                    payment.append([info[0],str(id),price,"No"])
                     fileManager.writeFile("payment.txt", 4, payment)
-                    print("Added Successfully!")
+                    print("Outstanding Payment Added Successfully!")
                     paymentfuction(userid)
                 case 2:
                     pay = input(f"Which payemnt id does {info[1]} wishes to pay?")
@@ -316,7 +315,29 @@ def paymentfuction(userid):
                                 case _:
                                     print("Error: Invalid input, only 1 or 2 is valid.")
                             paymentfuction(userid)
-                    
+
+                case 3:
+                    payment = fileManager.readFile("payment.txt")
+                    print("\n" + "=" * 24 + " payment " + "=" * 24)
+                    print("Patient name: ", info[1])
+                    print("Payment: ", payment[2])
+                    totalamount = 0
+                    for payid in payment:
+                        if info[0] == payment[0] and payment[3] == "No":
+                            
+
+                            
+                            print("Number:", str(totalamount).ljust(3), "Date:", Appointment[2].ljust(9), "Start Time:", Appointment[3].ljust(5), "End Time:", Appointment[4])
+                    print(f"Total appointment: {totalAppointment}")
+                    print("=" * 61 + "\n")
+
+
+
+
+                case 4:
+                    print("Bringing you back to main menu.")
+                    Receptionist()
+
 
 
 
