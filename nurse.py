@@ -1,6 +1,6 @@
 import main
 import fileManager
-#Nurse Functions
+
 def Nurse():
     print("\n============================\nNurse Menu\n============================")
     print("1.View Doctor's Appointment\n2.Record Patient's Observation\n3.View Prescriptions\n4.Administer Medicine To Patients\n5.Back To Menu")
@@ -40,16 +40,20 @@ def view_appointment(): #view doctor's appointment
         print("ID not found.")
         return
     return
+
 def record_patient_observation():
     # 拿到病人的观察记录文件
-    patient_id = int(input("Enter Patient ID:"))
+    patient_id = (input("Enter Patient ID: ")) 
     if patient_id == "":
-        print("Error")
-        return
-    patient_observation = fileManager.readFile("patient_observation/" + ID + ".txt")
-    # patient_observation = [[id, blood_pressure, pulse_rate, ...], [id, ...], [id, ...], ...]
+        print("Error:Patient ID cannot be blank.")
+    elif not patient_id.isdigit():
+        print("Error:Patient ID must be number.")
+    else:
+        patient_id = int(patient_id)
 
-    # 写入资讯
+    patient_observation = fileManager.readFile("patient_observations/" + str(patient_id) + ".txt")
+
+    # 写入资讯/收据数据
     blood_pressure = (input("Enter Blood Pressure (🩸C): "))
     pulse_rate = (input("Enter Pulse Rate (💓): "))
     temperature = str(float(input("Enter Temperature (🌡️): ")))
@@ -59,22 +63,13 @@ def record_patient_observation():
     observation_id = len(patient_observation)
     patient_observation.append([int(observation_id), blood_pressure, pulse_rate, temperature, symptoms, date])
 
-    fileManager.writeFile("patient_observation/" + ID + ".txt", 6, patient_observation)
-
-    # observation = f"Patient ID: {patient_id}, Blood Pressure: {blood_pressure}C, Pulse Rate: {pulse_rate}bpm, Temperature: {temperature}C, Symptoms: {symptoms}\n"
-    # with open("patient_observation.txt", "a") as file:
-    #     file.write(observation)
-
-
-
-    
-
+    fileManager.writeFile("patient_observations/" + str(patient_id) + ".txt", 6, patient_observation)
     return
+
 def view_doc__medical_records():
     print('hello')
 def administer_medicine():
     return
-
 
 #def nurseupdateinfo():
     nurseinfo = fileManager.readfile("nureseinfo.txt")

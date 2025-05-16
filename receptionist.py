@@ -15,10 +15,10 @@ def Receptionist():
                     UpdatePatDes()
                     break
                 case "3":
-                    MakeAppoint()
+                    MakeAppointment()
                     break
                 case "4":
-                    RepPay()
+                    RepPayment()
                     break
                 case "5":
                     main.main()
@@ -115,7 +115,7 @@ def UpdatePatDes():
             
     Receptionist()
 
-def MakeAppoint():
+def MakeAppointment():
     print("============================")
     patientId = input("Enter Patient ID: ")
     doctorId = input("Enter Doctor ID: ")
@@ -251,7 +251,7 @@ def cancelAppointment(patientId, doctorId, patientName, doctorName):
     fileManager.writeFile("Appointment.txt", 5, Appointments)
     Appointment_fuction(patientId, doctorId, patientName, doctorName)
 
-def RepPay():   
+def RepPayment():   
     userid = input("============================\nEnter Patient ID: ")
     if userid == "" or userid.isdigit() == False:
         print("Invalid input, ID must be digits and cannot be null.")
