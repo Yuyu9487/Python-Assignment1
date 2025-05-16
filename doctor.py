@@ -11,6 +11,7 @@ def Doctor():
         match user:
                 case "1":
                     Medlogs()
+                    print()
                     break
                 case "2":
                     UpdatePatRec()
@@ -74,7 +75,6 @@ def viewappoint():
                     print(line.strip())
                     found = True
                     break  # 如果只要找一条匹配的记录，就可以中断
-    except FileNotFoundError:
     print("❌ nurseinfo.txt file not found.")
     return
 
