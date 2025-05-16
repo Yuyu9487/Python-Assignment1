@@ -71,14 +71,9 @@ def view_doc__medical_records():
 def administer_medicine():
     return
 
-<<<<<<< HEAD
 
 def nurseupdateinfo():
     nurseinfo = fileManager.readFile("nureseinfo.txt")
-=======
-#def nurseupdateinfo():
-    nurseinfo = fileManager.readfile("nureseinfo.txt")
->>>>>>> 342bc15e8e9e383e8095f178b9fde2482876942f
     #data = [(id, name, contact, age), (id, name, contact, age), (id, name, contact, age), ..
     user = input("Enter Your ID:")
     for i in range(len(nurseinfo)):
