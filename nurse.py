@@ -63,7 +63,7 @@ def administer_medicine():
 
 
 def nurseupdateinfo():
-    nurseinfo = fileManager.readfile("nureseinfo.txt")
+    nurseinfo = fileManager.readFile("nureseinfo.txt")
     #data = [(id, name, contact, age), (id, name, contact, age), (id, name, contact, age), ..
     user = input("Enter Your ID:")
     for i in range(len(nurseinfo)):
