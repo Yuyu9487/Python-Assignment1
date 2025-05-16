@@ -6,7 +6,10 @@ def readFile(path : str):
         with open(path, "r") as file:
             content = file.read()
         data = content.split("/#")
-        number = int(data[0])
+        try:
+            number = int(data[0])
+        except:
+            number = 0
         datalist = []
         group = []
         groupNumber = 0
@@ -18,7 +21,7 @@ def readFile(path : str):
             groupNumber += number
         return datalist
     except:
-        print("\n", path, "have not found!")
+        print(path, "have not found!")
         print("Creating", path, "\n")
         f = open(path, "x")
         f.close()
@@ -35,3 +38,13 @@ def writeFile(path : str, number : int, data):
             file.write(write)
     except:
         print("\n", path, "can not found!\n")
+
+def viewAllPatient():
+    patients = readFile("patient.txt")
+    if len(patients) > 0:
+        print("\n============================")
+        for patient in patients:
+            print(f"ID:", patient[0].ljust(3), "Name:", patient[1].ljust(20), "Contact Number:", patient[3].ljust(12), "Age:", patient[4].ljust(3), "Address:", patient[5])
+        print(f"Total patient: {len(patients)}\n============================\n")
+    else:
+        print("\nError: Patient file is empty!\n")
