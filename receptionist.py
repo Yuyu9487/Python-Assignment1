@@ -330,6 +330,7 @@ def paymentfuction(userid):
                             if userid == payid[0] and pay == payid[1]:
                                 if payid[3] == "Yes":
                                     print("Error:Payment is already paid before!")
+                                    paymentfuction(userid)
 
                                 confirm = input(f"Payment ID {payid[1]} for {info[1]} is {payid[2]}.\n1.Yes\n2.No\nMark payment as paid?:")
                                 match confirm:
@@ -341,6 +342,7 @@ def paymentfuction(userid):
                                                 payment.append([payid[0], payid[1], payid[2], payid[3]])
                                                 fileManager.writeFile("payment.txt", 4, payment)
                                                 print("Payment made successfully!")
+                                                paymentfuction(userid)
 
                                     case "2":
                                         print("Bringing you back...")
@@ -361,15 +363,27 @@ def paymentfuction(userid):
 
             paymentfuction(userid)
 
+def get_paymentid(paymentid):
+    return int(paymentid[1])
+
 def viewpayment(info):
     global totalamount
     payment = fileManager.readFile("payment.txt")
     print("\n" + "=" * 24 + " Payment " + "=" * 24)
     print(f"Patient name: {info[1]}\n{"-"*57}")
     print("PaymentID\tAmount(RM)\tSettled Payment")
+
+
+    sorted_payments = []
     for payid in payment:
         if info[0] == payid[0]:
-            print(f"{payid[1]}\t\t{payid[2]}\t\t{payid[3]}")
+            sorted_payments.append(payid)
+    sorted_payments.sort(key=get_paymentid) #turns paymentid which is (payid[1]) into integer, then it will sort it according to integer
+
+    # Print payments
+    for payid in sorted_payments:
+        print(f"{payid[1]}\t\t{payid[2]}\t\t{payid[3]}")
+
     totalamount = 0
     for payid in payment:
         if info[0] == payid[0] and payid[3] == "No":
@@ -380,6 +394,8 @@ def viewpayment(info):
     else:
         print(f"Total outstanding appointment: RM{totalamount}")
     print("=" * 57 + "\n")
+
+
 
 
 
