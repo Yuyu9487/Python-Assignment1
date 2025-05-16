@@ -137,3 +137,4 @@ def view_payment(ID):
     for payment in my_payments:
         print("ID:", payment[0], "Price:", payment[1], "Payed:", payment[2])
     print("=" * 89 + "\n")
+    print("test")
