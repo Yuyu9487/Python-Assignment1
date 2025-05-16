@@ -62,7 +62,7 @@ def administer_medicine():
     return
 
 
-#def nurseupdateinfo():
+def nurseupdateinfo():
     nurseinfo = fileManager.readfile("nureseinfo.txt")
     #data = [(id, name, contact, age), (id, name, contact, age), (id, name, contact, age), ..
     user = input("Enter Your ID:")
@@ -76,3 +76,4 @@ def administer_medicine():
     else:
         print("ID not found.")
         return
+    print("test")
