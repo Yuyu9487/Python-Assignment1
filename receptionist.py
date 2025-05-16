@@ -4,7 +4,7 @@ import re
 #Receptionist function
 def Receptionist():
     print("\n============================\nReceptionist Menu\n============================")
-    print("1.Register New Patient\n2.Update Patient Details\n3.Schedule Appointment For Patient\n4.Process Payemnt\n5.Back To Menu")
+    print("1.Register New Patient\n2.Update Patient Details\n3.Schedule Appointment For Patient\n4.Process Payment\n5.Back To Menu")
     while True:
         user = input("Your Choice:")
         match user:
@@ -15,10 +15,10 @@ def Receptionist():
                     UpdatePatDes()
                     break
                 case "3":
-                    MakeAppointment()
+                    MakeAppoint()
                     break
                 case "4":
-                    RepPayment()
+                    RepPay()
                     break
                 case "5":
                     main.main()
@@ -33,37 +33,47 @@ def Register():
         if regname == "":
             print("Error:Name cannot be blank.")
             break
-        else:#next step
-                
-            regpass = input("Enter Patient Password:")
-            if regpass == "":
-                print("Error:Password cannot be blank.")
+
+        regpass = input("Enter Patient Password:")
+        if regpass == "":
+            print("Error:Password cannot be blank.")
+            break
+
+        regage = input("Enter Patient Age:")
+        if regage == "":
+            print("Error:Age cannot be blank.")
+            break
+        elif regage.isdigit() == False:
+            print("Error:Age must be number.")
+            break
+
+        regcontact = input("Enter Patient Contact Number:")
+        if regcontact == "":
+            print("Error:Contact Number Cannot be blank.")
+            break
+        elif regcontact.isdigit() == False:
+            print("Error:Contact Number must be number.")
+            break
+
+        regaddress = input("Enter Patient Address:")
+        if regaddress == "":
+            print("Error:Address Cannot be blank.")
+            break
+
+        i = 0
+        allID = []
+        for info in patfile:
+            allID.append(int(info[0]))
+        while i < 10000:
+            if i in allID:
+                i += 1
+            else:
+                Entered = True
+                patfile.append([str(i), regname, regpass, regage, regcontact, regaddress])
+                fileManager.writeFile("patient.txt", 6, patfile)
+                print(f"Patient ID: {i} added successfully!")
                 break
-            else:#nextstep
-                regcontact = input("Enter Patient Contact Number:")
-                if regcontact == "":
-                    print("Error:Cannot be blank.")
-                    break
-                elif regcontact.isdigit() == False:
-                    print("Error:Contact Number must be number.")
-                    break
-                else:
-                    i = 0
-                    allID = []
-                    for info in patfile:
-                        allID.append(int(info[0]))
-                    while i < 10000:
-                        if i in allID:
-                            i += 1
-                        else:
-                            Entered = True
-                            patfile.append([str(i), regname, regpass, regcontact])
-                            fileManager.writeFile("patient.txt", 4, patfile)
-                            print("Patient added successfully!")
-                            Receptionist()
-                            break
-                    break
-    Receptionist()
+        Receptionist()
 
 def UpdatePatDes():
     patientInfo = fileManager.readFile("patient.txt")
@@ -74,35 +84,51 @@ def UpdatePatDes():
         for info in patientInfo:
             if info[0] == userid:
                 print(f"User {info[1]} found.")
-                user = int(input("What would you like to Update?\n1.Name\n2.Password\n3.Contact Number\n4.Abort\nYour Choice:"))
+                user = input("============================\nWhat would you like to Update?\n1.Name\n2.Password\n3.Age\n4.Contact Number\n5.Address\n6.Abort\nYour Choice:")
+                if user == "" or user.isdigit() == False:
+                    print("Invalid input, input must be digits and cannot be null.")
+                    Receptionist()
+                user = int(user)
                 if user == 1:
                     update = input("Enter Patient Name:")
                 elif user ==2:
                     update = input("Enter Patient Password:")
                 elif user ==3:
-                    update = input("Enter Patient Contact Number:")
+                    update = input("Enter Patient Age:")
                 elif user ==4:
-                    Receptionist()
+                    update = input("Enter Patient Contact Number:")
+                elif user ==5:
+                    update = input("Enter Patient Address:")
+                elif user ==6:
+                    print("Bringing you back to receptionist menu...")
                 else:
                     print("Invalid Response, Please try again.")
-                    Receptionist()
 
                 if update == "":
                     print("Error:Input cannot be blank.")
+                elif info[user] == update:
+                    print("Error, new value must be different from old value.")
+                elif user ==3 and update.isdigit() == False:
+                    print("Age must be digits.")
+                elif user ==4 and update.isdigit() == False:
+                    print("Contact Number must be digits.")
+
                 else:
                     confirm = input(f"System will be overwrite {info[user]} with {update}.\n1.Confirm\n2.Abort\nAre you sure?:")
                     match confirm:
                         case "1":
-                            patientInfo.remove([info[0], info[1], info[2], info[3]])
+                            patientInfo.remove([info[0], info[1], info[2], info[3], info[4], info[5]])
                             info[user] = update
-                            patientInfo.append([info[0], info[1], info[2], info[3]])
-                            fileManager.writeFile("patient.txt", 4, patientInfo)
+                            patientInfo.append([info[0], info[1], info[2], info[3], info[4], info[5]])
+                            fileManager.writeFile("patient.txt", 6, patientInfo)
                             print("Updated")
                             Receptionist()
                         case "2":
+                            print("Bringing you back...")
                             Receptionist()
+
                         case _:
-                            print("Error, Invalid Input.")
+                            print("Error: Invalid Input.")
                             Receptionist()
 
         if userid != info[0]: 
@@ -115,7 +141,7 @@ def UpdatePatDes():
             
     Receptionist()
 
-def MakeAppointment():
+def MakeAppoint():
     print("============================")
     patientId = input("Enter Patient ID: ")
     doctorId = input("Enter Doctor ID: ")
@@ -251,19 +277,19 @@ def cancelAppointment(patientId, doctorId, patientName, doctorName):
     fileManager.writeFile("Appointment.txt", 5, Appointments)
     Appointment_fuction(patientId, doctorId, patientName, doctorName)
 
-def RepPayment():   
+def RepPay():   
     userid = input("============================\nEnter Patient ID: ")
     if userid == "" or userid.isdigit() == False:
         print("Invalid input, ID must be digits and cannot be null.")
         Receptionist()
     paymentfuction(userid)
-    
+
 def paymentfuction(userid):
     patientInfo = fileManager.readFile("patient.txt")
     for info in patientInfo:
         if info[0] == userid:
-            print(f"Patient [{info[1]}] Payment List.")
-            user = input("============================\nWhat would you like to do?\n1.Add outstanding amount.\n2.Process payment.\n3.View patient's payment history.\n4.Back to receptionist menu.\nYour Choice:")
+            print(f"============================\nPatient [{info[1]}] Payment List.")
+            user = input(f"----------------------------\nWhat would you like to do?\n1.Add outstanding amount.\n2.View patient's payment history.\n3.Process payment.\n4.Back to receptionist menu.\nYour Choice:")
             if user == "" or user.isdigit() == False:
                 print("Invalid input, ID must be digits and cannot be null.")
                 paymentfuction(userid)
@@ -288,55 +314,72 @@ def paymentfuction(userid):
                     fileManager.writeFile("payment.txt", 4, payment)
                     print("Outstanding Payment Added Successfully!")
                     paymentfuction(userid)
+
                 case 2:
-                    pay = input(f"Which payemnt id does {info[1]} wishes to pay?")
-                    if pay == "" or pay.isdigit() == False:
-                        print("Invalid input, ID must be digits and cannot be null.")
-                        paymentfuction(userid)
-                    payment = fileManager.readFile("payment.txt")
-                    for payid in payment:
-                        if userid == payid[0] and pay == payid[1]:
-                            confirm = input(f"Payment ID {payid[1]} for {info[1]} is {payid[2]}.\n1.Yes\2.No\nMark payment as paid?:")
-                            match confirm:
-                                case "1":
-                                    match payid[3]:
-                                        case "No":
-                                            payment.remove([payid[0], payid[1], payid[2], payid[3]])
-                                            payid[3] = "Yes"
-                                            payment.append([payid[0], payid[1], payid[2], payid[3]])
-                                            fileManager.writeFile("payment.txt", 4, payment)
-                                            print("Payment made successfully!")
-                                        case "Yes":
-                                            print("Error:Payment is already paid before!")
-                                    
-                                case "2":
-                                    print("Bringing you back...")
-                                
-                                case _:
-                                    print("Error: Invalid input, only 1 or 2 is valid.")
-                            paymentfuction(userid)
+                    viewpayment(info)
 
                 case 3:
-                    payment = fileManager.readFile("payment.txt")
-                    print("\n" + "=" * 24 + " payment " + "=" * 24)
-                    print("Patient name: ", info[1])
-                    print("Payment: ", payment[2])
-                    totalamount = 0
-                    for payid in payment:
-                        if info[0] == payment[0] and payment[3] == "No":
-                            
+                    viewpayment(info)
+                    if totalamount != 0:
+                        pay = input(f"Which payment id does {info[1]} wishes to pay?")
+                        if pay == "" or pay.isdigit() == False:
+                            print("Invalid input, ID must be digits and cannot be null.")
+                            paymentfuction(userid)
+                        payment = fileManager.readFile("payment.txt")
+                        for payid in payment:
+                            if userid == payid[0] and pay == payid[1]:
+                                if payid[3] == "Yes":
+                                    print("Error:Payment is already paid before!")
 
-                            
-                            print("Number:", str(totalamount).ljust(3), "Date:", Appointment[2].ljust(9), "Start Time:", Appointment[3].ljust(5), "End Time:", Appointment[4])
-                    print(f"Total appointment: {totalAppointment}")
-                    print("=" * 61 + "\n")
+                                confirm = input(f"Payment ID {payid[1]} for {info[1]} is {payid[2]}.\n1.Yes\n2.No\nMark payment as paid?:")
+                                match confirm:
+                                    case "1":
+                                        match payid[3]:
+                                            case "No":
+                                                payment.remove([payid[0], payid[1], payid[2], payid[3]])
+                                                payid[3] = "Yes"
+                                                payment.append([payid[0], payid[1], payid[2], payid[3]])
+                                                fileManager.writeFile("payment.txt", 4, payment)
+                                                print("Payment made successfully!")
 
+                                    case "2":
+                                        print("Bringing you back...")
+                                    
+                                    case _:
+                                        print("Error: Invalid input, only 1 or 2 is valid.")
+                        if userid != payid[0]:
+                            print("Error: PaymentID does not exist.")
 
+                    else:
+                        print("There's no payment to be made.")
 
+                    paymentfuction(userid)
 
                 case 4:
                     print("Bringing you back to main menu.")
                     Receptionist()
+
+            paymentfuction(userid)
+
+def viewpayment(info):
+    global totalamount
+    payment = fileManager.readFile("payment.txt")
+    print("\n" + "=" * 24 + " Payment " + "=" * 24)
+    print(f"Patient name: {info[1]}\n{"-"*57}")
+    print("PaymentID\tAmount(RM)\tSettled Payment")
+    for payid in payment:
+        if info[0] == payid[0]:
+            print(f"{payid[1]}\t\t{payid[2]}\t\t{payid[3]}")
+    totalamount = 0
+    for payid in payment:
+        if info[0] == payid[0] and payid[3] == "No":
+            totalamount += int(payid[2])
+    if totalamount == 0:
+        print(f"{info[1]} has no outstanding payment.")
+    
+    else:
+        print(f"Total outstanding appointment: RM{totalamount}")
+    print("=" * 57 + "\n")
 
 
 
@@ -356,13 +399,3 @@ def paymentfuction(userid):
   #                          print(f"Patient {info[1]} doesn't have any upcoming payments.")
    #                     else:
     #                        print(f"Patient {info[1]} has appointment(s) at {display}.")
-
-                                
-
-
-    return
-def MakeAppoint():
-    print("Hello")
-    return
-def RepPay():
-    return
