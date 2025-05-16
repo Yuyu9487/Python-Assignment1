@@ -63,6 +63,7 @@ def Register():
                             Receptionist()
                             break
                     break
+    Receptionist()
 
 def UpdatePatDes():
     patientInfo = fileManager.readFile("patient.txt")
@@ -171,7 +172,7 @@ def scheduleAppointment(patientId, doctorId, patientName, doctorName):
     endTime = input("Enter the end time of the appointment in [24 hour format](ex:2300)")
     timepattern = ("^([01][0-9]|[2][0-3])([05][0-9])")
     if not re.match(datepattern,date):
-        raise ValueError("Date does not match DD/MM/YY format or input is invalid")
+        print("Date does not match DD/MM/YY format or input is invalid")
         Appointment_fuction(patientId, doctorId, patientName, doctorName)
         return
     if re.match(timepattern,startTime) and re.match(timepattern,endTime):
