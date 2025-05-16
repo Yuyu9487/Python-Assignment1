@@ -43,6 +43,7 @@ def UpdatePatientRecords():
     Price=input("Enter the price:")
     Date=input("Enter the date:")
     MedicalRecord.append ([PatientID,PatientProblem,PatientDetail,MedicalPlan,Price,Date]) 
+    fileManager.writeFile ("patient_medical_records/", 6 , MedicalRecord)
     
 def ViewAppointment():
     id= input("Enter patient ID:").strip()
