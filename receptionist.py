@@ -4,15 +4,15 @@ import re
 #Receptionist function
 def Receptionist():
     print("\n============================\nReceptionist Menu\n============================")
-    print("1.Register New Patient\n2.Update Patient Details\n3.Schedule Appointment For Patient\n4.Process Payment\n5.Back To Menu")
+    print("1.Register Individuals\n2.Update Details\n3.Schedule Appointment For Patient\n4.Process Payment\n5.Back To Menu")
     while True:
         user = input("Your Choice:")
         match user:
                 case "1":
-                    Register()
+                    RegisterMenu()
                     break
                 case "2":
-                    UpdatePatDes()
+                    UpdateDetailMenu()
                     break
                 case "3":
                     MakeAppoint()
@@ -24,8 +24,25 @@ def Receptionist():
                     main.main()
                     break
                 case _:
-                    print("Error. Please Enter A Valid Input.")
-def Register():
+                    print("Error: Please Enter A Valid Input.")
+
+def RegisterMenu():
+    user = input("============================\nRegister Menu\n1.Patient\n2.Doctor\n3.Nurse\n4.Abort\nYour Choice:")
+    match user:
+        case "1":
+            Registerpatient()
+        case "2":
+            Registerdoctor()
+        case "3":
+            Registernurse()
+        case "4":
+            print("Bringing you back...")
+            Receptionist()
+        case _:
+            print("Error: Invalid Input")
+            Receptionist()
+
+def Registerpatient():
     Entered = False
     while Entered == False:
         patfile = fileManager.readFile("patient.txt")
@@ -73,7 +90,95 @@ def Register():
                 fileManager.writeFile("patient.txt", 6, patfile)
                 print(f"Patient ID: {i} added successfully!")
                 break
-        Receptionist()
+    RegisterMenu()
+
+def Registerdoctor():
+    Entered = False
+    while Entered == False:
+        docfile = fileManager.readFile("doctor.txt")
+        regname = input("Enter Doctor Name:")
+        if regname == "":
+            print("Error:Name cannot be blank.")
+            break
+
+        regpass = input("Enter Doctor Password:")
+        if regpass == "":
+            print("Error:Password cannot be blank.")
+            break
+
+        regcontact = input("Enter Doctor Contact Number:")
+        if regcontact == "":
+            print("Error:Contact Number Cannot be blank.")
+            break
+        elif regcontact.isdigit() == False:
+            print("Error:Contact Number must be number.")
+
+        i = 0
+        allID = []
+        for info in docfile:
+            allID.append(int(info[0]))
+        while i < 10000:
+            if i in allID:
+                i += 1
+            else:
+                Entered = True
+                docfile.append([str(i), regname, regpass, regcontact])
+                fileManager.writeFile("doctor.txt", 4, docfile)
+                print(f"Doctor ID: {i} added successfully!")
+                break
+    RegisterMenu()
+
+def Registernurse():
+    Entered = False
+    while Entered == False:
+        nursefile = fileManager.readFile("nurseinfo.txt")
+        regname = input("Enter Nurse Name:")
+        if regname == "":
+            print("Error:Name cannot be blank.")
+            break
+
+        regpass = input("Enter Nurse Password:")
+        if regpass == "":
+            print("Error:Password cannot be blank.")
+            break
+
+        regcontact = input("Enter Nurse Contact Number:")
+        if regcontact == "":
+            print("Error:Contact Number Cannot be blank.")
+            break
+        elif regcontact.isdigit() == False:
+            print("Error:Contact Number must be number.")
+
+        i = 0
+        allID = []
+        for info in nursefile:
+            allID.append(int(info[0]))
+        while i < 10000:
+            if i in allID:
+                i += 1
+            else:
+                Entered = True
+                nursefile.append([str(i), regname, regpass, regcontact])
+                fileManager.writeFile("nurseinfo.txt", 4, nursefile)
+                print(f"Nurse ID: {i} added successfully!")
+                break
+    RegisterMenu()
+
+def UpdateDetailMenu():
+    user = input("============================\nUpdate Menu\n1.Patient\n2.Doctor\n3.Nurse\n4.Abort\nYour Choice:")
+    match user:
+        case "1":
+            UpdatePatDes()
+        case "2":
+            UpdateDocDes()
+        case "3":
+            UpdateNurseDes()
+        case "4":
+            print("Bringing you back...")
+            Receptionist()
+        case _:
+            print("Error: Invalid Input.")
+            Receptionist()
 
 def UpdatePatDes():
     patientInfo = fileManager.readFile("patient.txt")
@@ -87,7 +192,7 @@ def UpdatePatDes():
                 user = input("============================\nWhat would you like to Update?\n1.Name\n2.Password\n3.Age\n4.Contact Number\n5.Address\n6.Abort\nYour Choice:")
                 if user == "" or user.isdigit() == False:
                     print("Invalid input, input must be digits and cannot be null.")
-                    Receptionist()
+                    UpdateDetailMenu()
                 user = int(user)
                 if user == 1:
                     update = input("Enter Patient Name:")
@@ -122,24 +227,129 @@ def UpdatePatDes():
                             patientInfo.append([info[0], info[1], info[2], info[3], info[4], info[5]])
                             fileManager.writeFile("patient.txt", 6, patientInfo)
                             print("Updated")
-                            Receptionist()
+                            UpdateDetailMenu()
                         case "2":
                             print("Bringing you back...")
-                            Receptionist()
+                            UpdateDetailMenu()
 
                         case _:
                             print("Error: Invalid Input.")
-                            Receptionist()
+                            UpdateDetailMenu()
 
         if userid != info[0]: 
-            print(f"Patient ID {userid} does not exist.")
-            Receptionist()
-                                
+            print(f"Error: Patient ID {userid} does not exist.")
+           
+    UpdateDetailMenu()
+
+def UpdateDocDes():
+    doctorInfo = fileManager.readFile("doctor.txt")
+    userid = input("============================\nEnter your ID: ")
+    if userid == "" or userid.isdigit() == False:
+        print("Invalid input, ID must be digits and cannot be null.")
+    else:
+        for info in doctorInfo:
+            if info[0] == userid:
+                print(f"User {info[1]} found.")
+                user = input("============================\nWhat would you like to Update?\n1.Name\n2.Password\n3.Contact Number\n4.Abort\nYour Choice:")
+                if user == "" or user.isdigit() == False:
+                    print("Invalid input, input must be digits and cannot be null.")
+                    Receptionist()
+                user = int(user)
+                if user == 1:
+                    update = input("Enter Patient Name:")
+                elif user ==2:
+                    update = input("Enter Patient Password:")
+                elif user ==3:
+                    update = input("Enter Patient Contact Number:")
+                elif user ==4:
+                    print("Bringing you back to receptionist menu...")
+                else:
+                    print("Invalid Response, Please try again.")
+
+                if update == "":
+                    print("Error:Input cannot be blank.")
+                elif info[user] == update:
+                    print("Error, new value must be different from old value.")
+                elif user ==3 and update.isdigit() == False:
+                    print("Contact Number must be digits.")
+
+                else:
+                    confirm = input(f"System will be overwrite {info[user]} with {update}.\n1.Confirm\n2.Abort\nAre you sure?:")
+                    match confirm:
+                        case "1":
+                            doctorInfo.remove([info[0], info[1], info[2], info[3]])
+                            info[user] = update
+                            doctorInfo.append([info[0], info[1], info[2], info[3]])
+                            fileManager.writeFile("doctor.txt", 4, doctorInfo)
+                            print("Updated")
+                            UpdateDetailMenu()
+                        case "2":
+                            print("Bringing you back...")
+                            UpdateDetailMenu()
+
+                        case _:
+                            print("Error: Invalid Input.")
+                            UpdateDetailMenu()
 
         if userid != info[0]: 
-            print(f"Error, Patient ID {userid} does not exist.")
-            
-    Receptionist()
+            print(f"Error: Doctor ID {userid} does not exist.")
+                                           
+    UpdateDetailMenu()
+
+def UpdateNurseDes():
+    nurseInfo = fileManager.readFile("nurseinfo.txt")
+    userid = input("============================\nEnter your ID: ")
+    if userid == "" or userid.isdigit() == False:
+        print("Invalid input, ID must be digits and cannot be null.")
+    else:
+        for info in nurseInfo:
+            if info[0] == userid:
+                print(f"User {info[1]} found.")
+                user = input("============================\nWhat would you like to Update?\n1.Name\n2.Password\n3.Contact Number\n4.Abort\nYour Choice:")
+                if user == "" or user.isdigit() == False:
+                    print("Invalid input, input must be digits and cannot be null.")
+                    Receptionist()
+                user = int(user)
+                if user == 1:
+                    update = input("Enter Patient Name:")
+                elif user ==2:
+                    update = input("Enter Patient Password:")
+                elif user ==3:
+                    update = input("Enter Patient Contact Number:")
+                elif user ==4:
+                    print("Bringing you back to receptionist menu...")
+                else:
+                    print("Invalid Response, Please try again.")
+
+                if update == "":
+                    print("Error:Input cannot be blank.")
+                elif info[user] == update:
+                    print("Error, new value must be different from old value.")
+                elif user ==3 and update.isdigit() == False:
+                    print("Contact Number must be digits.")
+
+                else:
+                    confirm = input(f"System will be overwrite {info[user]} with {update}.\n1.Confirm\n2.Abort\nAre you sure?:")
+                    match confirm:
+                        case "1":
+                            nurseInfo.remove([info[0], info[1], info[2], info[3]])
+                            info[user] = update
+                            nurseInfo.append([info[0], info[1], info[2], info[3]])
+                            fileManager.writeFile("nurseinfo.txt", 4, nurseInfo)
+                            print("Updated")
+                            UpdateDetailMenu()
+                        case "2":
+                            print("Bringing you back...")
+                            UpdateDetailMenu()
+
+                        case _:
+                            print("Error: Invalid Input.")
+                            UpdateDetailMenu()
+
+        if userid != info[0]: 
+            print(f"Error: Nurse ID {userid} does not exist.")
+                                         
+    UpdateDetailMenu()
 
 def MakeAppoint():
     print("============================")
@@ -380,7 +590,6 @@ def viewpayment(info):
             sorted_payments.append(payid)
     sorted_payments.sort(key=get_paymentid) #turns paymentid which is (payid[1]) into integer, then it will sort it according to integer
 
-    # Print payments
     for payid in sorted_payments:
         print(f"{payid[1]}\t\t{payid[2]}\t\t{payid[3]}")
 
@@ -410,8 +619,3 @@ def viewpayment(info):
 
  #                               priceid = input("Enter the ID of payment you wish to change:")
   #                              display.append[paymentinfo]
-#
- #                       if display == []:
-  #                          print(f"Patient {info[1]} doesn't have any upcoming payments.")
-   #                     else:
-    #                        print(f"Patient {info[1]} has appointment(s) at {display}.")
