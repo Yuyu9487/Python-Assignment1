@@ -32,7 +32,7 @@ def writeFile(path : str, number : int, data):
     write += str(number)
     for group in data:
         for var in group:
-            write += "/#" + var
+            write += "/#" + str(var)
     try:
         with open(path, "w") as file:
             file.write(write)

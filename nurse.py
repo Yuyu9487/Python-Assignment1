@@ -71,8 +71,9 @@ def view_doc__medical_records():
 def administer_medicine():
     return
 
-#def nurseupdateinfo():
-    nurseinfo = fileManager.readfile("nureseinfo.txt")
+
+def nurseupdateinfo():
+    nurseinfo = fileManager.readFile("nureseinfo.txt")
     #data = [(id, name, contact, age), (id, name, contact, age), (id, name, contact, age), ..
     user = input("Enter Your ID:")
     for i in range(len(nurseinfo)):
@@ -85,3 +86,4 @@ def administer_medicine():
     else:
         print("ID not found.")
         return
+    print("test")
