@@ -92,7 +92,7 @@ def view_doc__medical_records(): #doctor prescribed, to check what list of medic
         print("ID not found.")
         return
     #Now view what this doctor has prescribed
-    prescriptions = fileManager.readfile("prescriptions.txt")
+    prescriptions = fileManager.readFile("prescriptions.txt")
     found = False
     print(f"\n{'=' *10} Prescriptions Given  {'='*10}")
     for p in prescriptions:
