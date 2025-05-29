@@ -77,7 +77,7 @@ def view_patient_medical_record(ID):
 def view_appointment(ID):
     appointments = fileManager.readFile("Appointment.txt")
     doctors = fileManager.readFile("doctor.txt")
-    print("\n" + "=" * 36 + " Appointment " + "=" * 36)
+    print("\n" + "=" * 38 + " Appointment " + "=" * 38)
     for appointment in appointments:
         # find the appointment which is for this patient
         if int(appointment[1]) == ID:
@@ -96,7 +96,8 @@ def update_info(ID):
     patientInfo = fileManager.readFile("patient.txt")
     for i in range(0, len(patientInfo)):
         # find patient Information
-        if patientInfo[i][0] == ID:
+        print(i)
+        if patientInfo[i][0] == str(ID):
             # select the information witch user want to update
             user = int(input("\nWhat would you like to Update?\n1.Name\n2.Password\n3.Age\n4.Contact Number\n5.Adress\n4.Abort\nYour Choice:"))
             match user:
