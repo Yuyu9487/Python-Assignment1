@@ -118,14 +118,14 @@ def update_info(ID):
                 print("\nError:Input cannot be blank.")
             elif user == 3 and not update.isdigit():
                 print("\nError:Age cannot be not digit.")
-            elif user == 4 and not update.isdigit():
+            elif user == 4 and not   update.isdigit():
                 print("\nError:Patient cannot be not digit.")
             else:
                 confirm = input(f"\nSystem will be overwrite {patientInfo[i][user]} with {update}.\n1.Confirm\n2.Cancel\nAre you sure?:")
                 match confirm:
                     case "1":
                         patientInfo[i][user] = update
-                        fileManager.writeFile("patient.txt", 4, patientInfo)
+                        fileManager.writeFile("patient.txt", 6, patientInfo)
                         print("\nUpdated Sussessful!")
                         Patient(ID)
                     case _:
