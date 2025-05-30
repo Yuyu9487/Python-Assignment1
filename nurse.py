@@ -78,42 +78,27 @@ def record_patient_observation(): #me as nurse have to record to the specific Pa
 
 
 
-def view_doc__medical_records(): #doctor prescribed, to check what list of medicines to give patient from doctor requirement
-    print(f"\n{'=' *12} Doctor's Medical Record {'=' *12}")
-    doctorinfo = fileManager.readFile("doctor.txt")
-    #data = [(id,name,contact,age),(id,name,contact,age)]
-    user = input("Enter Your ID:")
-    for i in range(len(doctorinfo)):
-        if doctorinfo[i][0] == user:
-            print("Your ID:", doctorinfo[i][0])
-            print("Your Name:", doctorinfo[i][1])
-            break        
-    else:
-        print("ID not found.")
-        return
-    #Now view what this doctor has prescribed
-    prescriptions = fileManager.readFile("prescriptions.txt")
-    found = False
-    print(f"\n{'=' *10} Prescriptions Given  {'='*10}")
-    for p in prescriptions:
-        if p[0] == user: #p[0] is DoctorID
-            print(f"Patient ID: {p[1]}")
-            print(f"Medicine: {p[2]}")
-            print(f"Dosage: {p[3]}")
-            print(f"Time: {p[4]}/n")
-            found = True
-    if not found:
-        print("No prescriptions found for this doctor")
+def view_doc__medical_records(): #get record from (patient_medical_records) that will insert by 'kwx'
+    user = input("Patient ID: ") 
+    medical_records = fileManager.readFile("patient_medical_records/"+ user +".txt") 
+    for x in medical_records:
+        print("ID: ",x[0],"\nProblem:",x[1],"\nTime:",x[3],"\nPrice:",x[4],"\nDate:",x[5])
+              
+
     
-
-
-
-
 
 
 def administer_medicine(): #to comfirm/record that medicine has given to the patient, 
     print(f"\n{"=" *12} Administer Medicine {"=" *12}")
-    patient_id = input("Enter Patient ID: ")
+    ID = input("Enter Patient ID: ")
+    Medicine = input("Medicine Type: ")
+    Quantity = input("how many miligram/gram of medicine: ")
+
+    print("ID:",ID,"\nMedicine Type:",Medicine,"\nQUantity:", Quantity + "\n"     *2 + "SUCCESSFULLY RECORDED")
+
+
+
+
 
 
     return
