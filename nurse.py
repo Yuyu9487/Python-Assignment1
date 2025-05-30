@@ -84,7 +84,6 @@ def view_doc__medical_records(): #get record from (patient_medical_records) that
     for x in medical_records:
         print("ID: ",x[0],"\nProblem:",x[1],"\nTime:",x[3],"\nPrice:",x[4],"\nDate:",x[5])
               
- 
 
     
 
