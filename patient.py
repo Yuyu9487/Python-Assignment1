@@ -97,9 +97,9 @@ def update_info(ID):
     for i in range(0, len(patientInfo)):
         # find patient Information
         print(i)
-        if patientInfo[i][0] == str(ID):
+        if int(patientInfo[i][0]) == ID:
             # select the information witch user want to update
-            user = int(input("\nWhat would you like to Update?\n1.Name\n2.Password\n3.Age\n4.Contact Number\n5.Adress\n4.Abort\nYour Choice:"))
+            user = int(input("\nWhat would you like to Update?\n1.Name\n2.Password\n3.Age\n4.Contact Number\n5.Adress\n6.Abort\nYour Choice:"))
             match user:
                 case 1:
                     update = input("\nEnter Patient Name:")
