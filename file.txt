@@ -3,7 +3,7 @@ receptionist: [id, name, password, contant number]
 doctor : [id, name, password, contant number]
 nurse : [id, name, password, contant number]
 patient: [id, name, password, age, contant number, address]
-appointment: [id, patient id, doctor id, date, start_time, end_time]
+appointment: [patient id, doctor id, date, start_time, end_time]
 block list: [id, doctor id, date, start_time, end_time]
 
 Folder

@@ -10,26 +10,16 @@ def Nurse():
         match user:
                 case "1":
                     view_appointment()
-                    break
                 case "2":
                     record_patient_observation()
-                    break
                 case "3":
                     view_doc__medical_records()
-                    break
                 case "4":
                     administer_medicine()
-                    break
                 case "5":
                     main.main()
-                    break
                 case _:
                     print("Error. Please Enter A Valid Input.")
-
-
-
-
-
 
 def view_appointment(): #view doctor's appointment
     appointments = fileManager.readFile("Appointment.txt")
@@ -47,9 +37,6 @@ def view_appointment(): #view doctor's appointment
         print("ID not found.")
         return
     return
-
-
-
 
 def record_patient_observation(): #me as nurse have to record to the specific Patient ID for future reference
     # 拿到病人的观察记录文件
@@ -75,19 +62,12 @@ def record_patient_observation(): #me as nurse have to record to the specific Pa
 
     fileManager.writeFile("patient_observations/" + str(patient_id) + ".txt", 6, patient_observation) # will auto create path that not found 
     print("Observation recorded successfully.", "ID", observation_id)
-    return
-
-
 
 def view_doc__medical_records(): #get record from (patient_medical_records) that will insert by 'kwx'
     user = input("Patient ID: ") 
     medical_records = fileManager.readFile("patient_medical_records/"+ user +".txt") 
     for x in medical_records:
         print("ID: ",x[0],"\nProblem:",x[1],"\nTime:",x[3],"\nPrice:",x[4],"\nDate:",x[5])
-              
-
-    
-
 
 def administer_medicine(): #to comfirm/record that medicine has given to the patient, 
     print(f"\n{"=" *12} Administer Medicine {"=" *12}")
@@ -96,10 +76,3 @@ def administer_medicine(): #to comfirm/record that medicine has given to the pat
     Quantity = input("how many miligram/gram of medicine: ")
 
     print("ID:",ID,"\nMedicine Type:",Medicine,"\nQUantity:", Quantity + "\n"     *2 + "SUCCESSFULLY RECORDED")
-
-
-
-
-
-
-    return
