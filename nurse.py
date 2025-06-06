@@ -32,15 +32,16 @@ def Nurse():
 
 
 def view_appointment(): #view doctor's appointment
-    nurseinfo = fileManager.readFile("nurseinfo.txt")
+    appointments = fileManager.readFile("Appointment.txt")
     #data = [(id, name, contact, age), (id, name, contact, age), (id, name, contact, age), ..
     user = input("Enter Your ID: ")
-    for i in range(len(nurseinfo)):
-        if nurseinfo[i][0] == user:
-            print("Your ID:", nurseinfo[i][0])
-            print("Your Name:", nurseinfo[i][1])
-            print("Your Contact:", nurseinfo[i][2])
-            print("Your Age:", nurseinfo[i][3])
+    print("="*88)
+    for i in range(len(appointments)): 
+        if appointments[i][0] == user:
+            print("Your ID:".rjust(15), appointments[i][0])
+            print("Your Name:".rjust(15), appointments[i][1])
+            print("Your Contact:".rjust(15), appointments[i][2])
+            print("Your Age:".rjust(15), appointments[i][3])
             break
     else:
         print("ID not found.")

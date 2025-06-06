@@ -97,9 +97,9 @@ def update_info(ID):
     for i in range(0, len(patientInfo)):
         # find patient Information
         print(i)
-        if patientInfo[i][0] == str(ID):
+        if int(patientInfo[i][0]) == ID:
             # select the information witch user want to update
-            user = int(input("\nWhat would you like to Update?\n1.Name\n2.Password\n3.Age\n4.Contact Number\n5.Adress\n4.Abort\nYour Choice:"))
+            user = int(input("\nWhat would you like to Update?\n1.Name\n2.Password\n3.Age\n4.Contact Number\n5.Adress\n6.Abort\nYour Choice:"))
             match user:
                 case 1:
                     update = input("\nEnter Patient Name:")
@@ -118,14 +118,14 @@ def update_info(ID):
                 print("\nError:Input cannot be blank.")
             elif user == 3 and not update.isdigit():
                 print("\nError:Age cannot be not digit.")
-            elif user == 4 and not update.isdigit():
+            elif user == 4 and not   update.isdigit():
                 print("\nError:Patient cannot be not digit.")
             else:
                 confirm = input(f"\nSystem will be overwrite {patientInfo[i][user]} with {update}.\n1.Confirm\n2.Cancel\nAre you sure?:")
                 match confirm:
                     case "1":
                         patientInfo[i][user] = update
-                        fileManager.writeFile("patient.txt", 4, patientInfo)
+                        fileManager.writeFile("patient.txt", 6, patientInfo)
                         print("\nUpdated Sussessful!")
                         Patient(ID)
                     case _:
