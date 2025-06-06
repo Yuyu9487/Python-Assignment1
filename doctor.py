@@ -11,19 +11,19 @@ def Doctor():
         match user:
                 case "1":
                     view_patient_medical_records()
-                    break
+                
                 case "2":
                     UpdatePatientRecords()
-                    break
+                  
                 case "3":
                     ViewAppointment()
-                    break
+                  
                 case "4":
                     Appointment_Block_List()
-                    break
+
                 case "5":
                     main.main()
-                    break
+
                 case _:
                     print("Error. Please Enter A Valid Input.")
 
@@ -43,7 +43,7 @@ def UpdatePatientRecords():
     Price=input("Enter the price:")
     Date=input("Enter the date:")
     MedicalRecord.append ([PatientID,PatientProblem,PatientDetail,MedicalPlan,Price,Date]) 
-    fileManager.writeFile ("patient_medical_records/", 6 , MedicalRecord)
+    fileManager.writeFile ("patient_medical_records/" + str(PatientID) + ".txt", 6 , MedicalRecord)
     
 def ViewAppointment():
     PatientID = input("Enter Patient ID: ").strip()
@@ -68,7 +68,7 @@ def Appointment_Block_List():
     if service == "1":
         for blocklist in BlockLists:
             if blocklist[1] == DoctorID:
-                print(f"ID: {blocklist[0]} | Not Available Date: {blocklist[2]} | Start Time: {blocklist[3]} | End Time: {blocklist[4]}")
+                print(f"ID: {blocklist[0]} | PatientID: {blocklist[1]} | Not Available Date: {blocklist[2]} | Start Time: {blocklist[3]} | End Time: {blocklist[4]}")
                 found = True
         if not found:
             print("No block list found for the given Doctor ID.")
