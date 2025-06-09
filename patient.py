@@ -1,14 +1,14 @@
 import main
 import fileManager
 #Patient function
-def Patient(input_ID = -1):
-    ID = input_ID
+def Patient():
+    ID = -1
     while True:
         if ID == -1:
             print("\n================== Patient Login Menu ==================")
             print("1.Login")
             print("2.Back To Menu")
-            user = input("Your Choice:")
+            user = input("Your Choice:").strip()
             match user:
                 case "1":
                     ID = Login()
@@ -24,7 +24,7 @@ def Patient(input_ID = -1):
             print("3.Update Infomation")
             print("4.Access Billing Details And Payment History")
             print("5.Back To Menu")
-            user = input("Your Choice:")
+            user = input("Your Choice:").strip()
             match user:
                 case "1":
                     view_patient_medical_record(ID)
@@ -42,8 +42,8 @@ def Patient(input_ID = -1):
 
 def Login():
     patientInfo = fileManager.readFile("patient.txt")
-    userName = input("\nEnter your Name: ")
-    userPassword = input("Enter your Password: ")
+    userName = input("\nEnter your Name: ").strip()
+    userPassword = input("Enter your Password: ").strip()
     if userName == "":
         print("\nError:Name connot be blank!\n")
         return -1
@@ -96,23 +96,23 @@ def update_info(ID):
     patientInfo = fileManager.readFile("patient.txt")
     for i in range(0, len(patientInfo)):
         # find patient Information
-        print(i)
         if int(patientInfo[i][0]) == ID:
             # select the information witch user want to update
-            user = int(input("\nWhat would you like to Update?\n1.Name\n2.Password\n3.Age\n4.Contact Number\n5.Adress\n6.Abort\nYour Choice:"))
+            user = input("\nWhat would you like to Update?\n1.Name\n2.Password\n3.Age\n4.Contact Number\n5.Adress\n6.Abort\nYour Choice:").strip()
             match user:
-                case 1:
-                    update = input("\nEnter Patient Name:")
-                case 2:
-                    update = input("\nEnter Patient Password:")
-                case 3:
-                    update = input("\nEnter Patient Age:")
-                case 4:
-                    update = input("\nEnter Patient Contact Number:")
-                case 5:
-                    update = input("\nEnter Patient Adress:")
+                case "1":
+                    update = input("\nEnter Patient Name:").strip()
+                case "2":
+                    update = input("\nEnter Patient Password:").strip()
+                case "3":
+                    update = input("\nEnter Patient Age:").strip()
+                case "4":
+                    update = input("\nEnter Patient Contact Number:").strip()
+                case "5":
+                    update = input("\nEnter Patient Adress:").strip()
                 case _:
-                    Patient(ID)
+                    print("Invalid service choice.")
+                    break
             # check update is correct or not, then update user informationa
             if update == "":
                 print("\nError:Input cannot be blank.")
@@ -121,15 +121,14 @@ def update_info(ID):
             elif user == 4 and not   update.isdigit():
                 print("\nError:Patient cannot be not digit.")
             else:
-                confirm = input(f"\nSystem will be overwrite {patientInfo[i][user]} with {update}.\n1.Confirm\n2.Cancel\nAre you sure?:")
+                confirm = input(f"\nSystem will be overwrite {patientInfo[i][user]} with {update}.\n1.Confirm\n2.Cancel\nAre you sure?:").strip()
                 match confirm:
                     case "1":
                         patientInfo[i][user] = update
                         fileManager.writeFile("patient.txt", 6, patientInfo)
                         print("\nUpdated Sussessful!")
-                        Patient(ID)
                     case _:
-                        Patient(ID)
+                        print("Invalid service choice.")
             break
 
 def view_payment(ID):

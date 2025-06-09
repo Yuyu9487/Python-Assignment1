@@ -42,9 +42,8 @@ def writeFile(path : str, number : int, data):
 def viewAllPatient():
     patients = readFile("patient.txt")
     if len(patients) > 0:
-        print("\n============================")
         for patient in patients:
-            print(f"ID:", patient[0].ljust(3), "Name:", patient[1].ljust(20), "Contact Number:", patient[3].ljust(12), "Age:", patient[4].ljust(3), "Address:", patient[5])
-        print(f"Total patient: {len(patients)}\n============================\n")
+            print(f"ID:", patient[0].ljust(3), "Name:", patient[1].ljust(20), "Contact Number:", patient[4].ljust(12), "Age:", patient[3].ljust(3), "Address:", patient[5])
+        print(f"Total patient: {len(patients)}")
     else:
         print("\nError: Patient file is empty!\n")
