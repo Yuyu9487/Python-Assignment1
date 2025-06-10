@@ -35,7 +35,7 @@ def Nurse():
                     print("Error. Please Enter A Valid Input.")
 
 def Login():
-    nurseInfo = fileManager.readFile("nurseinfo.txt")
+    nurseInfo = fileManager.readFile("nurse.txt")
     userName = input("=======================\nEnter your Name: ").strip()
     userPassword = input("Enter your Password: ").strip()
     if userName == "":

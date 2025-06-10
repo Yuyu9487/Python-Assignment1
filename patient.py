@@ -84,7 +84,7 @@ def view_appointment(ID):
             # get doctor name
             doctorName = "empty"
             for doctor in doctors:
-                if doctor[0] == appointment[2]:
+                if doctor[0] == appointment[1]:
                     doctorName = doctor[1]
                     break
             
@@ -98,17 +98,17 @@ def update_info(ID):
         # find patient Information
         if int(patientInfo[i][0]) == ID:
             # select the information witch user want to update
-            user = input("\nWhat would you like to Update?\n1.Name\n2.Password\n3.Age\n4.Contact Number\n5.Adress\n6.Abort\nYour Choice:").strip()
+            user = int(input("\nWhat would you like to Update?\n1.Name\n2.Password\n3.Age\n4.Contact Number\n5.Adress\n6.Abort\nYour Choice:").strip())
             match user:
-                case "1":
+                case 1:
                     update = input("\nEnter Patient Name:").strip()
-                case "2":
+                case 2:
                     update = input("\nEnter Patient Password:").strip()
-                case "3":
+                case 3:
                     update = input("\nEnter Patient Age:").strip()
-                case "4":
+                case 4:
                     update = input("\nEnter Patient Contact Number:").strip()
-                case "5":
+                case 5:
                     update = input("\nEnter Patient Adress:").strip()
                 case _:
                     print("Invalid service choice.")
@@ -118,7 +118,7 @@ def update_info(ID):
                 print("\nError:Input cannot be blank.")
             elif user == 3 and not update.isdigit():
                 print("\nError:Age cannot be not digit.")
-            elif user == 4 and not   update.isdigit():
+            elif user == 4 and not update.isdigit():
                 print("\nError:Patient cannot be not digit.")
             else:
                 confirm = input(f"\nSystem will be overwrite {patientInfo[i][user]} with {update}.\n1.Confirm\n2.Cancel\nAre you sure?:").strip()

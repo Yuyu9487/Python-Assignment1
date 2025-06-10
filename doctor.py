@@ -62,10 +62,12 @@ def Login():
 def view_patient_medical_records(id):
     fileManager.viewAllPatient()
     PatientID = input("Enter Patient ID: ").strip()
-    found = False
     MedicalRecords = fileManager.readFile("patient_medical_records/" + str(PatientID) + ".txt")
-    for MedicalRecord in MedicalRecords:
-        print(f"Patient ID:{MedicalRecord[0]},Patient Problem:{MedicalRecord[1]},Patient Details:{MedicalRecord[2]},Medical Plan:{MedicalRecord[3]},Price:{MedicalRecord[4]},Date:{MedicalRecord[5]}")
+    if len(MedicalRecords) > 0:
+        for MedicalRecord in MedicalRecords:
+            print(f"Patient ID:{MedicalRecord[0]},Patient Problem:{MedicalRecord[1]},Patient Details:{MedicalRecord[2]},Medical Plan:{MedicalRecord[3]},Price:{MedicalRecord[4]},Date:{MedicalRecord[5]}")
+    else:
+        print("patient don't have medical records.")
 
 def UpdatePatientRecords(id):
     fileManager.viewAllPatient()
@@ -106,9 +108,9 @@ def Appointment_Block_List(id):
             print("No block list found for the given Doctor ID.")
 
     elif service == "2":
-        NotAvailableDate = input("Enter the not available date (e.g. 2024-12-01): ").strip()
-        NotAvailableStartTime = input("Enter the not available start time (e.g. 09:00): ").strip()
-        NotAvailableEndTime = input("Enter the not available end time (e.g. 12:00): ").strip()
+        NotAvailableDate = input("Enter the not available date (e.g. 01/12/25): ").strip()
+        NotAvailableStartTime = input("Enter the not available start time (e.g. 0900): ").strip()
+        NotAvailableEndTime = input("Enter the not available end time (e.g. 1200): ").strip()
         new_id = len(BlockLists)
         BlockLists.append([new_id, id, NotAvailableDate, NotAvailableStartTime, NotAvailableEndTime])
         fileManager.writeFile("AppointmentBlockList.txt", 5, BlockLists)
