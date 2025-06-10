@@ -32,7 +32,7 @@ def Nurse():
 
 
 def view_appointment(): #view doctor's appointment
-    appointments = fileManager.readFile("Appointment.txt")
+    appointments = fileManager.readFile("doctor.txt")
     #data = [(id, name, contact, age), (id, name, contact, age), (id, name, contact, age), ..
     user = input("Enter Your ID: ")
     print("="*88)
@@ -47,9 +47,6 @@ def view_appointment(): #view doctor's appointment
         print("ID not found.")
         return
     return
-
-
-
 
 def record_patient_observation(): #me as nurse have to record to the specific Patient ID for future reference
     # 拿到病人的观察记录文件
