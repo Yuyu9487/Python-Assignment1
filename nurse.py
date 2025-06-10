@@ -53,15 +53,15 @@ def Login():
     return -1
 
 def view_appointment(id): #view doctor's appointment
+    print("="*30, "doctor", "="*30)
+    fileManager.viewAllDoctor()
+    print("="*68)
     appointments = fileManager.readFile("Appointment.txt")
     user = input("Enter patient ID: ").strip()
     print("="*88)
     for i in range(len(appointments)): 
         if appointments[i][0] == user:
-            print("Your ID:".rjust(15), appointments[i][0])
-            print("Your Name:".rjust(15), appointments[i][1])
-            print("Your Contact:".rjust(15), appointments[i][2])
-            print("Your Age:".rjust(15), appointments[i][3])
+            print("Your ID:".rjust(15), appointments[i][0], "Your Name:".rjust(15), appointments[i][1], "Your Contact:".rjust(15), appointments[i][2], "Your Age:".rjust(15), appointments[i][3])
             break
     else:
         print("ID not found.")
@@ -85,7 +85,7 @@ def record_patient_observation(id): #me as nurse have to record to the specific 
     pulse_rate = input("Enter Pulse Rate (💓): ").strip()
     temperature = input("Enter Temperature (🌡️): ").strip()
     symptoms = input("Enter Symptoms (🩺): ").strip()
-    date = input("Enter Date (**/**/****): ").strip()
+    date = input("Enter Date (01/12/25): ").strip()
 
     observation_id = len(patient_observation)
     patient_observation.append([int(observation_id), blood_pressure, pulse_rate, temperature, symptoms, date])
