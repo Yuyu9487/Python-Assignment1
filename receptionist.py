@@ -131,7 +131,7 @@ def Registerdoctor():
 def Registernurse():
     Entered = False
     while Entered == False:
-        nursefile = fileManager.readFile("nurseinfo.txt")
+        nursefile = fileManager.readFile("nurse.txt")
         regname = input("Enter Nurse Name:")
         if regname == "":
             print("Error:Name cannot be blank.")
@@ -159,7 +159,7 @@ def Registernurse():
             else:
                 Entered = True
                 nursefile.append([str(i), regname, regpass, regcontact])
-                fileManager.writeFile("nurseinfo.txt", 4, nursefile)
+                fileManager.writeFile("nurse.txt", 4, nursefile)
                 print(f"Nurse ID: {i} added successfully!")
                 break
     RegisterMenu()
@@ -168,10 +168,16 @@ def UpdateDetailMenu():
     user = input("============================\nUpdate Menu\n1.Patient\n2.Doctor\n3.Nurse\n4.Abort\nYour Choice:")
     match user:
         case "1":
+            print("="*30, "patient", "="*30)
+            fileManager.viewAllPatient()
             UpdatePatDes()
         case "2":
+            print("="*30, "doctor", "="*30)
+            fileManager.viewAllDoctor()
             UpdateDocDes()
         case "3":
+            print("="*30, "nurse", "="*30)
+            fileManager.viewAllNurse()
             UpdateNurseDes()
         case "4":
             print("Bringing you back...")
@@ -297,7 +303,7 @@ def UpdateDocDes():
     UpdateDetailMenu()
 
 def UpdateNurseDes():
-    nurseInfo = fileManager.readFile("nurseinfo.txt")
+    nurseInfo = fileManager.readFile("nurse.txt")
     userid = input("============================\nEnter your ID: ")
     if userid == "" or userid.isdigit() == False:
         print("Invalid input, ID must be digits and cannot be null.")
@@ -335,7 +341,7 @@ def UpdateNurseDes():
                             nurseInfo.remove([info[0], info[1], info[2], info[3]])
                             info[user] = update
                             nurseInfo.append([info[0], info[1], info[2], info[3]])
-                            fileManager.writeFile("nurseinfo.txt", 4, nurseInfo)
+                            fileManager.writeFile("nurse.txt", 4, nurseInfo)
                             print("Updated")
                             UpdateDetailMenu()
                         case "2":
@@ -352,7 +358,11 @@ def UpdateNurseDes():
     UpdateDetailMenu()
 
 def MakeAppoint():
-    print("============================")
+    print("="*30, "patient", "="*30)
+    fileManager.viewAllPatient()
+    print("="*30, "doctor", "="*30)
+    fileManager.viewAllDoctor()
+    print("=" * 68)
     patientId = input("Enter Patient ID: ")
     doctorId = input("Enter Doctor ID: ")
     Appointment_fuction(patientId, doctorId)
@@ -383,7 +393,7 @@ def Appointment_fuction(patientId, doctorId, patientName = None, doctorName = No
             print(f"Error: Doctor ID {doctorId} can't be found.")
             return
     
-    user = input("============================\nWhat would you like to do?\n1.Schedule Appointment\n2.View Appointment\n3.Cancel Appointment\n4.Abort\nYour Choice:")
+    user = input("="*70 + "\nWhat would you like to do?\n1.Schedule Appointment\n2.View Appointment\n3.Cancel Appointment\n4.Abort\nYour Choice:")
     if user == "" or user.isdigit() == False:
         print("Invalid input, ID must be digits and cannot be null.")
         Appointment_fuction(patientId, doctorId, patientName, doctorName)
@@ -433,7 +443,7 @@ def scheduleAppointment(patientId, doctorId, patientName, doctorName):
                     return
 
         for appointBlockInfo in Appointmentblock:
-            if doctorId == appointBlockInfo[0] and date == appointBlockInfo[1]:
+            if doctorId == appointBlockInfo[1] and date == appointBlockInfo[2]:
                 print(f"Error: Doctor {doctorName} has this date [{date}] blocked for appointment.")
                 Appointment_fuction(patientId, doctorId, patientName, doctorName)
                 return
@@ -453,12 +463,14 @@ def viewAppointment(patientId, doctorId, patientName, doctorName):
     print("Patient name: ", patientName)
     print("Doctor name: ", doctorName)
     totalAppointment = 0
-    for Appointment in Appointments:
-        if Appointment[0] == patientId and Appointment[1] == doctorId:
-            totalAppointment += 1
-            print("Number:", str(totalAppointment).ljust(3), "Date:", Appointment[2].ljust(9), "Start Time:", Appointment[3].ljust(5), "End Time:", Appointment[4])
-    print(f"Total appointment: {totalAppointment}")
-    print("=" * 61 + "\n")
+    if len(Appointments) > 0:
+        for Appointment in Appointments:
+            if Appointment[0] == patientId and Appointment[1] == doctorId:
+                totalAppointment += 1
+                print("Number:", str(totalAppointment).ljust(3), "Date:", Appointment[2].ljust(9), "Start Time:", Appointment[3].ljust(5), "End Time:", Appointment[4])
+        print(f"Total appointment: {totalAppointment}")
+    else:
+        print(patientName, "and", doctorName, "don't have appointment yet.")
     Appointment_fuction(patientId, doctorId, patientName, doctorName)
 
 def cancelAppointment(patientId, doctorId, patientName, doctorName):
@@ -487,8 +499,10 @@ def cancelAppointment(patientId, doctorId, patientName, doctorName):
     fileManager.writeFile("Appointment.txt", 5, Appointments)
     Appointment_fuction(patientId, doctorId, patientName, doctorName)
 
-def RepPay():   
-    userid = input("============================\nEnter Patient ID: ")
+def RepPay():
+    print("="*30, "patient", "="*30)
+    fileManager.viewAllPatient()
+    userid = input("="*70 + "\nEnter Patient ID: ")
     if userid == "" or userid.isdigit() == False:
         print("Invalid input, ID must be digits and cannot be null.")
         Receptionist()
