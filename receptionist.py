@@ -528,14 +528,14 @@ def paymentfuction(userid):
                     elif price.isdigit() == False:
                         print("Error:Price must be number.")
                         paymentfuction(userid)
-                    payment = fileManager.readFile("payment.txt")
+                    payment = fileManager.readFile("patient_payments/"+ str(userid) +".txt")
                     id = 0
                     for payid in payment:
                         if userid == payid[0]:
                             id += 1
                             
                     payment.append([info[0],str(id),price,"No"])
-                    fileManager.writeFile("payment.txt", 4, payment)
+                    fileManager.writeFile("patient_payments/"+ str(userid) +".txt", 4, payment)
                     print("Outstanding Payment Added Successfully!")
                     paymentfuction(userid)
 
@@ -549,7 +549,7 @@ def paymentfuction(userid):
                         if pay == "" or pay.isdigit() == False:
                             print("Invalid input, ID must be digits and cannot be null.")
                             paymentfuction(userid)
-                        payment = fileManager.readFile("payment.txt")
+                        payment = fileManager.readFile("patient_payments/"+ str(userid) +".txt")
                         for payid in payment:
                             if userid == payid[0] and pay == payid[1]:
                                 if payid[3] == "Yes":
@@ -564,7 +564,7 @@ def paymentfuction(userid):
                                                 payment.remove([payid[0], payid[1], payid[2], payid[3]])
                                                 payid[3] = "Yes"
                                                 payment.append([payid[0], payid[1], payid[2], payid[3]])
-                                                fileManager.writeFile("payment.txt", 4, payment)
+                                                fileManager.writeFile("patient_payments/"+ str(userid) +".txt", 4, payment)
                                                 print("Payment made successfully!")
                                                 paymentfuction(userid)
 
@@ -592,7 +592,7 @@ def get_paymentid(paymentid):
 
 def viewpayment(info):
     global totalamount
-    payment = fileManager.readFile("payment.txt")
+    payment = fileManager.readFile("patient_payments/"+ str(info[0]) +".txt")
     print("\n" + "=" * 24 + " Payment " + "=" * 24)
     print(f"Patient name: {info[1]}\n{"-"*57}")
     print("PaymentID\tAmount(RM)\tSettled Payment")
