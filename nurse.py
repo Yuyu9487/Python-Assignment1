@@ -52,14 +52,12 @@ def Login():
             print("Error:Enter error!")
     return -1
 
-
-
-
-
-def view_appointment(): #view doctor's appointment
-    appointments = fileManager.readFile("doctor.txt")
-    #data = [(id, name, contact, age), (id, name, contact, age), (id, name, contact, age), ..
-    user = input("Enter Your ID: ")
+def view_appointment(id): #view doctor's appointment
+    print("="*30, "doctor", "="*30)
+    fileManager.viewAllDoctor()
+    print("="*68)
+    appointments = fileManager.readFile("Appointment.txt")
+    user = input("Enter patient ID: ").strip()
     print("="*88)
     for i in range(len(appointments)): 
         if appointments[i][0] == user:
@@ -70,7 +68,7 @@ def view_appointment(): #view doctor's appointment
         return
     return
 
-def record_patient_observation(): #me as nurse have to record to the specific Patient ID for future reference
+def record_patient_observation(id): #me as nurse have to record to the specific Patient ID for future reference
     # 拿到病人的观察记录文件
     patient_id = input("Enter Patient ID: ").strip()
     if patient_id == "":
