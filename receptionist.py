@@ -1,4 +1,3 @@
-import main
 import fileManager
 import re
 #Receptionist function
@@ -8,23 +7,22 @@ def Receptionist():
     while True:
         user = input("Your Choice:")
         match user:
-                case "1":
-                    RegisterMenu()
-                    break
-                case "2":
-                    UpdateDetailMenu()
-                    break
-                case "3":
-                    MakeAppoint()
-                    break
-                case "4":
-                    RepPay()
-                    break
-                case "5":
-                    main.main()
-                    break
-                case _:
-                    print("Error: Please Enter A Valid Input.")
+            case "1":
+                RegisterMenu()
+                break
+            case "2":
+                UpdateDetailMenu()
+                break
+            case "3":
+                MakeAppoint()
+                break
+            case "4":
+                RepPay()
+                break
+            case "5":
+                break
+            case _:
+                print("Error: Please Enter A Valid Input.")
 
 def RegisterMenu():
     user = input("============================\nRegister Menu\n1.Patient\n2.Doctor\n3.Nurse\n4.Abort\nYour Choice:")
@@ -87,7 +85,7 @@ def Registerpatient():
             else:
                 Entered = True
                 patfile.append([str(i), regname, regpass, regage, regcontact, regaddress])
-                fileManager.writeFile("patient.txt", 6, patfile)
+                fileManager.writeFile("patient.txt", patfile)
                 print(f"Patient ID: {i} added successfully!")
                 break
     RegisterMenu()
@@ -123,7 +121,7 @@ def Registerdoctor():
             else:
                 Entered = True
                 docfile.append([str(i), regname, regpass, regcontact])
-                fileManager.writeFile("doctor.txt", 4, docfile)
+                fileManager.writeFile("doctor.txt", docfile)
                 print(f"Doctor ID: {i} added successfully!")
                 break
     RegisterMenu()
@@ -159,7 +157,7 @@ def Registernurse():
             else:
                 Entered = True
                 nursefile.append([str(i), regname, regpass, regcontact])
-                fileManager.writeFile("nurse.txt", 4, nursefile)
+                fileManager.writeFile("nurse.txt", nursefile)
                 print(f"Nurse ID: {i} added successfully!")
                 break
     RegisterMenu()
@@ -231,7 +229,7 @@ def UpdatePatDes():
                             patientInfo.remove([info[0], info[1], info[2], info[3], info[4], info[5]])
                             info[user] = update
                             patientInfo.append([info[0], info[1], info[2], info[3], info[4], info[5]])
-                            fileManager.writeFile("patient.txt", 6, patientInfo)
+                            fileManager.writeFile("patient.txt", patientInfo)
                             print("Updated")
                             UpdateDetailMenu()
                         case "2":
@@ -286,7 +284,7 @@ def UpdateDocDes():
                             doctorInfo.remove([info[0], info[1], info[2], info[3]])
                             info[user] = update
                             doctorInfo.append([info[0], info[1], info[2], info[3]])
-                            fileManager.writeFile("doctor.txt", 4, doctorInfo)
+                            fileManager.writeFile("doctor.txt", doctorInfo)
                             print("Updated")
                             UpdateDetailMenu()
                         case "2":
@@ -341,7 +339,7 @@ def UpdateNurseDes():
                             nurseInfo.remove([info[0], info[1], info[2], info[3]])
                             info[user] = update
                             nurseInfo.append([info[0], info[1], info[2], info[3]])
-                            fileManager.writeFile("nurse.txt", 4, nurseInfo)
+                            fileManager.writeFile("nurse.txt", nurseInfo)
                             print("Updated")
                             UpdateDetailMenu()
                         case "2":
@@ -408,7 +406,6 @@ def Appointment_fuction(patientId, doctorId, patientName = None, doctorName = No
             cancelAppointment(patientId, doctorId, patientName, doctorName)
         case 4:
             print("Bringing you back to receptionist menu...")
-            Receptionist()
     Receptionist()
 
 def scheduleAppointment(patientId, doctorId, patientName, doctorName):
@@ -452,7 +449,7 @@ def scheduleAppointment(patientId, doctorId, patientName, doctorName):
         print(f"Appointment made for [{patientName}] at [{date}] successfully!")
         
         Appointment.append([patientId, doctorId, date, startTime, endTime])
-        fileManager.writeFile("Appointment.txt", 5, Appointment)
+        fileManager.writeFile("Appointment.txt", Appointment)
     else:
         raise ValueError("Start/End time does not match XX:XX format or input is invalid")
     Appointment_fuction(patientId, doctorId, patientName, doctorName)
@@ -496,7 +493,7 @@ def cancelAppointment(patientId, doctorId, patientName, doctorName):
 
     print(f"Cancel Appointment at [{myAppointments[cancelNumber - 1][2]}] for Patient [{myAppointments[cancelNumber - 1][0]}] and Doctor [{myAppointments[cancelNumber - 1][1]}] successfully.")
     Appointments.remove(myAppointments[cancelNumber - 1])
-    fileManager.writeFile("Appointment.txt", 5, Appointments)
+    fileManager.writeFile("Appointment.txt", Appointments)
     Appointment_fuction(patientId, doctorId, patientName, doctorName)
 
 def RepPay():
@@ -535,7 +532,7 @@ def paymentfuction(userid):
                             id += 1
                             
                     payment.append([info[0],str(id),price,"No"])
-                    fileManager.writeFile("patient_payments/"+ str(userid) +".txt", 4, payment)
+                    fileManager.writeFile("patient_payments/"+ str(userid) +".txt", payment)
                     print("Outstanding Payment Added Successfully!")
                     paymentfuction(userid)
 
@@ -564,7 +561,7 @@ def paymentfuction(userid):
                                                 payment.remove([payid[0], payid[1], payid[2], payid[3]])
                                                 payid[3] = "Yes"
                                                 payment.append([payid[0], payid[1], payid[2], payid[3]])
-                                                fileManager.writeFile("patient_payments/"+ str(userid) +".txt", 4, payment)
+                                                fileManager.writeFile("patient_payments/"+ str(userid) +".txt", payment)
                                                 print("Payment made successfully!")
                                                 paymentfuction(userid)
 

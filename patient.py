@@ -1,4 +1,3 @@
-import main
 import fileManager
 #Patient function
 def Patient():
@@ -13,7 +12,6 @@ def Patient():
                 case "1":
                     ID = Login()
                 case "2":
-                    main.main()
                     break
                 case _:
                     print("\nError. Please Enter A Valid Input.\n")
@@ -35,7 +33,6 @@ def Patient():
                 case "4":
                     view_payment(ID)
                 case "5":
-                    main.main()
                     break
                 case _:
                     print("Error. Please Enter A Valid Input.")
@@ -54,25 +51,24 @@ def Login():
         if info[1] == userName and info[2] == userPassword:
             print("\nSuccessful login!\n")
             return int(info[0])
-        else:
-            print("\nError:Enter error!\n")
+    print("\nError:Name or Password error!\n")
     return -1
 
 def view_patient_medical_record(ID):
     my_medical_records = fileManager.readFile("patient_medical_records/" + str(ID) + ".txt")
     number = 0
-    for medical_record in my_medical_records:
-        number += 1
-        print("\n" + "=" * 34 + " Medical Record " + str(number) + "=" * 34)
-        print("Problem:".rjust(13), medical_record[1])
-        print("Detail:".rjust(13), medical_record[2])
-        print("Medical plan:".rjust(13), medical_record[3])
-        print("Price:".rjust(13), medical_record[4])
-        print("Date:".rjust(13), medical_record[5])
-    if number == 0:
-        print("\nYou don't have any medical record!")
-    else:
+    if len(my_medical_records) > 0:
+        for medical_record in my_medical_records:
+            number += 1
+            print("\n" + "=" * 34 + " Medical Record " + str(number) + "=" * 34)
+            print("Problem:".rjust(13), medical_record[1])
+            print("Detail:".rjust(13), medical_record[2])
+            print("Medical plan:".rjust(13), medical_record[3])
+            print("Price:".rjust(13), medical_record[4])
+            print("Date:".rjust(13), medical_record[5])
         print("=" * 89 + "\n")
+    else:
+        print("\nYou don't have any medical record!")
 
 def view_appointment(ID):
     appointments = fileManager.readFile("Appointment.txt")
@@ -98,7 +94,7 @@ def update_info(ID):
         # find patient Information
         if int(patientInfo[i][0]) == ID:
             # select the information witch user want to update
-            user = int(input("\nWhat would you like to Update?\n1.Name\n2.Password\n3.Age\n4.Contact Number\n5.Adress\n6.Abort\nYour Choice:").strip())
+            user = int(input("\nWhat would you like to Update?\n1.Name\n2.Password\n3.Age\n4.Contact Number\n5.Address\n6.Abort\nYour Choice:").strip())
             match user:
                 case 1:
                     update = input("\nEnter Patient Name:").strip()
@@ -109,7 +105,7 @@ def update_info(ID):
                 case 4:
                     update = input("\nEnter Patient Contact Number:").strip()
                 case 5:
-                    update = input("\nEnter Patient Adress:").strip()
+                    update = input("\nEnter Patient Address:").strip()
                 case _:
                     print("Invalid service choice.")
                     break
@@ -122,13 +118,12 @@ def update_info(ID):
                 print("\nError:Patient cannot be not digit.")
             else:
                 confirm = input(f"\nSystem will be overwrite {patientInfo[i][user]} with {update}.\n1.Confirm\n2.Cancel\nAre you sure?:").strip()
-                match confirm:
-                    case "1":
-                        patientInfo[i][user] = update
-                        fileManager.writeFile("patient.txt", 6, patientInfo)
-                        print("\nUpdated Sussessful!")
-                    case _:
-                        print("Invalid service choice.")
+                if confirm == "1":
+                    patientInfo[i][user] = update
+                    fileManager.writeFile("patient.txt", patientInfo)
+                    print("\nUpdated Sussessful!")
+                else:
+                    print("Invalid service choice.")
             break
 
 def view_payment(ID):

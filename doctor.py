@@ -1,4 +1,3 @@
-import main
 import fileManager
 #Doctor Funtion
 APPOINTMENT_FILE="patient.txt"
@@ -15,7 +14,6 @@ def Doctor():
                 case "1":
                     id = Login()
                 case "2":
-                    main.main()
                     break
                 case _:
                     print("Error. Please Enter A Valid Input.")
@@ -36,7 +34,6 @@ def Doctor():
                 case "4":
                     Appointment_Block_List(id)
                 case "5":
-                    main.main()
                     break
                 case _:
                     print("Error. Please Enter A Valid Input.")
@@ -79,7 +76,7 @@ def UpdatePatientRecords(id):
     Price=input("Enter the price:")
     Date=input("Enter the date:")
     MedicalRecord.append ([PatientID,PatientProblem,PatientDetail,MedicalPlan,Price,Date]) 
-    fileManager.writeFile ("patient_medical_records/" + str(PatientID) + ".txt", 6 , MedicalRecord)
+    fileManager.writeFile ("patient_medical_records/" + str(PatientID) + ".txt", MedicalRecord)
     
 def ViewAppointment(id):
     found = False
@@ -113,7 +110,7 @@ def Appointment_Block_List(id):
         NotAvailableEndTime = input("Enter the not available end time (e.g. 1200): ").strip()
         new_id = len(BlockLists)
         BlockLists.append([new_id, id, NotAvailableDate, NotAvailableStartTime, NotAvailableEndTime])
-        fileManager.writeFile("AppointmentBlockList.txt", 5, BlockLists)
+        fileManager.writeFile("AppointmentBlockList.txt", BlockLists)
         print("New block added successfully.")
 
     elif service == "3":
@@ -124,7 +121,7 @@ def Appointment_Block_List(id):
         
         delete_id = input("Enter the Block ID you want to delete: ").strip()
         BlockLists = [item for item in BlockLists if item[0] != delete_id or int(item[1]) != id]
-        fileManager.writeFile("AppointmentBlockList.txt", 5, BlockLists)
+        fileManager.writeFile("AppointmentBlockList.txt", BlockLists)
         print(f"Block ID {delete_id} deleted (if it existed).")
 
     else:

@@ -1,4 +1,3 @@
-import main
 import fileManager
 
 def Nurse():
@@ -13,7 +12,6 @@ def Nurse():
                 case "1":
                     id = Login()
                 case "2":
-                    main.main()
                     break
                 case _:
                     print("Error. Please Enter A Valid Input.")
@@ -30,7 +28,7 @@ def Nurse():
                 case "4":
                     administer_medicine(id)
                 case "5":
-                    main.main()
+                    break
                 case _:
                     print("Error. Please Enter A Valid Input.")
 
@@ -90,7 +88,7 @@ def record_patient_observation(id): #me as nurse have to record to the specific 
     observation_id = len(patient_observation)
     patient_observation.append([int(observation_id), blood_pressure, pulse_rate, temperature, symptoms, date])
 
-    fileManager.writeFile("patient_observations/" + str(patient_id) + ".txt", 6, patient_observation) # will auto create path that not found 
+    fileManager.writeFile("patient_observations/" + str(patient_id) + ".txt", patient_observation) # will auto create path that not found 
     print("Observation recorded successfully.", "ID", observation_id)
 
 def view_patient_medical_records(id): #get record from (patient_medical_records) that will insert by 'kwx'

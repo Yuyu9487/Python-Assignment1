@@ -1,24 +1,18 @@
-#readFile = [(id, name), (id, name), (id, name), ..]
-# read = 3/#id/#name/#age/#id/#name/#age
-
 def readFile(path : str):
     try:
         with open(path, "r") as file:
             content = file.read()
-        data = content.split("/#")
-        try:
-            number = int(data[0])
-        except:
-            number = 0
+        rawDatas = content.split("\n")
         datalist = []
         group = []
-        groupNumber = 0
-        while groupNumber < len(data) - 1:
-            for i in range(0, number):
-                group.append(data[i + groupNumber + 1])
-            datalist.append(group)
-            group = []
-            groupNumber += number
+        for rawData in rawDatas:
+            datas = rawData.split("/#")
+            for data in datas:
+                if data != '':
+                    group.append(data)
+            if len(group) > 0:
+                datalist.append(group)
+                group = []
         return datalist
     except:
         print(path, "have not found!")
@@ -27,12 +21,14 @@ def readFile(path : str):
         f.close()
         return []
 
-def writeFile(path : str, number : int, data):
+def writeFile(path : str, data):
     write = ""
-    write += str(number)
     for group in data:
         for var in group:
-            write += "/#" + str(var)
+            write += str(var) + "/#"
+        write = write[:-2]
+        write += "\n"
+    write = write[:-2]
     try:
         with open(path, "w") as file:
             file.write(write)
