@@ -65,6 +65,9 @@ def Registerindividual(individual):
             if regage == "":
                 print("Error:Age cannot be blank.")
                 break
+            elif regcontact.isdigit() == False:
+                print("Error:Age must be number.")
+                break
 
         regcontact = input(f"Enter {individual} Contact Number:")
         if regcontact == "":
@@ -234,7 +237,7 @@ def Appointment_fuction(patientId, doctorId, patientName = None, doctorName = No
         Receptionist()
         return
 
-    patientName, doctorName = patientName, doctorName
+    #patientName, doctorName = patientName, doctorName
     if patientName == None or doctorName == None:
         patientInfo, doctorInfo = fileManager.readFile("patient.txt"), fileManager.readFile("doctor.txt")
         for info in patientInfo:
