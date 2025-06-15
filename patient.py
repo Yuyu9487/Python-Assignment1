@@ -31,7 +31,7 @@ def Patient():
                 case "3":
                     update_info(ID)
                 case "4":
-                    fileManager.viewpayment(ID)
+                    view_payment(ID)
                 case "5":
                     break
                 case _:
@@ -127,8 +127,18 @@ def update_info(ID):
             break
 
 def view_payment(ID):
-    my_payments = fileManager.readFile("patient_payments/" + str(ID) + ".txt")
-    print("\n" + "=" * 34 + " Payment History " + "=" * 34)
-    for payment in my_payments:
-        print("ID:", payment[0], "Price:", payment[1], "Settled Payment:", payment[2])
-    print("=" * 85 + "\n")
+    payments = fileManager.readFile("patient_payments/"+ str(ID) +".txt")
+    totalamount = 0
+
+    print("\n" + "=" * 24 + " Payment " + "=" * 24)
+    print("PaymentID\tAmount(RM)\tSettled Payment")
+    for payment in payments:
+        print(f"{payment[0]}\t\t{payment[1]}\t\t{payment[2]}")
+        if payment[2] == "No":
+            totalamount += int(payment[1])
+
+    if totalamount == 0:
+        print(f"you has no outstanding payment.")
+    else:
+        print(f"Total outstanding amount: RM{totalamount}")
+    print("=" * 57 + "\n")
