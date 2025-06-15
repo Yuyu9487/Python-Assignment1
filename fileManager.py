@@ -24,25 +24,13 @@ def readFile(path : str):
 def writeFile(path: str, data):
     try:
         with open(path, "w") as file:
+            lines = []
             for group in data:
                 line = "/#".join(str(var) for var in group)
-                file.write(line + "\n")
+                lines.append(line)
+            file.write("\n".join(lines))
     except:
         print("\n", path, "cannot be found!\n")
-
-#def writeFile(path : str, data):
-#     write = ""
-#     for group in data:
-#         for var in group:
-#             write += str(var) + "/#"
-#         write = write[:-2]
-#         write += "\n"
-#     write = write[:-2]
-#     try:
-#         with open(path, "w") as file:
-#             file.write(write)
-#     except:
-#         print("\n", path, "can not found!\n")
 
 def viewAllPatient():
     file = readFile("patient.txt")
