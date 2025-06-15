@@ -61,20 +61,19 @@ def viewAllNurse():
     else:
         print("\nError: Nurse file is empty!\n")
 
-def viewpayment(info):
-    payments = readFile("patient_payments/"+ str(info[0]) +".txt")
+def viewpayment(patientID):
+    payments = readFile("patient_payments/"+ str(patientID) +".txt")
     totalamount = 0
 
     print("\n" + "=" * 24 + " Payment " + "=" * 24)
-    print(f"Patient name: {info[1]}\n{"-"*57}")
     print("PaymentID\tAmount(RM)\tSettled Payment")
     for payment in payments:
-        print(payment[0],payment[1],payment[2])
+        print(f"{payment[0]}\t\t{payment[1]}\t\t{payment[2]}")
         if payment[2] == "No":
             totalamount += int(payment[1])
 
     if totalamount == 0:
-        print(f"{info[1]} has no outstanding payment.")
+        print(f"you has no outstanding payment.")
     else:
-        print(f"Total outstanding appointment: RM{totalamount}")
+        print(f"Total outstanding amount: RM{totalamount}")
     print("=" * 57 + "\n")

@@ -20,7 +20,7 @@ def Patient():
             print("1.View Personal Medical Records")
             print("2.View Appointment")
             print("3.Update Infomation")
-            print("4.Access Billing Details And Payment History")
+            print("4.View Payment History")
             print("5.Back To Menu")
             user = input("Your Choice:").strip()
             match user:
@@ -31,7 +31,7 @@ def Patient():
                 case "3":
                     update_info(ID)
                 case "4":
-                    view_payment(ID)
+                    fileManager.viewpayment(ID)
                 case "5":
                     break
                 case _:

@@ -466,5 +466,5 @@ def viewpayment(info):
         print(f"{info[1]} has no outstanding payment.")
     
     else:
-        print(f"Total outstanding appointment: RM{totalamount}")
+        print(f"Total outstanding amount: RM{totalamount}")
     print("=" * 57 + "\n")
