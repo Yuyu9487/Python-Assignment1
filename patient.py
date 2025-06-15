@@ -130,5 +130,5 @@ def view_payment(ID):
     my_payments = fileManager.readFile("patient_payments/" + str(ID) + ".txt")
     print("\n" + "=" * 34 + " Payment History " + "=" * 34)
     for payment in my_payments:
-        print("ID:", payment[0], "Price:", payment[1], "Payed:", payment[2])
+        print("ID:", payment[0], "Price:", payment[1], "Settled Payment:", payment[2])
     print("=" * 85 + "\n")

@@ -367,17 +367,20 @@ def RepPay():
         paymentfuction(userid)
 
 def paymentfuction(userid):
-    patientInfo = fileManager.readFile("patient.txt")
+    patients = fileManager.readFile("patient.txt")
+    info = []
     Found = False
-    for info in patientInfo:
-        if info[0] == userid:
-            print(f"============================\nPatient [{info[1]}] Payment List.")
+    for patient in patients:
+        if patient[0] == userid:
+            print(f"============================\nPatient [{patient[1]}] Payment List.")
             user = input(f"----------------------------\nWhat would you like to do?\n1.Add outstanding amount.\n2.View patient's payment history.\n3.Process payment.\n4.Back to receptionist menu.\nYour Choice:")
             if user == "" or user.isdigit() == False:
                 print("Invalid input, ID must be digits and cannot be null.")
                 break
             user = int(user)
             Found = True
+            info = patient
+            break
     while Found:
         match user:
             case 1: #add outstanding payment
@@ -447,8 +450,6 @@ def paymentfuction(userid):
 
 def viewpayment(info):
     global totalamount
-    payment = fileManager.readFile("patient_payments/"+ str(info[0]) +".txt")
-    fileManager.sorting(payment,"patient_payments/"+ str(info[0]) +".txt")
     payment = fileManager.readFile("patient_payments/"+ str(info[0]) +".txt")
 
     print("\n" + "=" * 24 + " Payment " + "=" * 24)
