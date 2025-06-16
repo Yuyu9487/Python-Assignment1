@@ -67,7 +67,7 @@ def checkDate(date:str):
             return True
         if int(date[3:5]) in (1, 3, 5, 7, 8, 10, 12) and int(date[0:2]) < 32:
             return True
-        if int(date[0:2]) < 31:
+        if int(date[3:5]) in (4, 6, 9, 11) and int(date[0:2]) < 31:
             return True
     return False
 
