@@ -50,36 +50,36 @@ def Registerindividual(individual):
 
         readfile = fileManager.readFile(file)
 
-        regname = input(f"Enter {individual} Name:")
-        if regname == "":
+        registerName = input(f"Enter {individual} Name:")
+        if registerName == "":
             print("Error:Name cannot be blank.")
             break
 
-        regpass = input(f"Enter {individual} Password:")
-        if regpass == "":
+        registerPassword = input(f"Enter {individual} Password:")
+        if registerPassword == "":
             print("Error:Password cannot be blank.")
             break
 
         if individual == "Patient":
-            regage = input("Enter Patient Age:")
-            if regage == "":
+            registerAge = input("Enter Patient Age:")
+            if registerAge == "":
                 print("Error:Age cannot be blank.")
                 break
-            elif regcontact.isdigit() == False:
+            elif registerContact.isdigit() == False:
                 print("Error:Age must be number.")
                 break
 
-        regcontact = input(f"Enter {individual} Contact Number:")
-        if regcontact == "":
+        registerContact = input(f"Enter {individual} Contact Number:")
+        if registerContact == "":
             print("Error:Contact Number Cannot be blank.")
             break
-        elif regcontact.isdigit() == False:
+        elif registerContact.isdigit() == False:
             print("Error:Contact Number must be number.")
             break
 
         if individual == "Patient":
-            regaddress = input("Enter Patient Address:")
-            if regaddress == "":
+            registerAddress = input("Enter Patient Address:")
+            if registerAddress == "":
                 print("Error:Address Cannot be blank.")
                 break
         
@@ -93,9 +93,9 @@ def Registerindividual(individual):
             else:
                 Entered = True
                 if individual == "Patient":
-                    readfile.append([str(i), regname, regpass, regage, regcontact, regaddress])
+                    readfile.append([str(i), registerName, registerPassword, registerAge, registerContact, registerAddress])
                 else:
-                    readfile.append([str(i), regname, regpass, regcontact])
+                    readfile.append([str(i), registerName, registerPassword, registerContact])
                 fileManager.writeFile(file, readfile)
                 print(f"{individual} ID: {i} added successfully!")
                 break
@@ -467,7 +467,6 @@ def viewpayment(info):
             totalamount += int(payid[1])
     if totalamount == 0:
         print(f"{info[1]} has no outstanding payment.")
-    
     else:
         print(f"Total outstanding amount: RM{totalamount}")
     print("=" * 57 + "\n")
