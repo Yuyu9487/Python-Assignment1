@@ -375,16 +375,16 @@ def paymentfuction(userid):
     Found = False
     for patient in patients:
         if patient[0] == userid:
-            print(f"============================\nPatient [{patient[1]}] Payment List.")
-            user = input(f"----------------------------\nWhat would you like to do?\n1.Add outstanding amount.\n2.View patient's payment history.\n3.Process payment.\n4.Back to receptionist menu.\nYour Choice:")
-            if user == "" or user.isdigit() == False:
-                print("Invalid input, ID must be digits and cannot be null.")
-                break
-            user = int(user)
             Found = True
             info = patient
             break
     while Found:
+        print(f"============================\nPatient [{patient[1]}] Payment List.")
+        user = input(f"----------------------------\nWhat would you like to do?\n1.Add outstanding amount.\n2.View patient's payment history.\n3.Process payment.\n4.Back to receptionist menu.\nYour Choice:")
+        if user == "" or user.isdigit() == False:
+            print("Invalid input, ID must be digits and cannot be null.")
+            break
+        user = int(user)
         match user:
             case 1: #add outstanding payment
                 price = input("How much does the patient has to pay?")
@@ -394,13 +394,13 @@ def paymentfuction(userid):
                 elif price.isdigit() == False:
                     print("Error:Price must be number.")
                     
-                payment = fileManager.readFile("patient_payments/"+ str(userid) +".txt")
+                paymentList = fileManager.readFile("patient_payments/"+ str(userid) +".txt")
                 id = 0
-                for payid in payment:
+                for payment in paymentList:
                         id += 1
                         
-                payment.append([str(id),price,"No"])
-                fileManager.writeFile("patient_payments/"+ str(userid) +".txt", payment)
+                paymentList.append([str(id),price,"No"])
+                fileManager.writeFile("patient_payments/"+ str(userid) +".txt", paymentList)
                 print("Outstanding Payment Added Successfully!")
                 
             case 2:
@@ -413,58 +413,50 @@ def paymentfuction(userid):
                     if pay == "" or pay.isdigit() == False:
                         print("Invalid input, ID must be digits and cannot be null.")
                         break
-                    payment = fileManager.readFile("patient_payments/"+ str(userid) +".txt")
-                    for payid in payment:
-                        if pay == payid[0]:
-                            if payid[2] == "Yes":
+                    paymentList = fileManager.readFile("patient_payments/"+ str(userid) +".txt")
+                    for payment in paymentList:
+                        if pay == payment[0]:
+                            if payment[2] == "Yes":
                                 print("Error:Payment is already paid before!")
                                 break
-
-                            confirm = input(f"Payment ID {payid[0]} for {info[1]} is {payid[1]}.\n1.Yes\n2.No\nMark payment as paid?:")
+                            confirm = input(f"Payment ID {payment[0]} for {info[1]} is {payment[1]}.\n1.Yes\n2.No\nMark payment as paid?:")
                             match confirm:
                                 case "1":
-                                    match payid[2]:
-                                        case "No":
-                                            payment.remove([payid[0], payid[1], payid[2]])
-                                            payid[2] = "Yes"
-                                            payment.append([payid[0], payid[1], payid[2], ])
-                                            fileManager.writeFile("patient_payments/"+ str(userid) +".txt", payment)
-                                            print("Payment made successfully!")
-                                            #break
-
+                                    if payment[2] == "No":
+                                        paymentList.remove([payment[0], payment[1], payment[2]])
+                                        payment[2] = "Yes"
+                                        paymentList.append([payment[0], payment[1], payment[2], ])
+                                        fileManager.writeFile("patient_payments/"+ str(userid) +".txt", paymentList)
+                                        print("Payment made successfully!")
                                 case "2":
                                     print("Bringing you back...")
-                                
                                 case _:
                                     print("Error: Invalid input, only 1 or 2 is valid.")
-                    if pay != payid[0]:
+                            break
+                    if pay != payment[0]:
                         print("Error: PaymentID does not exist.")
-
                 else:
                     print("There's no payment to be made.")
-
-
             case 4:
                 print("Bringing you back to main menu.")
-        break
-    while not Found:
+                break
+    if not Found:
         print(f"Error: Patient ID: {userid} doesn't exist.")
-        break
 
 def viewpayment(info):
     global totalamount
-    payment = fileManager.readFile("patient_payments/"+ str(info[0]) +".txt")
+    paymentList = fileManager.readFile("patient_payments/"+ str(info[0]) +".txt")
 
     print("\n" + "=" * 24 + " Payment " + "=" * 24)
     print(f"Patient name: {info[1]}\n{"-"*57}")
     print("PaymentID\tAmount(RM)\tSettled Payment")
-    for payid in payment:
-        print(f"{payid[0]}\t\t{payid[1]}\t\t{payid[2]}")
+    for payment in paymentList:
+        print(f"{payment[0]}\t\t{payment[1]}\t\t{payment[2]}")
 
     totalamount = 0
-    for payid in payment:
-        if payid[2] == "No":
-            totalamount += int(payid[1])
+    for payment in paymentList:
+        if payment[2] == "No":
+            totalamount += int(payment[1])
     if totalamount == 0:
         print(f"{info[1]} has no outstanding payment.")
     else:
