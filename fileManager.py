@@ -2,17 +2,12 @@ def readFile(path : str):
     try:
         with open(path, "r") as file:
             content = file.read()
-        rawDatas = content.split("\n")
+        content = content.split("\n")
         datalist = []
-        group = []
-        for rawData in rawDatas:
-            datas = rawData.split("/#")
-            for data in datas:
-                if data != '':
-                    group.append(data)
-            if len(group) > 0:
-                datalist.append(group)
-                group = []
+        for line in content:
+            datas = line.split("/#")
+            if len(datas) > 0:
+                datalist.append(datas)
         return datalist
     except:
         print(path, "have not found!")
@@ -63,3 +58,20 @@ def viewAllNurse():
         print(f"Total nurses: {len(file)}")
     else:
         print("\nError: Nurse file is empty!\n")
+
+def checkDate(date:str):
+    if len(date) == 8 and 13 > int(date[3:5]) > 0 and int(date[0:2]) > 0:
+        if int(date[6:8]) % 4 == 0 and int(date[3:5]) == 2 and int(date[0:2]) < 30:
+            return True
+        if int(date[3:5]) == 2 and int(date[0:2]) < 29:
+            return True
+        if int(date[3:5]) in (1, 3, 5, 7, 8, 10, 12) and int(date[0:2]) < 32:
+            return True
+        if int(date[3:5]) in (4, 6, 9, 11) and int(date[0:2]) < 31:
+            return True
+    return False
+
+def checkTime(time:str):
+    if len(time) == 4 and 24 > int(time[:2]) > -1 and 60 > int(time[2:]) > -1:
+        return True
+    return False
