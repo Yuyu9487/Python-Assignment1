@@ -59,6 +59,9 @@ def Login():
 def view_patient_medical_records(id):
     fileManager.viewAllPatient()
     PatientID = input("Enter Patient ID: ").strip()
+    if PatientID == "" or not PatientID.isdigit():
+        print("Please enter again!")
+        return
     MedicalRecords = fileManager.readFile("patient_medical_records/" + str(PatientID) + ".txt")
     if len(MedicalRecords) > 0:
         for MedicalRecord in MedicalRecords:
@@ -71,10 +74,28 @@ def UpdatePatientRecords(id):
     PatientID=int(input("Enter your ID:"))
     MedicalRecord=fileManager.readFile("patient_medical_records/" + str(PatientID) + ".txt")
     PatientProblem=input("Enter the problem:")
+    if PatientProblem == "":
+        print("Please enter again!")
+        return
     PatientDetail=input("Enter the details:")
+    if PatientDetail == "":
+        print("Please enter again!")
+        return
     MedicalPlan=input("Enter the medical plan:")
+    if MedicalPlan == "":
+        print("Please enter again!")
+        return
     Price=input("Enter the price:")
-    Date=input("Enter the date:")
+    if Price == "":
+        print("Please enter again!")
+        return
+    elif Price.isdigit()==False:
+        print("Please enter again!")
+        return
+    Date=input("Enter the date (eg: 24/4/25):")
+    if not fileManager.checkDate(Date):
+        print("Please enter again!")
+        return
     MedicalRecord.append ([PatientID,PatientProblem,PatientDetail,MedicalPlan,Price,Date]) 
     fileManager.writeFile ("patient_medical_records/" + str(PatientID) + ".txt", MedicalRecord)
     
@@ -92,6 +113,9 @@ def ViewAppointment(id):
 def Appointment_Block_List(id):
     print("Choose a service:\n1. View block list\n2. Insert block list\n3. Delete block list")
     service = input("Enter your service number (1/2/3): ").strip()
+    if service == "" or not service.isdigit():
+        print("Please enter again!")
+        return
     
     BlockLists = fileManager.readFile("AppointmentBlockList.txt")  # 放外面，避免后面读取不到
     found = False
@@ -105,10 +129,24 @@ def Appointment_Block_List(id):
             print("No block list found for the given Doctor ID.")
 
     elif service == "2":
-        NotAvailableDate = input("Enter the not available date (e.g. 01/12/25): ").strip()
-        NotAvailableStartTime = input("Enter the not available start time (e.g. 0900): ").strip()
-        NotAvailableEndTime = input("Enter the not available end time (e.g. 1200): ").strip()
-        new_id = len(BlockLists)
+        NotAvailableDate = input("Enter the not available date (e.g. 2024-12-01): ").strip()
+        if not fileManager.checkDate(NotAvailableDate):
+            print("Please enter again!")
+            return
+        NotAvailableStartTime = input("Enter the not available start time (e.g. 09:00): ").strip()
+        if not fileManager.checkTime(NotAvailableStartTime):
+            print("Please enter again!")
+            return
+        NotAvailableEndTime = input("Enter the not available end time (e.g. 12:00): ").strip()
+        if not fileManager.checkTime(NotAvailableEndTime):
+            print("Please enter again!")
+            return
+        blocklistID = [blocklist[0] for blocklist in BlockLists]
+        new_id = 0
+        for i in range(99999):
+            if i not in blocklistID:
+                new_id = i
+                break
         BlockLists.append([new_id, id, NotAvailableDate, NotAvailableStartTime, NotAvailableEndTime])
         fileManager.writeFile("AppointmentBlockList.txt", BlockLists)
         print("New block added successfully.")
@@ -120,6 +158,9 @@ def Appointment_Block_List(id):
                 print(f"ID: {blocklist[0]} | Date: {blocklist[2]} | Start: {blocklist[3]} | End: {blocklist[4]}")
         
         delete_id = input("Enter the Block ID you want to delete: ").strip()
+        if delete_id == "" or not delete_id.isdigit():
+            print("Please enter again!")
+            return
         BlockLists = [item for item in BlockLists if item[0] != delete_id or int(item[1]) != id]
         fileManager.writeFile("AppointmentBlockList.txt", BlockLists)
         print(f"Block ID {delete_id} deleted (if it existed).")
