@@ -1,5 +1,5 @@
 import fileManager
-import re
+
 #Receptionist function
 def Receptionist():
     while True:
@@ -273,15 +273,13 @@ def Appointment_fuction(patientId, doctorId, patientName = None, doctorName = No
 
 def scheduleAppointment(patientId, doctorId, patientName, doctorName):
     date = input("============================\nEnter the date in DD/MM/YY(ex:06/09/25),seperated by '/'.:")
-    datepattern = r"^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/(\d{2})$"
     startTime = input("Enter the starting time of the appointment in [24 hour format](ex:0945)")
     endTime = input("Enter the end time of the appointment in [24 hour format](ex:2300)")
-    timepattern = r"^([01][0-9]|2[0-3])[0-5][0-9]$"
-    if not re.match(datepattern,date):
+    if not fileManager.checkDate(date):
         print("Date does not match DD/MM/YY format or input is invalid")
         Appointment_fuction(patientId, doctorId, patientName, doctorName)
         return
-    if re.match(timepattern,startTime) and re.match(timepattern,endTime):
+    if fileManager.checkTime(startTime) and fileManager.checkTime(endTime):
         startTime, endTime = int(startTime), int(endTime)
         if endTime <= startTime:
             print("Error: End time cannot be same or early than starting time.")
@@ -301,7 +299,7 @@ def scheduleAppointment(patientId, doctorId, patientName, doctorName):
                     print(f"Error: Doctor {doctorName} have Appointment at [{date}]!")
                     Appointment_fuction(patientId, doctorId, patientName, doctorName)
                     return
-
+        
         for appointBlockInfo in Appointmentblock:
             if doctorId == appointBlockInfo[1] and date == appointBlockInfo[2]:
                 print(f"Error: Doctor {doctorName} has this date [{date}] blocked for appointment.")
