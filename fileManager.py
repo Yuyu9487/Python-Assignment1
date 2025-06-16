@@ -16,9 +16,12 @@ def readFile(path : str):
         return datalist
     except:
         print(path, "have not found!")
-        print("Creating", path, "\n")
-        f = open(path, "x")
-        f.close()
+        print("Creating", path)
+        try:
+            f = open(path, "x")
+            f.close()
+        except:
+            print("Creating", path, "fail!")
         return []
 
 def writeFile(path: str, data: list):
