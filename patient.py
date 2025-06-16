@@ -1,5 +1,4 @@
 import fileManager
-#Patient function
 def Patient():
     ID = -1
     while True:
@@ -38,7 +37,7 @@ def Patient():
                     print("Error. Please Enter A Valid Input.")
 
 def Login():
-    patientInfo = fileManager.readFile("patient.txt")
+    patients = fileManager.readFile("patient.txt")
     userName = input("\nEnter your Name: ").strip()
     userPassword = input("Enter your Password: ").strip()
     if userName == "":
@@ -47,10 +46,10 @@ def Login():
     elif userPassword == "":
         print("\nError:Password connot be blank!\n")
         return -1
-    for info in patientInfo:
-        if info[1] == userName and info[2] == userPassword:
+    for patient in patients:
+        if patient[1] == userName and patient[2] == userPassword:
             print("\nSuccessful login!\n")
-            return int(info[0])
+            return int(patient[0])
     print("\nError:Name or Password error!\n")
     return -1
 

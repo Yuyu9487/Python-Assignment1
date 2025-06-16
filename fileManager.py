@@ -2,17 +2,13 @@ def readFile(path : str):
     try:
         with open(path, "r") as file:
             content = file.read()
-        rawDatas = content.split("\n")
+        content = content.split("\n")
         datalist = []
-        group = []
-        for rawData in rawDatas:
-            datas = rawData.split("/#")
-            for data in datas:
-                if data != '':
-                    group.append(data)
-            if len(group) > 0:
-                datalist.append(group)
-                group = []
+        for line in content:
+            datas = line.split("/#")
+            print(datas)
+            if len(datas) > 0:
+                datalist.append(datas)
         return datalist
     except:
         print(path, "have not found!")
