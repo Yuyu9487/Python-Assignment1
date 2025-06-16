@@ -6,7 +6,7 @@ def readFile(path : str):
         datalist = []
         for line in content:
             datas = line.split("/#")
-            if len(datas) > 0:
+            if len(datas) > 1:
                 datalist.append(datas)
         return datalist
     except:
