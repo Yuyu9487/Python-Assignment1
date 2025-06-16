@@ -2,11 +2,13 @@ def readFile(path : str):
     try:
         with open(path, "r") as file:
             content = file.read()
+        if len(content) < 1:
+            return []
         content = content.split("\n")
         datalist = []
         for line in content:
             datas = line.split("/#")
-            if len(datas) > 1:
+            if len(datas) > 0:
                 datalist.append(datas)
         return datalist
     except:

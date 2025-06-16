@@ -65,7 +65,7 @@ def Registerindividual(individual):
             if registerAge == "":
                 print("Error:Age cannot be blank.")
                 break
-            elif registerContact.isdigit() == False:
+            elif registerAge.isdigit() == False:
                 print("Error:Age must be number.")
                 break
 
