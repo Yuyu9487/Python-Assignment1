@@ -4,7 +4,7 @@ def Receptionist():
     while True:
         print("\n============================\nReceptionist Menu\n============================")
         print("1.Register Individuals\n2.Update Details\n3.Schedule Appointment For Patient\n4.Process Payment\n5.Back To Menu")
-        user = input("Your Choice:")
+        user = input("Your Choice:").strip()
         match user:
             case "1":
                 RegisterMenu()
@@ -22,7 +22,7 @@ def Receptionist():
                 
 def RegisterMenu():
     while True:
-        user = input("============================\nRegister Menu\n1.Patient\n2.Doctor\n3.Nurse\n4.Abort\nYour Choice:")
+        user = input("============================\nRegister Menu\n1.Patient\n2.Doctor\n3.Nurse\n4.Abort\nYour Choice:").strip()
         match user:
             case "1":
                 Registerindividual("Patient")
@@ -49,18 +49,18 @@ def Registerindividual(individual):
 
         readfile = fileManager.readFile(file)
 
-        registerName = input(f"Enter {individual} Name:")
+        registerName = input(f"Enter {individual} Name:").strip()
         if registerName == "":
             print("Error:Name cannot be blank.")
             break
 
-        registerPassword = input(f"Enter {individual} Password:")
+        registerPassword = input(f"Enter {individual} Password:").strip()
         if registerPassword == "":
             print("Error:Password cannot be blank.")
             break
 
         if individual == "Patient":
-            registerAge = input("Enter Patient Age:")
+            registerAge = input("Enter Patient Age:").strip()
             if registerAge == "":
                 print("Error:Age cannot be blank.")
                 break
@@ -68,7 +68,7 @@ def Registerindividual(individual):
                 print("Error:Age must be number.")
                 break
 
-        registerContact = input(f"Enter {individual} Contact Number:")
+        registerContact = input(f"Enter {individual} Contact Number:").strip()
         if registerContact == "":
             print("Error:Contact Number Cannot be blank.")
             break
@@ -77,7 +77,7 @@ def Registerindividual(individual):
             break
 
         if individual == "Patient":
-            registerAddress = input("Enter Patient Address:")
+            registerAddress = input("Enter Patient Address:").strip()
             if registerAddress == "":
                 print("Error:Address Cannot be blank.")
                 break
@@ -101,7 +101,7 @@ def Registerindividual(individual):
 
 def UpdateDetailMenu():
     while True:
-        user = input("============================\nUpdate Menu\n1.Patient\n2.Doctor\n3.Nurse\n4.Abort\nYour Choice:")
+        user = input("============================\nUpdate Menu\n1.Patient\n2.Doctor\n3.Nurse\n4.Abort\nYour Choice:").strip()
         match user:
             case "1":
                 print("="*30, "Patient", "="*30)
@@ -131,7 +131,7 @@ def Updateindividual(individual):
         case "Nurse":
             file = "nurse.txt"
     readfile = fileManager.readFile(file)
-    userid = input("============================\nEnter your ID: ")
+    userid = input("============================\nEnter your ID: ").strip()
     if userid == "" or userid.isdigit() == False:
         print("Invalid input, ID must be digits and cannot be null.")
     else: #info is reading the file one individual by individual at a time
@@ -140,35 +140,35 @@ def Updateindividual(individual):
                 print(f"{individual}: {info[1]} found.")
                 while True:
                     if individual == "Patient":
-                        user = input("============================\nWhat would you like to Update?\n1.Name\n2.Password\n3.Age\n4.Contact Number\n5.Address\n0.Abort\nYour Choice:")
+                        user = input("============================\nWhat would you like to Update?\n1.Name\n2.Password\n3.Age\n4.Contact Number\n5.Address\n0.Abort\nYour Choice:").strip()
                     else:
-                        user = input("============================\nWhat would you like to Update?\n1.Name\n2.Password\n3.Contact Number\n0.Abort\nYour Choice:")
+                        user = input("============================\nWhat would you like to Update?\n1.Name\n2.Password\n3.Contact Number\n0.Abort\nYour Choice:").strip()
                     if user == "" or user.isdigit() == False:
                         print("Invalid input, input must be digits and cannot be null.")
 
                     user = int(user)
                     if user == 1:
-                        update = input(f"Enter {individual} Name:")
+                        update = input(f"Enter {individual} Name:").strip()
 
                     elif user ==2:
-                        update = input(f"Enter {individual} Password:")
+                        update = input(f"Enter {individual} Password:").strip()
 
                     elif user ==3:
                         if individual == "Patient":
-                            update = input(f"Enter {individual} Age:")
+                            update = input(f"Enter {individual} Age:").strip()
                         else:
-                            update = input(f"Enter {individual} Contact Number:")
+                            update = input(f"Enter {individual} Contact Number:").strip()
 
                     elif user ==4:
                         if individual == "Patient":
-                            update = input(f"Enter {individual} Contact Number:")
+                            update = input(f"Enter {individual} Contact Number:").strip()
                         else:
                             print("Invalid Response, Please try again.")
                             break
 
                     elif user ==5:
                         if individual == "Patient":
-                            update = input(f"Enter {individual} Address:")
+                            update = input(f"Enter {individual} Address:").strip()
                         else:
                             print("Invalid Response, Please try again.")
                             break
@@ -195,7 +195,7 @@ def Updateindividual(individual):
 
                     else:
                         print("="*30)
-                        confirm = input(f"System will be overwrite {info[user]} with {update}.\n1.Confirm\n2.Abort\nAre you sure?:")
+                        confirm = input(f"System will be overwrite {info[user]} with {update}.\n1.Confirm\n2.Abort\nAre you sure?:").strip()
                         match confirm:
                             case "1":
                                 readfile.remove([info[0], info[1], info[2], info[3], info[4], info[5]])
@@ -222,8 +222,8 @@ def MakeAppoint():
     print("="*30, "doctor", "="*30)
     fileManager.viewAllDoctor()
     print("=" * 68)
-    patientId = input("Enter Patient ID: ")
-    doctorId = input("Enter Doctor ID: ")
+    patientId = input("Enter Patient ID: ").strip()
+    doctorId = input("Enter Doctor ID: ").strip()
     Appointment_fuction(patientId, doctorId)
 
 def Appointment_fuction(patientId, doctorId, patientName = None, doctorName = None):
@@ -252,7 +252,7 @@ def Appointment_fuction(patientId, doctorId, patientName = None, doctorName = No
             print(f"Error: Doctor ID {doctorId} can't be found.")
             return
 
-    user = input("="*70 + "\nWhat would you like to do?\n1.Schedule Appointment\n2.View Appointment\n3.Cancel Appointment\n4.Abort\nYour Choice:")
+    user = input("="*70 + "\nWhat would you like to do?\n1.Schedule Appointment\n2.View Appointment\n3.Cancel Appointment\n4.Abort\nYour Choice:").strip()
     if user == "" or user.isdigit() == False:
         print("Invalid input, ID must be digits and cannot be null.")
         Appointment_fuction(patientId, doctorId, patientName, doctorName)
@@ -271,9 +271,9 @@ def Appointment_fuction(patientId, doctorId, patientName = None, doctorName = No
             print("Error: Invalid Input")
 
 def scheduleAppointment(patientId, doctorId, patientName, doctorName):
-    date = input("============================\nEnter the date in DD/MM/YY(ex:06/09/25),seperated by '/'.:")
-    startTime = input("Enter the starting time of the appointment in [24 hour format](ex:0945)")
-    endTime = input("Enter the end time of the appointment in [24 hour format](ex:2300)")
+    date = input("============================\nEnter the date in DD/MM/YY(ex:06/09/25),seperated by '/'.:").strip()
+    startTime = input("Enter the starting time of the appointment in [24 hour format](ex:0945)").strip()
+    endTime = input("Enter the end time of the appointment in [24 hour format](ex:2300)").strip()
     if not fileManager.checkDate(date):
         print("Date does not match DD/MM/YY format or input is invalid")
         Appointment_fuction(patientId, doctorId, patientName, doctorName)
@@ -344,7 +344,7 @@ def cancelAppointment(patientId, doctorId, patientName, doctorName):
     print(f"Total appointment: {len(myAppointments)}")
     print("=" * 62)
 
-    cancelNumber = input("Please enter the appointment number that you want to cancel: ")
+    cancelNumber = input("Please enter the appointment number that you want to cancel: ").strip()
     if cancelNumber == "" or not cancelNumber.isdigit():
         print("Invalid input, ID must be digits and cannot be null.")
         Appointment_fuction(patientId, doctorId, patientName, doctorName)
@@ -360,7 +360,7 @@ def cancelAppointment(patientId, doctorId, patientName, doctorName):
 def RepPay():
     print("="*30, "patient", "="*30)
     fileManager.viewAllPatient()
-    userid = input("="*70 + "\nEnter Patient ID: ")
+    userid = input("="*70 + "\nEnter Patient ID: ").strip()
     if userid == "" or userid.isdigit() == False:
         print("Invalid input, ID must be digits and cannot be null.")
     else:
@@ -377,14 +377,14 @@ def paymentfuction(userid):
             break
     while Found:
         print(f"============================\nPatient [{patient[1]}] Payment List.")
-        user = input(f"----------------------------\nWhat would you like to do?\n1.Add outstanding amount.\n2.View patient's payment history.\n3.Process payment.\n4.Back to receptionist menu.\nYour Choice:")
+        user = input(f"----------------------------\nWhat would you like to do?\n1.Add outstanding amount.\n2.View patient's payment history.\n3.Process payment.\n4.Back to receptionist menu.\nYour Choice:").strip()
         if user == "" or user.isdigit() == False:
             print("Invalid input, ID must be digits and cannot be null.")
             break
         user = int(user)
         match user:
             case 1: #add outstanding payment
-                price = input("How much does the patient has to pay?")
+                price = input("How much does the patient has to pay?").strip()
                 if price == "":
                     print("Error:Price cannot be blank.")
                     
@@ -406,7 +406,7 @@ def paymentfuction(userid):
             case 3:
                 viewpayment(info)
                 if totalamount != 0:
-                    pay = input(f"Which payment id does {info[1]} wishes to pay?")
+                    pay = input(f"Which payment id does {info[1]} wishes to pay?").strip()
                     if pay == "" or pay.isdigit() == False:
                         print("Invalid input, ID must be digits and cannot be null.")
                         break
@@ -416,7 +416,7 @@ def paymentfuction(userid):
                             if payment[2] == "Yes":
                                 print("Error:Payment is already paid before!")
                                 break
-                            confirm = input(f"Payment ID {payment[0]} for {info[1]} is {payment[1]}.\n1.Yes\n2.No\nMark payment as paid?:")
+                            confirm = input(f"Payment ID {payment[0]} for {info[1]} is {payment[1]}.\n1.Yes\n2.No\nMark payment as paid?:").strip()
                             match confirm:
                                 case "1":
                                     if payment[2] == "No":
