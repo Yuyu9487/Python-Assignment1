@@ -1,6 +1,5 @@
 import fileManager
 
-#Receptionist function
 def Receptionist():
     while True:
         print("\n============================\nReceptionist Menu\n============================")

@@ -1,6 +1,4 @@
 import fileManager
-#Doctor Funtion
-APPOINTMENT_FILE="patient.txt"
 
 def Doctor():
     id = -1
