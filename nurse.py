@@ -56,6 +56,11 @@ def view_appointment(id): #view doctor's appointment
     print("="*68)
     appointments = fileManager.readFile("Appointment.txt")
     user = input("Enter patient ID: ").strip()
+    if user == "":
+        print("Error:Patient ID cannot be empty!")
+        return
+    elif user.isdigit():
+        print("Error:Patient ID must be number!")
     print("="*88)
     for i in range(len(appointments)): 
         if appointments[i][0] == user:
@@ -63,8 +68,6 @@ def view_appointment(id): #view doctor's appointment
             break
     else:
         print("ID not found.")
-        return
-    return
 
 def record_patient_observation(id): #me as nurse have to record to the specific Patient ID for future reference
     # 拿到病人的观察记录文件
@@ -80,10 +83,40 @@ def record_patient_observation(id): #me as nurse have to record to the specific 
 
     # 写入资讯/收据数据
     blood_pressure = input("Enter Blood Pressure (🩸C): ").strip()
+    if blood_pressure == "":
+        print("Error:Blood Pressure cannot be empty!")
+        return
+    elif not blood_pressure.isdigit():
+        print("Error:Blood Pressure must be number.")
+        return
     pulse_rate = input("Enter Pulse Rate (💓): ").strip()
+    if pulse_rate == "":
+        print("Error:Pulse Rate cannot be empty!")
+        return
+    elif not pulse_rate.isdigit():
+        print("Error:Pulse Rate must be number.")
+        return
     temperature = input("Enter Temperature (🌡️): ").strip()
+    if temperature == "":
+        print("Error:Temperature cannot be empty!")
+        return
+    elif not temperature.isdigit():
+        print("Error:Temperature must be number.")
+        return
     symptoms = input("Enter Symptoms (🩺): ").strip()
-    date = input("Enter Date (01/12/25): ").strip()
+    if symptoms == "":
+        print("Error:Symptoms cannot be empty!")
+        return
+    elif not symptoms.isdigit():
+        print("Error:Symptoms must be number.")
+        return
+    date = input("Enter Date (DD/MM/YY): ").strip()
+    if date == "":
+        print("Error:Date cannot be empty!")
+        return
+    elif not fileManager.checkDate(date):
+        print("Error:Date is wrong!")
+        return
 
     observation_id = len(patient_observation)
     patient_observation.append([int(observation_id), blood_pressure, pulse_rate, temperature, symptoms, date])
@@ -93,6 +126,12 @@ def record_patient_observation(id): #me as nurse have to record to the specific 
 
 def view_patient_medical_records(id): #get record from (patient_medical_records) that will insert by 'kwx'
     user = input("Patient ID: ") 
+    if user == "":
+        print("Error:Patient ID cannot be empty!")
+        return
+    elif not user.isdigit():
+        print("Error:Patient ID must be number.")
+        return
     medical_records = fileManager.readFile("patient_medical_records/"+ user +".txt") 
     for x in medical_records:
         print("ID: ",x[0],"\nProblem:",x[1],"\nTime:",x[3],"\nPrice:",x[4],"\nDate:",x[5])
@@ -101,6 +140,15 @@ def administer_medicine(id): #to comfirm/record that medicine has given to the p
     print(f"\n{"=" *12} Administer Medicine {"=" *12}")
     ID = input("Enter Patient ID: ")
     Medicine = input("Medicine Type: ")
+    if Medicine == "":
+        print("Error:Medicine cannot be empty!")
+        return
     Quantity = input("how many miligram/gram of medicine: ")
+    if Quantity == "":
+        print("Error:Quantity of medicine cannot be empty!")
+        return
+    elif not Quantity.isdigit():
+        print("Error:Quantity of medicine must be number.")
+        return
 
     print("ID:",ID,"\nMedicine Type:",Medicine,"\nQUantity:", Quantity + "\n"*2 + "SUCCESSFULLY RECORDED")
