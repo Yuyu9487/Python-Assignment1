@@ -157,4 +157,5 @@ def administer_medicine(id): #to comfirm/record that medicine has given to the p
     elif not Quantity.isdigit():
         print("Error:Quantity of medicine must be number.")
         return
+    
     print("ID:",ID,"\nMedicine Type:",Medicine,"\nQUantity:", Quantity + "\n"*2 + "SUCCESSFULLY RECORDED")
