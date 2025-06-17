@@ -59,7 +59,7 @@ def view_doctor_appointment(id): #view doctor's appointment
     if user == "":
         print("Error:Patient ID cannot be empty!")
         return
-    elif user.isdigit():
+    elif not user.isdigit():
         print("Error:Patient ID must be number!")
         return
     print("="*88)
