@@ -20,7 +20,7 @@ def Nurse():
             user = input("Your Choice:").strip()
             match user:
                 case "1":
-                    view_appointment(id)
+                    view_doctor_appointment(id)
                 case "2":
                     record_patient_observation(id)
                 case "3":
@@ -50,7 +50,7 @@ def Login():
             print("Error:Enter error!")
     return -1
 
-def view_appointment(id): #view doctor's appointment
+def view_doctor_appointment(id): #view doctor's appointment
     print("="*30, "doctor", "="*30)
     fileManager.viewAllDoctor()
     print("="*68)
@@ -61,27 +61,27 @@ def view_appointment(id): #view doctor's appointment
         return
     elif user.isdigit():
         print("Error:Patient ID must be number!")
+        return
     print("="*88)
     for i in range(len(appointments)): 
         if appointments[i][0] == user:
-            print("Your ID:".rjust(15), appointments[i][0], "Your Name:".rjust(15), appointments[i][1], "Your Contact:".rjust(15), appointments[i][2], "Your Age:".rjust(15), appointments[i][3])
+            print("Patient ID:", appointments[i][0].ljust(15), "Date:", appointments[i][2].ljust(15), "Start Time:", appointments[i][3].ljust(15), "End Time:", appointments[i][4].ljust(15))
             break
     else:
         print("ID not found.")
 
 def record_patient_observation(id): #me as nurse have to record to the specific Patient ID for future reference
-    # 拿到病人的观察记录文件
     patient_id = input("Enter Patient ID: ").strip()
     if patient_id == "":
         print("Error:Patient ID cannot be blank.")
+        return
     elif not patient_id.isdigit():
         print("Error:Patient ID must be number.")
-    else:
-        patient_id = int(patient_id)
+        return
    
-    patient_observation = fileManager.readFile("patient_observations/" + str(patient_id) + ".txt")
+    patient_observation = fileManager.readFile("patient_observations/" + patient_id + ".txt")
 
-    # 写入资讯/收据数据
+    # write information
     blood_pressure = input("Enter Blood Pressure (🩸C): ").strip()
     if blood_pressure == "":
         print("Error:Blood Pressure cannot be empty!")
@@ -89,6 +89,7 @@ def record_patient_observation(id): #me as nurse have to record to the specific 
     elif not blood_pressure.isdigit():
         print("Error:Blood Pressure must be number.")
         return
+    
     pulse_rate = input("Enter Pulse Rate (💓): ").strip()
     if pulse_rate == "":
         print("Error:Pulse Rate cannot be empty!")
@@ -96,6 +97,7 @@ def record_patient_observation(id): #me as nurse have to record to the specific 
     elif not pulse_rate.isdigit():
         print("Error:Pulse Rate must be number.")
         return
+    
     temperature = input("Enter Temperature (🌡️): ").strip()
     if temperature == "":
         print("Error:Temperature cannot be empty!")
@@ -103,6 +105,7 @@ def record_patient_observation(id): #me as nurse have to record to the specific 
     elif not temperature.isdigit():
         print("Error:Temperature must be number.")
         return
+    
     symptoms = input("Enter Symptoms (🩺): ").strip()
     if symptoms == "":
         print("Error:Symptoms cannot be empty!")
@@ -110,6 +113,7 @@ def record_patient_observation(id): #me as nurse have to record to the specific 
     elif not symptoms.isdigit():
         print("Error:Symptoms must be number.")
         return
+    
     date = input("Enter Date (DD/MM/YY): ").strip()
     if date == "":
         print("Error:Date cannot be empty!")
@@ -121,7 +125,7 @@ def record_patient_observation(id): #me as nurse have to record to the specific 
     observation_id = len(patient_observation)
     patient_observation.append([int(observation_id), blood_pressure, pulse_rate, temperature, symptoms, date])
 
-    fileManager.writeFile("patient_observations/" + str(patient_id) + ".txt", patient_observation) # will auto create path that not found 
+    fileManager.writeFile("patient_observations/" + patient_id + ".txt", patient_observation) # will auto create path that not found 
     print("Observation recorded successfully.", "ID", observation_id)
 
 def view_patient_medical_records(id): #get record from (patient_medical_records) that will insert by 'kwx'
@@ -132,6 +136,7 @@ def view_patient_medical_records(id): #get record from (patient_medical_records)
     elif not user.isdigit():
         print("Error:Patient ID must be number.")
         return
+    
     medical_records = fileManager.readFile("patient_medical_records/"+ user +".txt") 
     for x in medical_records:
         print("ID: ",x[0],"\nProblem:",x[1],"\nTime:",x[3],"\nPrice:",x[4],"\nDate:",x[5])
@@ -139,10 +144,12 @@ def view_patient_medical_records(id): #get record from (patient_medical_records)
 def administer_medicine(id): #to comfirm/record that medicine has given to the patient, 
     print(f"\n{"=" *12} Administer Medicine {"=" *12}")
     ID = input("Enter Patient ID: ")
+
     Medicine = input("Medicine Type: ")
     if Medicine == "":
         print("Error:Medicine cannot be empty!")
         return
+    
     Quantity = input("how many miligram/gram of medicine: ")
     if Quantity == "":
         print("Error:Quantity of medicine cannot be empty!")
