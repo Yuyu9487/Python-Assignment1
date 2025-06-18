@@ -1,8 +1,4 @@
-import main
 import fileManager
-import re
-#Doctor Funtion
-APPOINTMENT_FILE="patient.txt"
 
 def Doctor():
     id = -1
@@ -181,4 +177,4 @@ def Appointment_Block_List(id):
 
     else:
         print("Invalid service choice.")
-        return
+    return
