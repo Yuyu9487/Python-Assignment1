@@ -28,16 +28,43 @@ def Doctor():
                 case _:
                     print("Error. Please Enter A Valid Input.")
 
-def view_patient_medical_records():
+def Login():
+    doctorInfo = fileManager.readFile("doctor.txt")
+    userName = input("=======================\nEnter your Name: ").strip()
+    userPassword = input("Enter your Password: ").strip()
+    if userName == "":
+        print("Error:Name connot be blank!")
+        return -1
+    elif userPassword == "":
+        print("Error:Password connot be blank!")
+        return -1
+    for info in doctorInfo:
+        if info[1] == userName and info[2] == userPassword:
+            print("Successful login!")
+            return int(info[0])
+        else:
+            print("Error:Enter error!")
+    return -1
+
+def view_patient_medical_records(id):
+    print("="*30, "Patient", "="*30)
+    fileManager.viewAllPatient()
+    print("="*67)
     PatientID = input("Enter Patient ID: ").strip()
     found = False
     MedicalRecords = fileManager.readFile("patient_medical_records/" + str(PatientID) + ".txt")
     for MedicalRecord in MedicalRecords:
         print(f"Patient ID:{MedicalRecord[0]},Patient Problem:{MedicalRecord[1]},Patient Details:{MedicalRecord[2]},Medical Plan:{MedicalRecord[3]},Price:{MedicalRecord[4]},Date:{MedicalRecord[5]}")
 
-def UpdatePatientRecords():
-    PatientID=int(input("Enter your ID:"))
-    MedicalRecord=fileManager.readFile("patient_medical_records/" + str(PatientID) + ".txt")
+def UpdatePatientRecords(id):
+    print("="*30, "Patient", "="*30)
+    fileManager.viewAllPatient()
+    print("="*67)
+    PatientID = input("Enter your ID:").strip()
+    if PatientID == "" or not PatientID.isdigit():
+        print("Please enter again!")
+        return
+    MedicalRecord=fileManager.readFile("patient_medical_records/" + PatientID + ".txt")
     PatientProblem=input("Enter the problem:")
     PatientDetail=input("Enter the details:")
     MedicalPlan=input("Enter the medical plan:")
@@ -56,19 +83,20 @@ def UpdatePatientRecords():
     else:
         print("Good Good!")
     MedicalRecord.append ([PatientID,PatientProblem,PatientDetail,MedicalPlan,Price,Date]) 
-    fileManager.writeFile ("patient_medical_records/" + str(PatientID) + ".txt", 6 , MedicalRecord)
+    fileManager.writeFile ("patient_medical_records/" + PatientID + ".txt", MedicalRecord)
     
 def ViewAppointment():
     PatientID = input("Enter Patient ID: ").strip()
     found = False
     Appointment = fileManager.readFile("Appointment.txt")
+    print("="*30, "Appointment", "="*30)
     for appointment in Appointment:
-        if appointment[0] == PatientID:
-            print(f"PatientID: {appointment[0]}, Doctor ID: {appointment[1]}, Date: {appointment[2]}, Start Time: {appointment[3]}, End Time: {appointment[4]}")
+        if int(appointment[1]) == id:
+            print("Patient ID:", appointment[0].ljust(3), "Date:", appointment[2].ljust(9), "Start Time:", appointment[3].ljust(5), "End Time:",appointment[4].rjust(5))
             found = True
     if not found:
-        print("No appointment found for the given Patient ID.")
-    return
+        print("You don't have appointment.")
+    print("="*70)
 
 def Appointment_Block_List():
     DoctorID = input("Enter Doctor ID: ").strip()
@@ -79,35 +107,36 @@ def Appointment_Block_List():
     found = False
 
     if service == "1":
+        print("="*30, "Appointment Block List", "="*30)
         for blocklist in BlockLists:
-            if blocklist[1] == DoctorID:
-                print(f"ID: {blocklist[0]} | PatientID: {blocklist[1]} | Not Available Date: {blocklist[2]} | Start Time: {blocklist[3]} | End Time: {blocklist[4]}")
+            if int(blocklist[1]) == id:
+                print("ID:", blocklist[0].ljust(3), "PatientID:", blocklist[1].ljust(3), "Not Available Date:", blocklist[2].ljust(9), "Start Time:", blocklist[3].ljust(5), "End Time:",blocklist[4].rjust(5))
                 found = True
         if not found:
             print("No block list found for the given Doctor ID.")
+        print("="*84)
 
     elif service == "2":
-        NotAvailableDate = input("Enter the not available date (e.g. 2024-12-01): ").strip()
+        NotAvailableDate = input("Enter the not available date (e.g. 01/12/25): ").strip()
         if not fileManager.checkDate(NotAvailableDate):
             print("Please enter again!")
             return
-        else:
-            print("Good Good!")
-        NotAvailableStartTime = input("Enter the not available start time (e.g. 09:00): ").strip()
+        NotAvailableStartTime = input("Enter the not available start time (e.g. 0900): ").strip()
         if not fileManager.checkTime(NotAvailableStartTime):
             print("Please enter again!")
             return
-        else:
-            print("Good Good!")
-        NotAvailableEndTime = input("Enter the not available end time (e.g. 12:00): ").strip()
+        NotAvailableEndTime = input("Enter the not available end time (e.g. 1200): ").strip()
         if not fileManager.checkTime(NotAvailableEndTime):
             print("Please enter again!")
             return
-        else:
-            print("Good Good!")
-        new_id = str(len(BlockLists) + 1)
-        BlockLists.append([new_id, DoctorID, NotAvailableDate, NotAvailableStartTime, NotAvailableEndTime])
-        fileManager.writeFile("AppointmentBlockList.txt", 5, BlockLists)
+        blocklistID = [blocklist[0] for blocklist in BlockLists]
+        new_id = 0
+        while True:
+            if new_id not in blocklistID:
+                break
+            new_id += 1
+        BlockLists.append([new_id, id, NotAvailableDate, NotAvailableStartTime, NotAvailableEndTime])
+        fileManager.writeFile("AppointmentBlockList.txt", BlockLists)
         print("New block added successfully.")
 
     elif service == "3":

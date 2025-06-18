@@ -127,17 +127,17 @@ def update_info(ID):
 
 def view_payment(ID):
     payments = fileManager.readFile("patient_payments/"+ str(ID) +".txt")
-    totalamount = 0
+    totalAmount = 0
 
     print("\n" + "=" * 24 + " Payment " + "=" * 24)
     print("PaymentID\tAmount(RM)\tSettled Payment")
     for payment in payments:
         print(f"{payment[0]}\t\t{payment[1]}\t\t{payment[2]}")
         if payment[2] == "No":
-            totalamount += int(payment[1])
+            totalAmount += int(payment[1])
 
-    if totalamount == 0:
+    if totalAmount == 0:
         print(f"you has no outstanding payment.")
     else:
-        print(f"Total outstanding amount: RM{totalamount}")
+        print(f"Total outstanding amount: RM{totalAmount}")
     print("=" * 57 + "\n")
