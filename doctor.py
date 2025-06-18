@@ -5,26 +5,38 @@ import re
 APPOINTMENT_FILE="patient.txt"
 
 def Doctor():
+    id = -1
     print("\n============================\nDoctor Menu\n============================")
-    print("1.Patient's Medical Records/Treatment History\n2.Update Patient Record\n3.View Appointment List\n4.Block/Unblock Schedule\n5.Back To Menu")
     while True:
-        user = input("Your Choice:")
-        match user:
+        if id == -1:
+            print("1.login")
+            print("2.Back To Menu")
+            user = input("Your Choice:").strip()
+            match user:
                 case "1":
-                    view_patient_medical_records()
-                
+                    id = Login()
                 case "2":
-                    UpdatePatientRecords()
-                  
+                    break
+                case _:
+                    print("Error. Please Enter A Valid Input.")
+        else:
+            print("1.Patient's Medical Records/Treatment History")
+            print("2.Update Patient Record")
+            print("3.View Appointment List")
+            print("4.Block/Unblock Schedule")
+            print("5.Back To Menu")
+            user = input("Your Choice:")
+            match user:
+                case "1":
+                    view_patient_medical_records(id)
+                case "2":
+                    UpdatePatientRecords(id)
                 case "3":
-                    ViewAppointment()
-                  
+                    ViewAppointment(id)
                 case "4":
-                    Appointment_Block_List()
-
+                    Appointment_Block_List(id)
                 case "5":
-                    main.main()
-
+                    break
                 case _:
                     print("Error. Please Enter A Valid Input.")
 
@@ -51,10 +63,15 @@ def view_patient_medical_records(id):
     fileManager.viewAllPatient()
     print("="*67)
     PatientID = input("Enter Patient ID: ").strip()
-    found = False
+    if PatientID == "" or not PatientID.isdigit():
+        print("Please enter again!")
+        return
     MedicalRecords = fileManager.readFile("patient_medical_records/" + str(PatientID) + ".txt")
-    for MedicalRecord in MedicalRecords:
-        print(f"Patient ID:{MedicalRecord[0]},Patient Problem:{MedicalRecord[1]},Patient Details:{MedicalRecord[2]},Medical Plan:{MedicalRecord[3]},Price:{MedicalRecord[4]},Date:{MedicalRecord[5]}")
+    if len(MedicalRecords) > 0:
+        for MedicalRecord in MedicalRecords:
+            print(f"Patient ID:{MedicalRecord[0]},Patient Problem:{MedicalRecord[1]},Patient Details:{MedicalRecord[2]},Medical Plan:{MedicalRecord[3]},Price:{MedicalRecord[4]},Date:{MedicalRecord[5]}")
+    else:
+        print("patient don't have medical records.")
 
 def UpdatePatientRecords(id):
     print("="*30, "Patient", "="*30)
@@ -66,27 +83,32 @@ def UpdatePatientRecords(id):
         return
     MedicalRecord=fileManager.readFile("patient_medical_records/" + PatientID + ".txt")
     PatientProblem=input("Enter the problem:")
+    if PatientProblem == "":
+        print("Please enter again!")
+        return
     PatientDetail=input("Enter the details:")
+    if PatientDetail == "":
+        print("Please enter again!")
+        return
     MedicalPlan=input("Enter the medical plan:")
+    if MedicalPlan == "":
+        print("Please enter again!")
+        return
     Price=input("Enter the price:")
     if Price == "":
-        print("Please enter again")
+        print("Please enter again!")
         return
     elif Price.isdigit()==False:
-        print("Please enter again")
+        print("Please enter again!")
         return
-    
     Date=input("Enter the date (eg: 24/4/25):")
     if not fileManager.checkDate(Date):
         print("Please enter again!")
         return
-    else:
-        print("Good Good!")
     MedicalRecord.append ([PatientID,PatientProblem,PatientDetail,MedicalPlan,Price,Date]) 
     fileManager.writeFile ("patient_medical_records/" + PatientID + ".txt", MedicalRecord)
     
-def ViewAppointment():
-    PatientID = input("Enter Patient ID: ").strip()
+def ViewAppointment(id):
     found = False
     Appointment = fileManager.readFile("Appointment.txt")
     print("="*30, "Appointment", "="*30)
@@ -98,11 +120,13 @@ def ViewAppointment():
         print("You don't have appointment.")
     print("="*70)
 
-def Appointment_Block_List():
-    DoctorID = input("Enter Doctor ID: ").strip()
+def Appointment_Block_List(id):
     print("Choose a service:\n1. View block list\n2. Insert block list\n3. Delete block list")
     service = input("Enter your service number (1/2/3): ").strip()
-
+    if service == "" or not service.isdigit():
+        print("Please enter again!")
+        return
+    
     BlockLists = fileManager.readFile("AppointmentBlockList.txt")  # 放外面，避免后面读取不到
     found = False
 
@@ -142,12 +166,15 @@ def Appointment_Block_List():
     elif service == "3":
         print("Current Block List:")
         for blocklist in BlockLists:
-            if blocklist[1] == DoctorID:
+            if int(blocklist[1]) == id:
                 print(f"ID: {blocklist[0]} | Date: {blocklist[2]} | Start: {blocklist[3]} | End: {blocklist[4]}")
         
         delete_id = input("Enter the Block ID you want to delete: ").strip()
-        BlockLists = [item for item in BlockLists if item[0] != delete_id or item[1] != DoctorID]
-        fileManager.writeFile("AppointmentBlockList.txt", 5, BlockLists)
+        if delete_id == "" or not delete_id.isdigit():
+            print("Please enter again!")
+            return
+        BlockLists = [item for item in BlockLists if item[0] != delete_id or int(item[1]) != id]
+        fileManager.writeFile("AppointmentBlockList.txt", BlockLists)
         print(f"Block ID {delete_id} deleted (if it existed).")
 
     else:
