@@ -1,4 +1,8 @@
+import main
 import fileManager
+import re
+#Doctor Funtion
+APPOINTMENT_FILE="patient.txt"
 
 def Doctor():
     id = -1
@@ -63,11 +67,13 @@ def view_patient_medical_records(id):
         print("Please enter again!")
         return
     MedicalRecords = fileManager.readFile("patient_medical_records/" + str(PatientID) + ".txt")
-    if len(MedicalRecords) > 0:
-        for MedicalRecord in MedicalRecords:
-            print(f"Patient ID:{MedicalRecord[0]},Patient Problem:{MedicalRecord[1]},Patient Details:{MedicalRecord[2]},Medical Plan:{MedicalRecord[3]},Price:{MedicalRecord[4]},Date:{MedicalRecord[5]}")
-    else:
-        print("patient don't have medical records.")
+    print ("="*30, "Patient", "="*30)
+    for MedicalRecord in MedicalRecords:
+        print("Patient ID:", MedicalRecord[0].ljust(3), "Patient Problem:", MedicalRecord[1].ljust(3), "Patient Details:", MedicalRecord[2].ljust(9), "Price:", MedicalRecord[3].ljust(5), "Date:", MedicalRecord[4].rjust(5))
+        found = True
+    if not found:
+        print("Patient don't have medical records.")
+    print("="*67)
 
 def UpdatePatientRecords(id):
     print("="*30, "Patient", "="*30)
@@ -175,4 +181,4 @@ def Appointment_Block_List(id):
 
     else:
         print("Invalid service choice.")
-    return
+        return
