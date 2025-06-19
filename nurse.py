@@ -135,8 +135,8 @@ def view_patient_medical_records(id): #To view Medical History such as, history 
         return
     
     medical_records = fileManager.readFile("patient_medical_records/"+ user +".txt") 
-    for x in medical_records:
-        print("ID: ",x[0],"\nProblem:",x[1],"\nTime:",x[3],"\nPrice:",x[4],"\nDate:",x[5])
+    for medical_record in medical_records:
+        print("ID: ",medical_record[0],"\nProblem:",medical_record[1],"\nTime:",medical_record[3],"\nPrice:",medical_record[4],"\nDate:",medical_record[5])
 
 def administer_medicine(id): #Record nurse gave medicine to patient
     print(f"\n{"=" *12} Administer Medicine {"=" *12}")
