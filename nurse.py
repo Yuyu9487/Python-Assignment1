@@ -65,9 +65,6 @@ def view_doctor_appointment(id): #view doctor's appointment
     for i in range(len(appointments)): 
         if appointments[i][1] == user:
             print("Patient ID:", appointments[i][0].ljust(15), "Date:", appointments[i][2].ljust(15), "Start Time:", appointments[i][3].ljust(15), "End Time:", appointments[i][4].ljust(15))
-            break
-    else:
-        print("ID not found.")
 
 def record_patient_observation(id): #me as nurse have to record to the specific Patient ID for future reference
     patient_id = input("Enter Patient ID: ").strip()
