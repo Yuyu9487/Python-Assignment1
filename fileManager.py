@@ -24,7 +24,7 @@ def readFile(path : str):
 def writeFile(path: str, data: list):
     try:
         # sort data with first element
-        data.sort(key = lambda group : group[0])
+        data.sort(key = lambda group : int(group[0]))
         with open(path, "w") as file:
             lines = []
             for group in data:
