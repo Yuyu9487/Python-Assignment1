@@ -37,10 +37,10 @@ def Login():
     userName = input("=======================\nEnter your Name: ").strip()
     userPassword = input("Enter your Password: ").strip()
     if userName == "":
-        print("Error:Name connot be blank!")
+        print("Error:Name cannot be blank!")
         return -1
     elif userPassword == "":
-        print("Error:Password connot be blank!")
+        print("Error:Password cannot be blank!")
         return -1
     for info in nurseInfo:
         if info[1] == userName and info[2] == userPassword:
@@ -55,16 +55,16 @@ def view_doctor_appointment(id): #view doctor's appointment
     fileManager.viewAllDoctor()
     print("="*68)
     appointments = fileManager.readFile("Appointment.txt")
-    user = input("Enter patient ID: ").strip()
+    user = input("Enter Doctor ID: ").strip()
     if user == "":
-        print("Error:Patient ID cannot be empty!")
+        print("Error:Doctor ID cannot be empty!")
         return
     elif not user.isdigit():
-        print("Error:Patient ID must be number!")
+        print("Error:Doctor ID must be number!")
         return
     print("="*88)
     for i in range(len(appointments)): 
-        if appointments[i][0] == user:
+        if appointments[i][1] == user:
             print("Patient ID:", appointments[i][0].ljust(15), "Date:", appointments[i][2].ljust(15), "Start Time:", appointments[i][3].ljust(15), "End Time:", appointments[i][4].ljust(15))
             break
     else:
