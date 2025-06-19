@@ -50,8 +50,7 @@ def Login():
         if info[1] == userName and info[2] == userPassword:
             print("Successful login!")
             return int(info[0])
-        else:
-            print("Error:Enter error!")
+    print("Error:Enter error!")
     return -1
 
 def view_patient_medical_records(id):
