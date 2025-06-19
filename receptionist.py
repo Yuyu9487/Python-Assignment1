@@ -145,6 +145,7 @@ def Updateindividual(individual):
                         user = input("============================\nWhat would you like to Update?\n1.Name\n2.Password\n3.Contact Number\n0.Abort\nYour Choice:").strip()
                     if user == "" or user.isdigit() == False:
                         print("Invalid input, input must be digits and cannot be null.")
+                        break
 
                     user = int(user)
                     if user == 1:
@@ -211,7 +212,7 @@ def Updateindividual(individual):
                             case _:
                                 print("Error: Invalid Input.")
                                 break
-
+                break
         if userid != info[0]: 
             print(f"Error: {individual} ID {userid} does not exist.")
 
