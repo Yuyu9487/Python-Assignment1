@@ -41,10 +41,10 @@ def Login():
     userName = input("\nEnter your Name: ").strip()
     userPassword = input("Enter your Password: ").strip()
     if userName == "":
-        print("\nError:Name connot be blank!\n")
+        print("\nError:Name cannot be blank!\n")
         return -1
     elif userPassword == "":
-        print("\nError:Password connot be blank!\n")
+        print("\nError:Password cannot be blank!\n")
         return -1
     for patient in patients:
         if patient[1] == userName and patient[2] == userPassword:
