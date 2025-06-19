@@ -110,9 +110,6 @@ def record_patient_observation(id): #me as nurse have to record to the specific 
     if symptoms == "":
         print("Error:Symptoms cannot be empty!")
         return
-    elif not symptoms.isdigit():
-        print("Error:Symptoms must be number.")
-        return
     
     date = input("Enter Date (DD/MM/YY): ").strip()
     if date == "":
@@ -128,7 +125,7 @@ def record_patient_observation(id): #me as nurse have to record to the specific 
     fileManager.writeFile("patient_observations/" + patient_id + ".txt", patient_observation) # will auto create path that not found 
     print("Observation recorded successfully.", "ID", observation_id)
 
-def view_patient_medical_records(id): #get record from (patient_medical_records) that will insert by 'kwx'
+def view_patient_medical_records(id): #To view Medical History such as, history current time,price of medicine,more and more
     user = input("Patient ID: ") 
     if user == "":
         print("Error:Patient ID cannot be empty!")
@@ -141,7 +138,7 @@ def view_patient_medical_records(id): #get record from (patient_medical_records)
     for x in medical_records:
         print("ID: ",x[0],"\nProblem:",x[1],"\nTime:",x[3],"\nPrice:",x[4],"\nDate:",x[5])
 
-def administer_medicine(id): #to comfirm/record that medicine has given to the patient, 
+def administer_medicine(id): #Record nurse gave medicine to patient
     print(f"\n{"=" *12} Administer Medicine {"=" *12}")
     ID = input("Enter Patient ID: ")
 
