@@ -41,17 +41,16 @@ def Login():
     userName = input("=======================\nEnter your Name: ").strip()
     userPassword = input("Enter your Password: ").strip()
     if userName == "":
-        print("Error:Name connot be blank!")
+        print("Error:Name cannot be blank!")
         return -1
     elif userPassword == "":
-        print("Error:Password connot be blank!")
+        print("Error:Password cannot be blank!")
         return -1
     for info in doctorInfo:
         if info[1] == userName and info[2] == userPassword:
             print("Successful login!")
             return int(info[0])
-        else:
-            print("Error:Enter error!")
+    print("Error:Enter error!")
     return -1
 
 def view_patient_medical_records(id):
@@ -63,11 +62,13 @@ def view_patient_medical_records(id):
         print("Please enter again!")
         return
     MedicalRecords = fileManager.readFile("patient_medical_records/" + str(PatientID) + ".txt")
-    if len(MedicalRecords) > 0:
-        for MedicalRecord in MedicalRecords:
-            print(f"Patient ID:{MedicalRecord[0]},Patient Problem:{MedicalRecord[1]},Patient Details:{MedicalRecord[2]},Medical Plan:{MedicalRecord[3]},Price:{MedicalRecord[4]},Date:{MedicalRecord[5]}")
-    else:
-        print("patient don't have medical records.")
+    print ("="*30, "Patient", "="*30)
+    for MedicalRecord in MedicalRecords:
+        print("Patient ID:", MedicalRecord[0].ljust(3), "Patient Problem:", MedicalRecord[1].ljust(3), "Patient Details:", MedicalRecord[2].ljust(9), "Price:", MedicalRecord[3].ljust(5), "Date:", MedicalRecord[4].rjust(5))
+        found = True
+    if not found:
+        print("Patient don't have medical records.")
+    print("="*67)
 
 def UpdatePatientRecords(id):
     print("="*30, "Patient", "="*30)
@@ -169,7 +170,7 @@ def Appointment_Block_List(id):
         if delete_id == "" or not delete_id.isdigit():
             print("Please enter again!")
             return
-        BlockLists = [item for item in BlockLists if item[0] != delete_id or int(item[1]) != id]
+        BlockLists = [item for item in BlockLists if item[0] != delete_id]
         fileManager.writeFile("AppointmentBlockList.txt", BlockLists)
         print(f"Block ID {delete_id} deleted (if it existed).")
 

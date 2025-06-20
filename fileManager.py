@@ -24,7 +24,7 @@ def readFile(path : str):
 def writeFile(path: str, data: list):
     try:
         # sort data with first element
-        data.sort(key = lambda group : group[0])
+        data.sort(key = lambda group : int(group[0]))
         with open(path, "w") as file:
             lines = []
             for group in data:
@@ -62,7 +62,7 @@ def viewAllNurse():
         print("\nError: Nurse file is empty!\n")
 
 def checkDate(date:str):
-    if len(date) == 8 and 13 > int(date[3:5]) > 0 and int(date[0:2]) > 0:
+    if len(date) == 8 and (date[0:2] + date[3:5] + date[6:8]).isdigit() and date[2] == "/" and date[5] == "/" and 13 > int(date[3:5]) > 0 and int(date[0:2]) > 0:
         if int(date[6:8]) % 4 == 0 and int(date[3:5]) == 2 and int(date[0:2]) < 30:
             return True
         if int(date[3:5]) == 2 and int(date[0:2]) < 29:
@@ -74,6 +74,6 @@ def checkDate(date:str):
     return False
 
 def checkTime(time:str):
-    if len(time) == 4 and 24 > int(time[:2]) > -1 and 60 > int(time[2:]) > -1:
+    if len(time) == 4 and time.isdigit() and 24 > int(time[:2]) > -1 and 60 > int(time[2:]) > -1:
         return True
     return False

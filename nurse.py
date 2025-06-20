@@ -46,8 +46,7 @@ def Login():
         if info[1] == userName and info[2] == userPassword:
             print("Successful login!")
             return int(info[0])
-        else:
-            print("Error:Enter error!")
+    print("Error:Enter error!")
     return -1
 
 def view_doctor_appointment(id): #view doctor's appointment
@@ -66,9 +65,6 @@ def view_doctor_appointment(id): #view doctor's appointment
     for i in range(len(appointments)): 
         if appointments[i][1] == user:
             print("Patient ID:", appointments[i][0].ljust(15), "Date:", appointments[i][2].ljust(15), "Start Time:", appointments[i][3].ljust(15), "End Time:", appointments[i][4].ljust(15))
-            break
-    else:
-        print("ID not found.")
 
 def record_patient_observation(id): #me as nurse have to record to the specific Patient ID for future reference
     patient_id = input("Enter Patient ID: ").strip()
@@ -134,9 +130,9 @@ def view_patient_medical_records(id): #To view Medical History such as, history 
         print("Error:Patient ID must be number.")
         return
     
-    medical_records = fileManager.readFile("patient_medical_records/"+ user +".txt") 
-    for x in medical_records:
-        print("ID: ",x[0],"\nProblem:",x[1],"\nAfter Care:",x[3],"\nPrice:",x[4],"\nDate:",x[5])
+    medical_records = fileManager.readFile("patient_medical_records/"+ user +".txt")
+    for medical_record in medical_records:
+        print("ID: ",medical_record[0],"\nProblem:",medical_record[1],"\nAfter Care:",medical_record[3],"\nPrice:",medical_record[4],"\nDate:",medical_record[5])
 
 def administer_medicine(id): #Record nurse gave medicine to patient
     print(f"\n{"=" *12} Administer Medicine {"=" *12}")
