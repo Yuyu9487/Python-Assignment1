@@ -170,7 +170,7 @@ def Appointment_Block_List(id):
         if delete_id == "" or not delete_id.isdigit():
             print("Please enter again!")
             return
-        BlockLists = [item for item in BlockLists if item[0] != delete_id or int(item[1]) != id]
+        BlockLists = [item for item in BlockLists if item[0] != delete_id]
         fileManager.writeFile("AppointmentBlockList.txt", BlockLists)
         print(f"Block ID {delete_id} deleted (if it existed).")
 
