@@ -131,7 +131,7 @@ def Appointment_Block_List(id):
         print("="*30, "Appointment Block List", "="*30)
         for blocklist in BlockLists:
             if int(blocklist[1]) == id:
-                print("ID:", blocklist[0].ljust(3), "PatientID:", blocklist[1].ljust(3), "Not Available Date:", blocklist[2].ljust(9), "Start Time:", blocklist[3].ljust(5), "End Time:",blocklist[4].rjust(5))
+                print("ID:", blocklist[0].ljust(3), "Not Available Date:", blocklist[2].ljust(9), "Start Time:", blocklist[3].ljust(5), "End Time:",blocklist[4].rjust(5))
                 found = True
         if not found:
             print("No block list found for the given Doctor ID.")
@@ -150,7 +150,7 @@ def Appointment_Block_List(id):
         if not fileManager.checkTime(NotAvailableEndTime):
             print("Please enter again!")
             return
-        blocklistID = [blocklist[0] for blocklist in BlockLists]
+        blocklistID = [int(blocklist[0]) for blocklist in BlockLists]
         new_id = 0
         while True:
             if new_id not in blocklistID:
