@@ -1,1 +1,2 @@
 0/#cold/#temperature 39/#sleep nicely/#100/#01/01/26
+0/#fever/#temperature 39.7/#take medicine/#90/#05/04/25

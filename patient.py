@@ -75,7 +75,7 @@ def view_appointment(ID):
     print("\n" + "=" * 38 + " Appointment " + "=" * 38)
     for appointment in appointments:
         # find the appointment which is for this patient
-        if int(appointment[1]) == ID:
+        if int(appointment[0]) == ID:
             # get doctor name
             doctorName = "empty"
             for doctor in doctors:
@@ -84,7 +84,7 @@ def view_appointment(ID):
                     break
             
             # print appointment
-            print("ID:", appointment[0].ljust(3), "Doctor:", doctorName.ljust(20), "Date:", appointment[2].ljust(10), "Start time:", appointment[3].ljust(6), "End time:", appointment[4].ljust(6))
+            print("Doctor:", doctorName.ljust(20), "Date:", appointment[2].ljust(10), "Start time:", appointment[3].ljust(6), "End time:", appointment[4].ljust(6))
     print("=" * 89 + "\n")
 
 def update_info(ID):
@@ -114,7 +114,7 @@ def update_info(ID):
             elif user == 3 and not update.isdigit():
                 print("\nError:Age cannot be not digit.")
             elif user == 4 and not update.isdigit():
-                print("\nError:Patient cannot be not digit.")
+                print("\nError:Contact Number cannot be not digit.")
             else:
                 confirm = input(f"\nSystem will be overwrite {patientInfo[i][user]} with {update}.\n1.Confirm\n2.Cancel\nAre you sure?:").strip()
                 if confirm == "1":
