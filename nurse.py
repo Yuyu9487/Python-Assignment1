@@ -65,7 +65,7 @@ def view_doctor_appointment(id): #view doctor's appointment
     for i in range(len(appointments)): 
         if appointments[i][1] == user:
             print("Patient ID:", appointments[i][0].ljust(15), "Date:", appointments[i][2].ljust(15), "Start Time:", appointments[i][3].ljust(15), "End Time:", appointments[i][4].ljust(15))
-
+            #If the doctor ID is not existed in appointment text file list, index 1. then send back to nurse menu () , because Nurse() is a big while True loop.
 def record_patient_observation(id): #me as nurse have to record to the specific Patient ID for future reference
     patient_id = input("Enter Patient ID: ").strip()
     if patient_id == "":
@@ -76,6 +76,10 @@ def record_patient_observation(id): #me as nurse have to record to the specific 
         return
    
     patient_observation = fileManager.readFile("patient_observations/" + patient_id + ".txt")
+    #purpose of /(slash) go inside this "patient_observations" folder first, then find the file name example: 1.txt
+    #/ = direct separator
+    # and on this fileManager module, readfile() function, we define if the information does not exist which example 168.txt not exist then
+    #it will automatically create one new file for this 168.txt under "patient_observation" folder 
 
     # write information
     blood_pressure = input("Enter Blood Pressure (🩸C): ").strip()
@@ -115,12 +119,12 @@ def record_patient_observation(id): #me as nurse have to record to the specific 
         print("Error:Date is wrong!")
         return
 
-    observation_id = len(patient_observation)
-    patient_observation.append([int(observation_id), blood_pressure, pulse_rate, temperature, symptoms, date])
+    observation_id = len(patient_observation) #take the patient observation data list, and i take the length of the list to be the new observation ID 
+    patient_observation.append([int(observation_id), blood_pressure, pulse_rate, temperature, symptoms, date])#then add all the information to the list above
 
-    fileManager.writeFile("patient_observations/" + patient_id + ".txt", patient_observation) # will auto create path that not found 
-    print("Observation recorded successfully.", "ID", observation_id)
-
+    fileManager.writeFile("patient_observations/" + patient_id + ".txt", patient_observation) # then write it inside the patient ID( if patient ID not exist it will already created)
+    print("Observation recorded successfully.", "ID", observation_id)                         # add inside the folder of patient observation 
+                                                                                                 
 def view_patient_medical_records(id): #To view Medical History such as, history current time,price of medicine,more and more
     user = input("Patient ID: ") 
     if user == "":
