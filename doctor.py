@@ -57,6 +57,7 @@ def view_patient_medical_records(id):
     print("="*30, "Patient", "="*30)
     fileManager.viewAllPatient()
     print("="*67)
+    found = False
     PatientID = input("Enter Patient ID: ").strip()
     if PatientID == "" or not PatientID.isdigit():
         print("Please enter again!")
