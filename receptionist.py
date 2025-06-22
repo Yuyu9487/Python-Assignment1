@@ -423,7 +423,7 @@ def paymentfuction(userid):
                                     if payment[2] == "No":
                                         paymentList.remove([payment[0], payment[1], payment[2]])
                                         payment[2] = "Yes"
-                                        paymentList.append([payment[0], payment[1], payment[2], ])
+                                        paymentList.append([payment[0], payment[1], payment[2]])
                                         fileManager.writeFile("patient_payments/"+ str(userid) +".txt", paymentList)
                                         print("Payment made successfully!")
                                 case "2":
