@@ -17,7 +17,7 @@ def Nurse():
                     print("Error. Please Enter A Valid Input.")
         else:
             print("1.View Doctor's Appointment\n2.Record Patient's Observation\n3.View Prescriptions\n4.Administer Medicine To Patients\n5.Back To Menu")
-            user = input("Your Choice:").strip()
+            user = input("Your Choice:").strip()  #see who is handling the id 
             match user:
                 case "1":
                     view_doctor_appointment(id)
@@ -39,7 +39,8 @@ def Login():
     if userName == "":
         print("Error:Name cannot be blank!")
         return -1
-    elif userPassword == "":
+    elif userPassword == "": 
+
         print("Error:Password cannot be blank!")
         return -1
     for info in nurseInfo:
@@ -60,13 +61,13 @@ def view_doctor_appointment(id): #view doctor's appointment
         return
     elif not user.isdigit():
         print("Error:Doctor ID must be number!")
-        return
+        return # return to where cause it doe'nt have loop, so return straight go back nurse menu?
     print("="*88)
     for i in range(len(appointments)): 
         if appointments[i][1] == user:
             print("Patient ID:", appointments[i][0].ljust(15), "Date:", appointments[i][2].ljust(15), "Start Time:", appointments[i][3].ljust(15), "End Time:", appointments[i][4].ljust(15))
             #If the doctor ID is not existed in appointment text file list, index 1. then send back to nurse menu () , because Nurse() is a big while True loop.
-def record_patient_observation(id): #me as nurse have to record to the specific Patient ID for future reference
+def record_patient_observation(id): #this code is to keep adding new observation for future reference
     patient_id = input("Enter Patient ID: ").strip()
     if patient_id == "":
         print("Error:Patient ID cannot be blank.")
@@ -78,8 +79,8 @@ def record_patient_observation(id): #me as nurse have to record to the specific 
     patient_observation = fileManager.readFile("patient_observations/" + patient_id + ".txt")
     #purpose of /(slash) go inside this "patient_observations" folder first, then find the file name example: 1.txt
     #/ = direct separator
-    # and on this fileManager module, readfile() function, we define if the information does not exist which example 168.txt not exist then
-    #it will automatically create one new file for this 168.txt under "patient_observation" folder 
+    # and on this fileManager module, readfile() function, we define if the information does not exist which example 123.txt not exist then
+    #it will automatically create one new file example 168.txt under "patient_observation" folder 
 
     # write information
     blood_pressure = input("Enter Blood Pressure (🩸C): ").strip()
