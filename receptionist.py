@@ -4,8 +4,8 @@ def Receptionist():
     while True:
         print("\n============================\nReceptionist Menu\n============================")
         print("1.Register Individuals\n2.Update Details\n3.Schedule Appointment For Patient\n4.Process Payment\n5.Back To Menu")
-        user = input("Your Choice:").strip()
-        match user:
+        user = input("Your Choice:").strip() #remove extra space
+        match user: 
             case "1":
                 RegisterMenu()
             case "2":
@@ -15,7 +15,7 @@ def Receptionist():
             case "4":
                 RepPay()
             case "5":
-                print("Bringing you back...")
+                print("Bringing you back...") 
                 break
             case _:
                 print("Error: Please Enter A Valid Input.")
@@ -36,10 +36,10 @@ def RegisterMenu():
             case _:
                 print("Error: Invalid Input")
             
-def Registerindividual(individual):
+def Registerindividual(individual): 
     Entered = False
     while Entered == False:
-        match individual:
+        match individual: #matches with the argument and determine the file location
             case "Patient":
                 file = "patient.txt"
             case "Doctor":
@@ -59,7 +59,7 @@ def Registerindividual(individual):
             print("Error:Password cannot be blank.")
             break
 
-        if individual == "Patient":
+        if individual == "Patient": #doctor and nurse dont need to enter their age
             registerAge = input("Enter Patient Age:").strip()
             if registerAge == "":
                 print("Error:Age cannot be blank.")
@@ -76,7 +76,7 @@ def Registerindividual(individual):
             print("Error:Contact Number must be number.")
             break
 
-        if individual == "Patient":
+        if individual == "Patient": #doctor and nurse dont need to enter their address
             registerAddress = input("Enter Patient Address:").strip()
             if registerAddress == "":
                 print("Error:Address Cannot be blank.")
@@ -84,7 +84,7 @@ def Registerindividual(individual):
         
         i = 0
         allID = []
-        for info in readfile:
+        for info in readfile: #read and count how many record exist in the file, giving them a id.
             allID.append(int(info[0]))
         while i < 10000:
             if i in allID:
@@ -155,20 +155,20 @@ def Updateindividual(individual):
                         update = input(f"Enter {individual} Password:").strip()
 
                     elif user ==3:
-                        if individual == "Patient":
+                        if individual == "Patient": #3 is age for patient while also being contact for doctor and nurse
                             update = input(f"Enter {individual} Age:").strip()
                         else:
                             update = input(f"Enter {individual} Contact Number:").strip()
 
                     elif user ==4:
-                        if individual == "Patient":
+                        if individual == "Patient":#will output error if doctor/nurse enter 4, since they can only choose 1-3
                             update = input(f"Enter {individual} Contact Number:").strip()
                         else:
                             print("Invalid Response, Please try again.")
                             break
 
                     elif user ==5:
-                        if individual == "Patient":
+                        if individual == "Patient":#same as above
                             update = input(f"Enter {individual} Address:").strip()
                         else:
                             print("Invalid Response, Please try again.")
@@ -198,7 +198,7 @@ def Updateindividual(individual):
                         print("="*30)
                         confirm = input(f"System will be overwrite {info[user]} with {update}.\n1.Confirm\n2.Abort\nAre you sure?:").strip()
                         match confirm:
-                            case "1":
+                            case "1": #removing old value from the file, updating the new info then rewriting it back into it
                                 readfile.remove([info[0], info[1], info[2], info[3], info[4], info[5]])
                                 info[user] = update
                                 readfile.append([info[0], info[1], info[2], info[3], info[4], info[5]])
@@ -213,8 +213,8 @@ def Updateindividual(individual):
                                 print("Error: Invalid Input.")
                                 break
                 break
-        if userid != info[0]: 
-            print(f"Error: {individual} ID {userid} does not exist.")
+        if userid != info[0]: #continue from line 138, after running thru all record and still isnt the same, then prints error
+            print(f"Error: {individual} ID {userid} does not exist.") #while successful search will break the search instantly, so info[0] will match the userid
 
 ###Appointment
 def MakeAppoint():
@@ -223,9 +223,9 @@ def MakeAppoint():
     print("="*30, "doctor", "="*30)
     fileManager.viewAllDoctor()
     print("=" * 68)
-    patientId = input("Enter Patient ID: ").strip()
+    patientId = input("Enter Patient ID: ").strip() 
     doctorId = input("Enter Doctor ID: ").strip()
-    Appointment_fuction(patientId, doctorId)
+    Appointment_fuction(patientId, doctorId) #choosing which patient have appointment with which doctor
 
 def Appointment_fuction(patientId, doctorId, patientName = None, doctorName = None):
     if patientId == "" or patientId.isdigit() == False:
@@ -241,24 +241,25 @@ def Appointment_fuction(patientId, doctorId, patientName = None, doctorName = No
     if patientName == None or doctorName == None:
         patientInfo, doctorInfo = fileManager.readFile("patient.txt"), fileManager.readFile("doctor.txt")
         for info in patientInfo:
-            if info[0] == patientId:
+            if info[0] == patientId: #searching if input is in record or not while also assigning their names
                 patientName = info[1]
         for info in doctorInfo:
             if info[0] == doctorId:
                 doctorName = info[1]
-        if patientName == None:
+        if patientName == None: #no name will be assigned if the record doesn't exist, printing error
             print(f"Error: Patient ID {patientId} can't be found.")
             return
         elif doctorName == None:
             print(f"Error: Doctor ID {doctorId} can't be found.")
             return
 
+    #after checking, actually entering the function part of this menu
     user = input("="*70 + "\nWhat would you like to do?\n1.Schedule Appointment\n2.View Appointment\n3.Cancel Appointment\n4.Abort\nYour Choice:").strip()
     if user == "" or user.isdigit() == False:
         print("Invalid input, ID must be digits and cannot be null.")
         Appointment_fuction(patientId, doctorId, patientName, doctorName)
     else:
-        user = int(user)
+        user = int(user) #to make matching below easier instead of using (case"1")
     match user:
         case 1:
             scheduleAppointment(patientId, doctorId, patientName, doctorName)
@@ -289,18 +290,18 @@ def scheduleAppointment(patientId, doctorId, patientName, doctorName):
         Appointmentblock = fileManager.readFile("AppointmentBlockList.txt")
         Appointment = fileManager.readFile("Appointment.txt")
 
-        for appointInfo in Appointment:
+        for appointInfo in Appointment: #checking if the new appointment will overlap with existing appointment or not
             if date == appointInfo[2] and startTime < int(appointInfo[4]) and endTime > int(appointInfo[3]):
-                if patientId == appointInfo[0]:
+                if patientId == appointInfo[0]: #check for patient
                     print(f"Error: Patient {patientName} have Appointment at [{date}]!")
                     Appointment_fuction(patientId, doctorId, patientName, doctorName)
                     return
-                elif doctorId == appointInfo[1]:
+                elif doctorId == appointInfo[1]: #check for doctor
                     print(f"Error: Doctor {doctorName} have Appointment at [{date}]!")
                     Appointment_fuction(patientId, doctorId, patientName, doctorName)
                     return
         
-        for appointBlockInfo in Appointmentblock:
+        for appointBlockInfo in Appointmentblock: #check if the date is on doctor's blocklist or not
             if doctorId == appointBlockInfo[1] and date == appointBlockInfo[2]:
                 print(f"Error: Doctor {doctorName} has this date [{date}] blocked for appointment.")
                 Appointment_fuction(patientId, doctorId, patientName, doctorName)
@@ -353,7 +354,7 @@ def cancelAppointment(patientId, doctorId, patientName, doctorName):
     cancelNumber = int(cancelNumber)
 
     print(f"Cancel Appointment at [{myAppointments[cancelNumber - 1][2]}] for Patient [{myAppointments[cancelNumber - 1][0]}] and Doctor [{myAppointments[cancelNumber - 1][1]}] successfully.")
-    Appointments.remove(myAppointments[cancelNumber - 1])
+    Appointments.remove(myAppointments[cancelNumber - 1])#minus one is because the id we give the appointment starts from 1 while python index starts with 0. so its to balance it out
     fileManager.writeFile("Appointment.txt", Appointments)
     Appointment_fuction(patientId, doctorId, patientName, doctorName)
 
@@ -374,7 +375,7 @@ def paymentfuction(userid):
     for patient in patients:
         if patient[0] == userid:
             Found = True
-            info = patient
+            info = patient #make the info solely just have all of the patient's data
             break
     while Found:
         print(f"============================\nPatient [{patient[1]}] Payment List.")
@@ -397,24 +398,24 @@ def paymentfuction(userid):
                 for payment in paymentList:
                         id += 1
                         
-                paymentList.append([str(id),price,"No"])
+                paymentList.append([str(id),price,"No"])#(payment id, price, status of payment)
                 fileManager.writeFile("patient_payments/"+ str(userid) +".txt", paymentList)
                 print("Outstanding Payment Added Successfully!")
                 
-            case 2:
+            case 2:#view payment history
                 viewpayment(info)
 
-            case 3:
+            case 3:#process payment
                 viewpayment(info)
-                if totalamount != 0:
+                if totalamount != 0: #only runs if the patient still have outstanding amount
                     pay = input(f"Which payment id does {info[1]} wishes to pay?").strip()
                     if pay == "" or pay.isdigit() == False:
                         print("Invalid input, ID must be digits and cannot be null.")
                         break
                     paymentList = fileManager.readFile("patient_payments/"+ str(userid) +".txt")
                     for payment in paymentList:
-                        if pay == payment[0]:
-                            if payment[2] == "Yes":
+                        if pay == payment[0]:#match payment id
+                            if payment[2] == "Yes":#checking if the payment has been paid before or not
                                 print("Error:Payment is already paid before!")
                                 break
                             confirm = input(f"Payment ID {payment[0]} for {info[1]} is {payment[1]}.\n1.Yes\n2.No\nMark payment as paid?:").strip()
@@ -422,8 +423,8 @@ def paymentfuction(userid):
                                 case "1":
                                     if payment[2] == "No":
                                         paymentList.remove([payment[0], payment[1], payment[2]])
-                                        payment[2] = "Yes"
-                                        paymentList.append([payment[0], payment[1], payment[2], ])
+                                        payment[2] = "Yes"#changing the status of the payment
+                                        paymentList.append([payment[0], payment[1], payment[2]])
                                         fileManager.writeFile("patient_payments/"+ str(userid) +".txt", paymentList)
                                         print("Payment made successfully!")
                                 case "2":
@@ -435,25 +436,26 @@ def paymentfuction(userid):
                         print("Error: PaymentID does not exist.")
                 else:
                     print("There's no payment to be made.")
-            case 4:
+                    
+            case 4:#abort
                 print("Bringing you back to main menu.")
                 break
     if not Found:
         print(f"Error: Patient ID: {userid} doesn't exist.")
 
 def viewpayment(info):
-    global totalamount
+    global totalamount #global so this variable can be used in other function(used at process payment)
     paymentList = fileManager.readFile("patient_payments/"+ str(info[0]) +".txt")
 
     print("\n" + "=" * 24 + " Payment " + "=" * 24)
     print(f"Patient name: {info[1]}\n{"-"*57}")
     print("PaymentID\tAmount(RM)\tSettled Payment")
     for payment in paymentList:
-        print(f"{payment[0]}\t\t{payment[1]}\t\t{payment[2]}")
+        print(f"{payment[0]}\t\t{payment[1]}\t\t{payment[2]}")#print every payment in a table
 
     totalamount = 0
     for payment in paymentList:
-        if payment[2] == "No":
+        if payment[2] == "No": #adding the price amount of the payment that have not been paid
             totalamount += int(payment[1])
     if totalamount == 0:
         print(f"{info[1]} has no outstanding payment.")
