@@ -1,16 +1,17 @@
-def readFile(path : str):
-    try:
+def readFile(path : str):   # path(parameter name) is a name when whatever the result of this function got is hold the input value on this 'path' name
+    try:                    # str = string, str here expect string
         with open(path, "r") as file:
             content = file.read()
         if len(content) < 1:
             return []
         content = content.split("\n")
-        datalist = []
+        datalist = []            #datalist = [content]
         for line in content:
             datas = line.split("/#")
             if len(datas) > 0:
-                datalist.append(datas)
-        return datalist
+                datalist.append(datas) #datalist []
+        return datalist          #datalist is the big list [] that will store small list of each line in "patient observation.txt" that store in 'datas'
+                                 #seperate ("/#") with the datas variable and it will become 
     except:
         print(path, "have not found!")
         print("Creating", path)
@@ -48,7 +49,7 @@ def viewAllDoctor():
     if len(file) > 0:
         for doctor in file:
             print(f"ID:", doctor[0].ljust(3), "Name:", doctor[1].ljust(20), "Contact Number:", doctor[3].ljust(12))
-        print(f"Total doctors: {len(file)}")
+        print(f"Total doctors: {len(file)}")  # ask haoyu how it works, so when retrieve information it uses indedx, and when print display 3 with len function?
     else:
         print("\nError: Doctor file is empty!\n")
 
@@ -67,7 +68,7 @@ def checkDate(date:str):
             return True
         if int(date[3:5]) == 2 and int(date[0:2]) < 29:
             return True
-        if int(date[3:5]) in (1, 3, 5, 7, 8, 10, 12) and int(date[0:2]) < 32:
+        if int(date[3:5]) in (3,1,  5, 7, 8, 10, 12) and int(date[0:2]) < 32:
             return True
         if int(date[3:5]) in (4, 6, 9, 11) and int(date[0:2]) < 31:
             return True
